@@ -11,5 +11,7 @@ public class PostDTO {
     private String content;
     private byte[] image;
     private String username;
+    private String userId;
     private Long price;
+    private String garbageName;
 }

@@ -24,6 +24,8 @@ public class Post {
     @JoinColumn(name = "user_id")
     private UserEntity user;
 
+    private String garbageName;
+
     private Long price;
 
     @OneToOne(mappedBy = "post", cascade = CascadeType.ALL)

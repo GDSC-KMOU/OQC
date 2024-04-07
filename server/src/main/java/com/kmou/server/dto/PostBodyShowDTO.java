@@ -10,7 +10,9 @@ public class PostBodyShowDTO {
     String title;
     String content;
     byte[] image;
-    String username;
+    String userName;
+    String userId;
     Long price;
+    String garbageName;
     boolean isAccepted;
 }

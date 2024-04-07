@@ -48,6 +48,7 @@ public class PaymentController {
         obj.put("paymentKey", paymentKey);
 
         paymentService.changeAccepted(orderId);
+        logger.info("Payment accepted: {}", orderId);
 
         HttpEntity<String> entity = new HttpEntity<>(obj.toJSONString(), headers);
 
