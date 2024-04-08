@@ -1,28 +1,13 @@
 package com.kmou.server.controller;
 
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.kmou.server.dto.PostBodyShowDTO;
-import com.kmou.server.dto.PostDTO;
 import com.kmou.server.dto.PostHeadShowDTO;
-import com.kmou.server.entity.Post;
-import com.kmou.server.entity.UserEntity;
-import com.kmou.server.service.AIService;
 import com.kmou.server.service.PostService;
-import com.kmou.server.service.UserService;
 import lombok.AllArgsConstructor;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.client.RestTemplate;
-import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
-import java.security.Principal;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RestController
@@ -30,8 +15,6 @@ import java.util.stream.Collectors;
 public class MainController {
 
     private final PostService postService;
-    private static final Logger logger = LoggerFactory.getLogger(MainController.class);
-
 
     @GetMapping("/posts/{id}")
     public ResponseEntity<PostBodyShowDTO> getPost(@PathVariable Long id) {
@@ -46,6 +29,7 @@ public class MainController {
                     responseDTO.setUserId(post.getUser().getUsername());
                     responseDTO.setPrice(post.getPrice());
                     responseDTO.setAccepted(post.isAccepted());
+                    responseDTO.setPaid(post.isPaid());
                     responseDTO.setGarbageName(post.getGarbageName());
                     return ResponseEntity.ok(responseDTO);
                 })

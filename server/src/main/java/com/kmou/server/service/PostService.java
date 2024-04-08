@@ -27,5 +27,12 @@ public class PostService {
         return postRepository.findById(postId);
     }
 
+    @Transactional
+    public void acceptedPost(Long postId) {
+        Post post = postRepository.findById(postId)
+                .orElseThrow(() -> new IllegalArgumentException("Post not found"));
+        post.setAccepted(true);
+    }
+
 
 }

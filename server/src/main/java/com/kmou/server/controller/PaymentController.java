@@ -2,7 +2,6 @@ package com.kmou.server.controller;
 
 import com.kmou.server.dto.PaymentHoldDTO;
 import com.kmou.server.dto.PaymentRequestDTO;
-import com.kmou.server.entity.PaymentInfo;
 import com.kmou.server.entity.TossPayment;
 import com.kmou.server.service.PaymentService;
 import org.json.simple.JSONObject;
@@ -56,8 +55,6 @@ public class PaymentController {
                 "https://api.tosspayments.com/v1/payments/confirm",
                 entity,
                 TossPayment.class);
-
-
 
         return response;
     }

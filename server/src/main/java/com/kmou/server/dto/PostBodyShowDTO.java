@@ -15,4 +15,5 @@ public class PostBodyShowDTO {
     Long price;
     String garbageName;
     boolean isAccepted;
+    boolean isPaid;
 }

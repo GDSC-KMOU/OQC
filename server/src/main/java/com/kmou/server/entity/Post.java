@@ -19,6 +19,7 @@ public class Post {
     private byte[] image;
 
     private boolean isAccepted;
+    private boolean isPaid;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
