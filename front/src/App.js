@@ -9,6 +9,8 @@ import Payment from './Component/Payment';
 import SuccessPage from './Component/Success';
 import ImageUploadComponent from './Component/ImageProcess';
 import AdminPosts from './Component/AdminAllPosts';
+import DaumPost from './Component/DaumPost'; 
+
 
 function App() {
     const [isLoggedIn, setIsLoggedIn] = useState(false);

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import DaumPost from './DaumPost';
 
 function ImageUploadComponent() {
     const [image, setImage] = useState(null);
@@ -11,6 +12,7 @@ function ImageUploadComponent() {
     const [content, setContent] = useState('');
     const [step, setStep] = useState(1);
     const navigate = useNavigate();
+    const [addressObj, setAddressObj] = useState({ areaAddress: '', townAddress: '' });
 
     const handleImageUpload = async () => {
         const formData = new FormData();
@@ -55,8 +57,7 @@ function ImageUploadComponent() {
 
     const handleSubmitPost = async () => {
         const formData = new FormData();
-        formData.append('title', title);
-        formData.append('content', content);
+        formData.append('address', `${addressObj.areaAddress} ${addressObj.townAddress} ${addressObj.detailAddress}`);
         formData.append('image', image);
         formData.append('selectedOption', JSON.parse(selectedOption).price);
         formData.append('resValue', resValue);
@@ -99,8 +100,15 @@ function ImageUploadComponent() {
             )}
             {step === 3 && (
                 <>
-                    <input type="text" placeholder="제목" value={title} onChange={e => setTitle(e.target.value)} />
-                    <textarea placeholder="날짜, 장소 입력" value={content} onChange={e => setContent(e.target.value)} />
+                    <DaumPost setAddressObj={setAddressObj} /> {/* Daum Post 주소 검색 컴포넌트 */}
+                    <div>
+                        <label>전체 주소:</label>
+                        <input type="text" value={`${addressObj.areaAddress} ${addressObj.townAddress}`} readOnly />
+                    </div>
+                    <div>
+                        <label>상세 주소 입력:</label>
+                        <input type="text" placeholder="상세 주소 입력" value={addressObj.detailAddress} onChange={e => setAddressObj({ ...addressObj, detailAddress: e.target.value })} />
+                    </div>
                     <button onClick={handleSubmitPost}>신청</button>
                 </>
             )}

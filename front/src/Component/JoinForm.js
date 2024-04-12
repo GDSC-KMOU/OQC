@@ -7,6 +7,7 @@ function SignUpForm() {
         username: '',
         name: '',
         password: '',
+        phoneNumber: '', // 폰번호 필드 추가
     });
 
     const handleChange = (e) => {
@@ -33,7 +34,8 @@ function SignUpForm() {
                 navigate('/');
             }
         } catch (error) {
-            alert('회원가입 실패');
+            console.error('회원가입 오류', error);
+            alert('회원가입 실패: ' + error.response.data.message); // 오류 메시지 개선
         }
     };
 
@@ -66,6 +68,16 @@ function SignUpForm() {
                     id="password"
                     name="password"
                     value={formData.password}
+                    onChange={handleChange}
+                />
+            </div>
+            <div>
+                <label htmlFor="phoneNumber">전화번호</label>
+                <input
+                    type="text"
+                    id="phoneNumber"
+                    name="phoneNumber"
+                    value={formData.phoneNumber}
                     onChange={handleChange}
                 />
             </div>

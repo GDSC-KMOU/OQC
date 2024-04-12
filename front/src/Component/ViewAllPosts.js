@@ -24,12 +24,13 @@ function App() {
     fetchPosts();
   }, []);
 
+  console.log("zz: ", posts)
   return (
     <div>
       {posts.length > 0 ? (
         posts.map(post => (
           <div key={post.id} onClick={() => navigate(`/view-by-post/${post.id}`)} style={{ cursor: 'pointer' }}>
-            <h2>제목: {post.title}</h2>
+            <h2>제목: {post.garbageName}</h2>
             <p>작성자: {post.username}</p>
           </div>
         ))
