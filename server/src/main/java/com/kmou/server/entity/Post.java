@@ -7,12 +7,11 @@ import lombok.*;
 @Getter
 @Setter
 @ToString
-public class Post {
+public class Post extends BaseTime {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String title;
-    private String content;
+    private String address;
 
     @Lob
     @Column(columnDefinition = "LONGBLOB")

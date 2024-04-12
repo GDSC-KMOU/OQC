@@ -18,6 +18,7 @@ public class JoinService {
         String username = joinDTO.getUsername();
         String name = joinDTO.getName();
         String password = joinDTO.getPassword();
+        Long phoneNumber = joinDTO.getPhoneNumber();
 
         Boolean isExist = userRepository.existsByUsername(username);
 
@@ -31,6 +32,7 @@ public class JoinService {
         data.setName(name);
         data.setPassword(bCryptPasswordEncoder.encode(password));
         data.setRole("ROLE_USER");
+        data.setPhoneNumber(phoneNumber);
 
         userRepository.save(data);
     }

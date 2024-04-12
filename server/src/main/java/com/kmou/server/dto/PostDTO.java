@@ -7,11 +7,11 @@ import lombok.Setter;
 @Setter
 public class PostDTO {
     private Long Id;
-    private String title;
-    private String content;
+    private String address;
     private byte[] image;
     private String username;
     private String userId;
     private Long price;
     private String garbageName;
+    private String time;
 }

@@ -7,8 +7,7 @@ import lombok.Setter;
 @Setter
 public class PostBodyShowDTO {
     Long Id;
-    String title;
-    String content;
+    String address;
     byte[] image;
     String userName;
     String userId;
@@ -16,4 +15,5 @@ public class PostBodyShowDTO {
     String garbageName;
     boolean isAccepted;
     boolean isPaid;
+    String time;
 }

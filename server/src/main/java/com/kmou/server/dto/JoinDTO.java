@@ -9,4 +9,5 @@ public class JoinDTO {
     private String username;
     private String name;
     private String password;
+    private Long phoneNumber;
 }

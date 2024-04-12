@@ -54,8 +54,7 @@ public class ImageController {
     }
 
     @PostMapping("/selection")
-    public ResponseEntity<PostDTO> saveSelection(@RequestParam("title") String title,
-                                                 @RequestParam("content") String content,
+    public ResponseEntity<PostDTO> saveSelection(@RequestParam("address") String address,
                                                  @RequestParam("image") MultipartFile image,
                                                  @RequestParam("resValue") String resValue,
                                                  @RequestParam("selectedOption") Long price,
@@ -69,22 +68,22 @@ public class ImageController {
         UserEntity user = userOpt.get();
 
         Post post = new Post();
-        post.setTitle(title);
-        post.setContent(content);
+        post.setAddress(address);
         post.setImage(image.getBytes());
         post.setUser(user);
         post.setPrice(price);
         post.setGarbageName(resValue);
+        post.getCreateDate();
         Post savedPost = postService.createPost(post);
 
         PostDTO responseDTO = new PostDTO();
         responseDTO.setId(savedPost.getId());
-        responseDTO.setTitle(savedPost.getTitle());
-        responseDTO.setContent(savedPost.getContent());
+        responseDTO.setAddress(savedPost.getAddress());
         responseDTO.setImage(savedPost.getImage());
         responseDTO.setPrice(savedPost.getPrice());
         responseDTO.setUserId(user.getUsername());
         responseDTO.setUsername(user.getName());
+        responseDTO.setTime(savedPost.getCreateDate());
         responseDTO.setGarbageName(savedPost.getGarbageName());
 
         return ResponseEntity.ok(responseDTO);

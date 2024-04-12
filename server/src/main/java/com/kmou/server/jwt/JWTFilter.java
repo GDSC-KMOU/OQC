@@ -1,6 +1,6 @@
 package com.kmou.server.jwt;
 
-import com.kmou.server.controller.MainController;
+import com.kmou.server.controller.PostController;
 import com.kmou.server.dto.CustomUserDetails;
 import com.kmou.server.entity.UserEntity;
 import jakarta.servlet.FilterChain;
@@ -21,7 +21,7 @@ import java.io.IOException;
 public class JWTFilter extends OncePerRequestFilter {
 
     private final JWTUtil jwtUtil;
-    private static final Logger logger = LoggerFactory.getLogger(MainController.class);
+    private static final Logger logger = LoggerFactory.getLogger(PostController.class);
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
@@ -48,12 +48,16 @@ public class JWTFilter extends OncePerRequestFilter {
         String username = jwtUtil.getUsername(token);
         String name = jwtUtil.getName(token);
         String role = jwtUtil.getRole(token);
+        Long phoneNumber = jwtUtil.getPhoneNumber(token);
+
 
         UserEntity userEntity = new UserEntity();
         userEntity.setUsername(username);
         userEntity.setName(name);
         userEntity.setPassword("tempassword");
         userEntity.setRole(role);
+        userEntity.setPhoneNumber(phoneNumber);
+
 
         CustomUserDetails customUserDetails = new CustomUserDetails(userEntity);
         Authentication authentication = new UsernamePasswordAuthenticationToken(customUserDetails, null, customUserDetails.getAuthorities());

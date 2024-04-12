@@ -7,6 +7,7 @@ import lombok.Setter;
 @Setter
 public class PostHeadShowDTO {
     Long Id;
-    String title;
+    String garbageName;
     String username;
+    String time;
 }

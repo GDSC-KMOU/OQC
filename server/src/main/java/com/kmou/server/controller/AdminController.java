@@ -31,8 +31,7 @@ public class AdminController {
         List<AdminPostDTO> postDTOs = postService.getAllPosts().stream().map(post -> {
             AdminPostDTO dto = new AdminPostDTO();
             dto.setId(post.getId());
-            dto.setTitle(post.getTitle());
-            dto.setUsername(post.getUser().getName());
+            dto.setAddress(post.getAddress());
             dto.setPaid(post.isPaid());
             dto.setAccepted(post.isAccepted());
             return dto;
