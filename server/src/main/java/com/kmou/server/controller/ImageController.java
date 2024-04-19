@@ -67,12 +67,18 @@ public class ImageController {
         }
         UserEntity user = userOpt.get();
 
+        Map<String, Long> optionDetails = getOptionsBasedOnAnalysis(resValue).get(resValue).stream()
+                .filter(opt -> opt.containsValue(price))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("Invalid option selected"));
+
         Post post = new Post();
         post.setAddress(address);
         post.setImage(image.getBytes());
         post.setUser(user);
         post.setPrice(price);
         post.setGarbageName(resValue);
+        post.setGarbageContent(optionDetails.keySet().iterator().next());
         post.getCreateDate();
         Post savedPost = postService.createPost(post);
 
@@ -85,6 +91,7 @@ public class ImageController {
         responseDTO.setUsername(user.getName());
         responseDTO.setTime(savedPost.getCreateDate());
         responseDTO.setGarbageName(savedPost.getGarbageName());
+        responseDTO.setGarbageContent(savedPost.getGarbageContent());
 
         return ResponseEntity.ok(responseDTO);
     }

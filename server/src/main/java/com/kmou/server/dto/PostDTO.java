@@ -13,5 +13,6 @@ public class PostDTO {
     private String userId;
     private Long price;
     private String garbageName;
+    private String garbageContent;
     private String time;
 }

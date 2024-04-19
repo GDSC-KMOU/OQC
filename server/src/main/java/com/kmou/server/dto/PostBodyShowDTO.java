@@ -13,6 +13,7 @@ public class PostBodyShowDTO {
     String userId;
     Long price;
     String garbageName;
+    String garbageContent;
     boolean isAccepted;
     boolean isPaid;
     String time;

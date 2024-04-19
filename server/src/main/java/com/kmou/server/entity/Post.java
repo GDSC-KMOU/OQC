@@ -25,6 +25,7 @@ public class Post extends BaseTime {
     private UserEntity user;
 
     private String garbageName;
+    private String garbageContent;
 
     private Long price;
 

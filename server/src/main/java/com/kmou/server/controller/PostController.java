@@ -4,6 +4,10 @@ import com.kmou.server.dto.PostBodyShowDTO;
 import com.kmou.server.dto.PostHeadShowDTO;
 import com.kmou.server.service.PostService;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
 
@@ -30,6 +34,7 @@ public class PostController {
                     responseDTO.setAccepted(post.isAccepted());
                     responseDTO.setPaid(post.isPaid());
                     responseDTO.setGarbageName(post.getGarbageName());
+                    responseDTO.setGarbageContent(post.getGarbageContent());
                     responseDTO.setTime(post.getCreateDate());
                     return ResponseEntity.ok(responseDTO);
                 })
@@ -38,15 +43,17 @@ public class PostController {
 
 
     @GetMapping("/posts")
-    public ResponseEntity<List<PostHeadShowDTO>> getAllPosts() {
-        List<PostHeadShowDTO> postDTOs = postService.getAllPosts().stream().map(post -> {
+    public ResponseEntity<Page<PostHeadShowDTO>> getAllPosts(Pageable pageable) {
+        Pageable sortedPageable = PageRequest.of(pageable.getPageNumber(), pageable.getPageSize(), Sort.by(Sort.Direction.DESC, "createDate"));
+
+        Page<PostHeadShowDTO> postDTOs = postService.getAllPosts(sortedPageable).map(post -> {
             PostHeadShowDTO dto = new PostHeadShowDTO();
             dto.setId(post.getId());
             dto.setGarbageName(post.getGarbageName());
             dto.setUsername(post.getUser().getName());
             dto.setTime(post.getCreateDate());
             return dto;
-        }).collect(Collectors.toList());
+        });
         return ResponseEntity.ok(postDTOs);
     }
 

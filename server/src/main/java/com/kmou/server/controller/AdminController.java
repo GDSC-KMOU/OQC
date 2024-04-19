@@ -1,19 +1,15 @@
 package com.kmou.server.controller;
 
 import com.kmou.server.dto.AdminPostDTO;
-import com.kmou.server.dto.PostHeadShowDTO;
-import com.kmou.server.entity.Post;
 import com.kmou.server.service.PostService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
-
-import java.util.List;
-import java.util.stream.Collectors;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class AdminController {
@@ -26,24 +22,32 @@ public class AdminController {
     }
 
     @GetMapping("/admin")
-    public ResponseEntity<List<AdminPostDTO>> adminGetAllPosts() {
-        logger.info("Admin get all posts");
-        List<AdminPostDTO> postDTOs = postService.getAllPosts().stream().map(post -> {
+    public ResponseEntity<Page<AdminPostDTO>> adminGetAllPosts(Pageable pageable) {
+        logger.info("Admin get all posts with pagination");
+
+        Pageable sortedByCreateDateDesc = PageRequest.of(
+                pageable.getPageNumber(),
+                pageable.getPageSize(),
+                Sort.by("createDate").descending()
+        );
+
+        Page<AdminPostDTO> postDTOs = postService.getAllPosts(sortedByCreateDateDesc).map(post -> {
             AdminPostDTO dto = new AdminPostDTO();
             dto.setId(post.getId());
             dto.setAddress(post.getAddress());
+            dto.setName(post.getUser().getName());
             dto.setPaid(post.isPaid());
             dto.setAccepted(post.isAccepted());
             return dto;
-        }).collect(Collectors.toList());
+        });
+
         return ResponseEntity.ok(postDTOs);
     }
 
     @PostMapping("/admin/{id}")
-    public ResponseEntity<Post> acceptedSubmit(@PathVariable Long id) {
+    public ResponseEntity<Void> acceptPost(@PathVariable Long id) {
         postService.acceptedPost(id);
-        logger.info("Admin accepted post id: " + id);
+        logger.info("Admin accepted post id: {}", id);
         return ResponseEntity.ok().build();
     }
-
 }

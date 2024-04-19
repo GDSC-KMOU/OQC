@@ -8,6 +8,7 @@ import lombok.Setter;
 public class AdminPostDTO {
     Long Id;
     String address;
+    String name;
     boolean isPaid;
     boolean isAccepted;
 }
