@@ -9,8 +9,8 @@ import Payment from './Component/Payment';
 import SuccessPage from './Component/Success';
 import ImageUploadComponent from './Component/ImageProcess';
 import AdminPosts from './Component/AdminAllPosts';
-import DaumPost from './Component/DaumPost'; 
-
+import MainPage from './Component/MainPage';
+import UserPage from './Component/UserPage';
 
 function App() {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -43,6 +43,7 @@ function App() {
                                 <li><Link to="/logout">로그아웃</Link></li>
                                 <li><Link to="/image">폐기 신청</Link></li>
                                 <li><Link to="/allpost">폐기 신청글 보기</Link></li>
+                                <li><Link to="/user">내 신청글 보기</Link></li>
                                 {isAdmin && <li><Link to="/admin">관리자</Link></li>}
                             </>
                         )}
@@ -58,6 +59,8 @@ function App() {
                     <Route path="/success" element={<SuccessPage />} />
                     <Route path="/image" element={<ImageUploadComponent />} />
                     <Route path="/admin" element={<AdminPosts />} />
+                    <Route path="/user" element={<UserPage />} />
+                    <Route path="/" element={<MainPage />} />
                 </Routes>
             </div>
         </Router>

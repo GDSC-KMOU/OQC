@@ -59,14 +59,19 @@ function ViewByPost() {
     const isAuthor = post.userId === loggedInUsername;
     const canPay = !post.paid && isAuthor;
 
+    console.log("data: ", post)
     return (
         <div>
             <h2>{post.title}</h2>
             <p>{post.content}</p>
             {post.image && <img src={`data:image/jpeg;base64,${post.image}`} alt={post.title} />}
             <p>폐기물명: {post.garbageName}</p>
+            <p>폐기물 사이즈: {post.garbageContent}</p>
             <p>가격: {post.price}원</p>
+            <p>주소: {post.address}</p>
             <p>결제 여부: {post.paid ? (post.accepted ? '승인 완료' : '승인 대기중') : '미결제'}</p>
+            <p>신청자: {post.userId}</p>
+            <p>게시일: {post.time}</p>
             {canPay && <button onClick={handleGoToCheckout}>결제하기</button>}
         </div>
     );

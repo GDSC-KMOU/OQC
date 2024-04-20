@@ -13,7 +13,7 @@ function AdminPosts() {
                 const response = await axios.get('http://localhost:8080/admin', {
                     headers: { Authorization: `Bearer ${token}` }
                 });
-                setPosts(response.data);
+                setPosts(response.data.content);
             } catch (error) {
                 console.error('Error fetching data:', error);
                 if (error.response && error.response.status === 403) {
@@ -41,6 +41,8 @@ function AdminPosts() {
         }
     };
 
+    console.log("data: ", posts)
+
     return (
         <div>
             <h1>Admin Post List</h1>
@@ -48,7 +50,9 @@ function AdminPosts() {
                 <ul>
                     {posts.map(post => (
                         <li key={post.id}>
-                            {post.title} by {post.username} - {post.paid ? (post.accepted ? '승인 완료' : (
+                            주소: {post.address} / 
+                            날짜: {post.time} / 
+                            신청자: {post.name} - {post.paid ? (post.accepted ? '승인 완료' : (
                                 <button onClick={() => handleApprove(post.id)}>승인하기</button>
                             )) : '미결제'}
                         </li>
