@@ -11,4 +11,5 @@ public class AdminPostDTO {
     String name;
     boolean isPaid;
     boolean isAccepted;
+    String time;
 }

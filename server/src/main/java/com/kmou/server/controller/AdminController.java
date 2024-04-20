@@ -38,6 +38,7 @@ public class AdminController {
             dto.setName(post.getUser().getName());
             dto.setPaid(post.isPaid());
             dto.setAccepted(post.isAccepted());
+            dto.setTime(post.getCreateDate());
             return dto;
         });
 

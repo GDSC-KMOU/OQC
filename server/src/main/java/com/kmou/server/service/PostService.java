@@ -1,5 +1,6 @@
 package com.kmou.server.service;
 
+import com.kmou.server.dto.PostHeadShowDTO;
 import com.kmou.server.entity.Post;
 import com.kmou.server.repository.PostRepository;
 import lombok.AllArgsConstructor;
@@ -38,5 +39,13 @@ public class PostService {
         post.setAccepted(true);
     }
 
+    @Transactional(readOnly = true)
+    public Page<PostHeadShowDTO> getPostsByUser(String username, Pageable pageable) {
+        return postRepository.findByUserUsername(username, pageable).map(this::convertToDto);
+    }
+
+    private PostHeadShowDTO convertToDto(Post post) {
+        return new PostHeadShowDTO(post.getId(), post.getGarbageName(), post.getUser().getName(), post.getCreateDate(), post.isAccepted(), post.isPaid());
+    }
 
 }

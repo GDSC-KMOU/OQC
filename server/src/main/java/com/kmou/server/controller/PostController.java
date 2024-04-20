@@ -11,9 +11,6 @@ import org.springframework.data.domain.Sort;
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
 @RestController
 @AllArgsConstructor
 public class PostController {
@@ -52,6 +49,8 @@ public class PostController {
             dto.setGarbageName(post.getGarbageName());
             dto.setUsername(post.getUser().getName());
             dto.setTime(post.getCreateDate());
+            dto.setAccepted(post.isAccepted());
+            dto.setPaid(post.isPaid());
             return dto;
         });
         return ResponseEntity.ok(postDTOs);

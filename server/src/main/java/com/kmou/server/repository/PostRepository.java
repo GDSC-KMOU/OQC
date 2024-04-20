@@ -10,4 +10,6 @@ import java.util.Optional;
 public interface PostRepository extends JpaRepository<Post, Long> {
     Page<Post> findAll(Pageable pageable);
 
+    Page<Post> findByUserUsername(String username, Pageable pageable);
+
 }
