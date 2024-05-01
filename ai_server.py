@@ -17,7 +17,7 @@ async def process_home_form(file = File(...)):
     model = torch.hub.load("WongKinYiu/yolov7", "custom", "best.pt", trust_repo = True)
 
     results = model(Image.open(BytesIO(await file.read())))
-    json_results = results_to_json(results,model)
+    json_results = results_to_json(results, model)
 
     return json_results
 
@@ -37,5 +37,5 @@ if __name__ == '__main__':
     uvicorn.run(
         app = app,
         host = 'localhost', 
-        port = 3000
+        port = 3003
     )
