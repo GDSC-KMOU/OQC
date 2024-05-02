@@ -1,5 +1,6 @@
 fastapi
 uvicorn
+python-multipart
 
 # Base ----------------------------------------
 matplotlib>=3.2.2
