@@ -1,5 +1,8 @@
 package com.kmou.server.service;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
@@ -9,12 +12,13 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.stream.StreamSupport;
 
 @Service
 public class AIService {
 
-    public String analyzeImage(MultipartFile image) {
-        final String url = "http://localhost:5050/";
+    public String analyzeImage(MultipartFile image) throws JsonProcessingException {
+        final String url = "http://capstone.includer.site/predict";
         RestTemplate restTemplate = new RestTemplate();
 
         HttpHeaders headers = new HttpHeaders();
@@ -34,9 +38,22 @@ public class AIService {
 
         HttpEntity<MultiValueMap<String, Object>> requestEntity = new HttpEntity<>(body, headers);
 
-        ResponseEntity<String> response = restTemplate.postForEntity(url, requestEntity, String.class);
+        ResponseEntity<String> tmp = restTemplate.postForEntity(url, requestEntity, String.class);
 
-        return response.getBody();
+        ObjectMapper mapper = new ObjectMapper();
+        JsonNode root = mapper.readTree(tmp.getBody());
+        String response = "";
+
+        if (root.isArray()) {
+            response = StreamSupport.stream(root.spliterator(), false)
+                    .flatMap(array -> StreamSupport.stream(array.spliterator(), false))
+                    .filter(item -> item.has("class_name"))
+                    .map(item -> item.get("class_name").asText())
+                    .findFirst()
+                    .orElse("No class_name found");
+        }
+
+        return response;
     }
 
 }

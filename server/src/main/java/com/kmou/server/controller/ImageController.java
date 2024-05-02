@@ -42,13 +42,7 @@ public class ImageController {
         String analysisResult = aiService.analyzeImage(image);
         logger.info("Analysis result: " + analysisResult);
 
-        ObjectMapper mapper = new ObjectMapper();
-        JsonNode rootNode = mapper.readTree(analysisResult);
-        String resValue = rootNode.get("res").asText();
-        logger.info("resValue: " + resValue);
-
-        Map<String, List<Map<String, Long>>> response = getOptionsBasedOnAnalysis(resValue);
-        logger.info("Response: " + response);
+        Map<String, List<Map<String, Long>>> response = getOptionsBasedOnAnalysis(analysisResult);
 
         return ResponseEntity.ok(response);
     }
@@ -100,21 +94,21 @@ public class ImageController {
         Map<String, List<Map<String, Long>>> options = new HashMap<>();
 
         switch (resValue) {
-            case "dog":
-                List<Map<String, Long>> dogOptions = new ArrayList<>();
-                dogOptions.add(Map.of("6인용 이상", 7000L));
-                dogOptions.add(Map.of("6인용 미만", 5000L));
-                dogOptions.add(Map.of("대리석 6인용 이상", 17000L));
-                dogOptions.add(Map.of("대리석 6인용 미만", 13000L));
-                options.put("dog", dogOptions);
+            case "diningtable":
+                List<Map<String, Long>> diningtableOptions = new ArrayList<>();
+                diningtableOptions.add(Map.of("6인용 이상", 7000L));
+                diningtableOptions.add(Map.of("6인용 미만", 5000L));
+                diningtableOptions.add(Map.of("대리석 6인용 이상", 17000L));
+                diningtableOptions.add(Map.of("대리석 6인용 미만", 13000L));
+                options.put("밥상", diningtableOptions);
                 break;
-            case "서랍장":
+            case "drawer":
                 List<Map<String, Long>> drawerOptions = new ArrayList<>();
                 drawerOptions.add(Map.of("5단 이상", 10000L));
                 drawerOptions.add(Map.of("5단 미만", 6000L));
                 options.put("서랍장", drawerOptions);
                 break;
-            case "소파":
+            case "sofa":
                 List<Map<String, Long>> sofaOptions = new ArrayList<>();
                 sofaOptions.add(Map.of("5인용이상", 17000L));
                 sofaOptions.add(Map.of("3인용", 12000L));
@@ -122,7 +116,7 @@ public class ImageController {
                 sofaOptions.add(Map.of("1인용", 5000L));
                 options.put("소파", sofaOptions);
                 break;
-            case "의자":
+            case "chair":
                 List<Map<String, Long>> chairOptions = new ArrayList<>();
                 chairOptions.add(Map.of("목재, 철제", 2000L));
                 chairOptions.add(Map.of("목재, 철재 외", 3000L));
@@ -130,14 +124,14 @@ public class ImageController {
                 chairOptions.add(Map.of("안마의자", 30000L));
                 options.put("의자", chairOptions);
                 break;
-            case "장롱":
+            case "wardrobe":
                 List<Map<String, Long>> wardrobeOptions = new ArrayList<>();
                 wardrobeOptions.add(Map.of("120cm 이상", 17000L));
                 wardrobeOptions.add(Map.of("90cm 이상", 14000L));
                 wardrobeOptions.add(Map.of("90cm 미만", 10000L));
                 options.put("장롱", wardrobeOptions);
                 break;
-            case "책상":
+            case "desk":
                 List<Map<String, Long>> deskOptions = new ArrayList<>();
                 deskOptions.add(Map.of("서랍장 2개 혹은 1m 이상", 8000L));
                 deskOptions.add(Map.of("서랍장 1개 혹은 1m 미만", 5000L));
