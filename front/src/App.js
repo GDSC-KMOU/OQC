@@ -1,70 +1,41 @@
-import React, { useState, useEffect } from 'react';
-import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
-import JoinForm from './Component/JoinForm';
-import LoginForm from './Component/LoginForm';
-import Logout from './Component/Logout';
-import ViewAllPosts from './Component/ViewAllPosts';
-import ViewByPost from './Component/ViewByPost';
-import Payment from './Component/Payment';
-import SuccessPage from './Component/Success';
-import ImageUploadComponent from './Component/ImageProcess';
-import AdminPosts from './Component/AdminAllPosts';
-import MainPage from './Component/MainPage';
-import UserPage from './Component/UserPage';
+import React from 'react';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import Home from './pages/Home';
+import Login from './pages/Login';
+import Logout from './pages/Logout';
+import Signup from './pages/Signup';
+import Nav from './components/Nav';
+import WasteFee from './pages/WasteFee';
+import WasteOut from './pages/WasteOut';
+import MyPosts from './pages/MyPosts';
+import AllPosts from './pages/AllPosts';
+import ViewByPost from './pages/ViewByPost';
+import Payment from './components/Payment';
+import SuccessPage from './pages/Success';
+import FailPage from './pages/Fail';
 
-function App() {
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
-    const [isAdmin, setIsAdmin] = useState(false);
-    //등급 확인
-    useEffect(() => {
-        const token = localStorage.getItem('token');
-        if (token) {
-            setIsLoggedIn(true);
-            const payload = JSON.parse(atob(token.split('.')[1]));
-            setIsAdmin(payload.role === 'ROLE_ADMIN');
-        }
-    }, []);
-
+const App = () => {
     return (
         <Router>
-            <div>
-                <nav>
-                    <ul>
-                        {/*로그인 안하면 밑에 두 개 출력*/}
-                        {!isLoggedIn && (
-                            <>
-                                <li><Link to="/login">로그인</Link></li>
-                                <li><Link to="/join">회원가입</Link></li>
-                            </>
-                        )}
-                        {/*로그인시 밑에 세 개 출력, 어드민이면 관리자도 출력*/}
-                        {isLoggedIn && (
-                            <>
-                                <li><Link to="/logout">로그아웃</Link></li>
-                                <li><Link to="/image">폐기 신청</Link></li>
-                                <li><Link to="/allpost">폐기 신청글 보기</Link></li>
-                                <li><Link to="/user">내 신청글 보기</Link></li>
-                                {isAdmin && <li><Link to="/admin">관리자</Link></li>}
-                            </>
-                        )}
-                    </ul>
-                </nav>
+            <div className="App">
+                <Nav />
                 <Routes>
-                    <Route path="/login" element={<LoginForm />} />
-                    <Route path="/logout" element={<Logout />} />
-                    <Route path="/join" element={<JoinForm />} />
-                    <Route path="/allpost" element={<ViewAllPosts />} />
-                    <Route path="/view-by-post/:postId" element={<ViewByPost />} />
-                    <Route path="/payment" element={<Payment />} />
-                    <Route path="/success" element={<SuccessPage />} />
-                    <Route path="/image" element={<ImageUploadComponent />} />
-                    <Route path="/admin" element={<AdminPosts />} />
-                    <Route path="/user" element={<UserPage />} />
-                    <Route path="/" element={<MainPage />} />
+                    <Route element={<Home />} path='/' />
+                    <Route element={<Login />} path='/login' />
+                    <Route element={<Logout />} path='/logout' />
+                    <Route element={<Signup />} path='/signup' />
+                    <Route element={<MyPosts />} path='/myposts' />
+                    <Route element={<WasteFee />} path='/wastefee' />
+                    <Route element={<WasteOut />} path='/wasteout' />
+                    <Route element={<AllPosts />} path='/allposts' />
+                    <Route element={<ViewByPost />} path='/view-by-post/:postId' />
+                    <Route element={<Payment />} path='/payment' />
+                    <Route element={<SuccessPage />} path='/success' />
+                    <Route element={<FailPage />} path='/fail' />
                 </Routes>
             </div>
         </Router>
     );
-}
+};
 
 export default App;

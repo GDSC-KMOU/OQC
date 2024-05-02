@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import Footer from '../components/Footer';
 
-function LoginForm() {
-    const [username, setUsername] = useState('');
-    const [password, setPassword] = useState('');
+const Login = () => {
+    const [username, setUsername] = useState("");
+    const [password, setPassword] = useState("");
     const navigate = useNavigate();
 
     const handleLogin = async (e) => {
@@ -33,22 +34,25 @@ function LoginForm() {
     };
 
     return (
-        <form onSubmit={handleLogin}>
-            <div>
+        <div>
+            <form onSubmit={handleLogin}>
                 <label>
-                    Username:
-                    <input type="text" value={username} onChange={(e) => setUsername(e.target.value)} />
+                    아이디 : 
+                    <input type="text" onChange={(e) => setUsername(e.target.value)} value={username} placeholder='아이디를 입력해주세요'/>
                 </label>
-            </div>
-            <div>
                 <label>
-                    Password:
-                    <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
+                    비밀번호 :
+                    <input type="password" onChange={(e) => setPassword(e.target.value)} value={password} placeholder='비밀번호를 입력해주세요'/>
                 </label>
-            </div>
-            <button type="submit">Login</button>
-        </form>
+                <button type='submit'>로그인</button>
+                <Link to = {'/signup'}>
+                    <button>회원가입</button>
+                </Link>
+            </form>
+            <Footer />
+        </div>
+        
     );
-}
+};
 
-export default LoginForm;
+export default Login;

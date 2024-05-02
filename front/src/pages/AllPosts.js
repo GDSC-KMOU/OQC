@@ -20,7 +20,7 @@ const fetchPosts = async (pageNumber, pageSize, setPosts, setErrorLoading, setTo
   }
 };
 
-function App() {
+function AllPosts() {
   const [posts, setPosts] = useState([]);
   const [errorLoading, setErrorLoading] = useState(true); // 로딩 상태 관리
   const [currentPage, setCurrentPage] = useState(0);
@@ -68,4 +68,4 @@ function App() {
   );
 }
 
-export default App;
+export default AllPosts;

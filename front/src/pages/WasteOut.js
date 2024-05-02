@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import DaumPost from './DaumPost';
+import Postcode from '../components/Postcode';
 
 function ImageUploadComponent() {
     const [image, setImage] = useState(null);
@@ -12,16 +12,16 @@ function ImageUploadComponent() {
     const [content, setContent] = useState('');
     const [step, setStep] = useState(1);
     const navigate = useNavigate();
-    const [addressObj, setAddressObj] = useState({ areaAddress: '', townAddress: '' });
+    const [addressObj, setAddressObj] = useState({ 
+        address: '', 
+        detailAddress: '' 
+    });
+    const token = localStorage.getItem('token');
 
     const handleImageUpload = async () => {
         const formData = new FormData();
         formData.append('image', image);
-        const token = localStorage.getItem('token');
-        if (!token) {
-            alert('로그인해라');
-            return;
-        }
+        
         try {
             const response = await axios.post('http://localhost:8080/image', formData, {
                 headers: {
@@ -55,9 +55,16 @@ function ImageUploadComponent() {
         setStep(3);
     };
 
+    const handleAddressChange = (address, detailAddress) => {
+        setAddressObj({
+            address: address,
+            detailAddress: detailAddress,
+        });
+    };
+
     const handleSubmitPost = async () => {
         const formData = new FormData();
-        formData.append('address', `${addressObj.areaAddress} ${addressObj.townAddress} ${addressObj.detailAddress}`);
+        formData.append('address', `${addressObj.address} ${addressObj.detailAddress}`);
         formData.append('image', image);
         formData.append('selectedOption', JSON.parse(selectedOption).price);
         formData.append('resValue', resValue);
@@ -79,6 +86,9 @@ function ImageUploadComponent() {
         }
     };
 
+    if(!token){
+        return ("로그인이 필요한 서비스입니다.")
+    }
     return (
         <div>
             {step === 1 && (
@@ -100,16 +110,10 @@ function ImageUploadComponent() {
             )}
             {step === 3 && (
                 <>
-                    <DaumPost setAddressObj={setAddressObj} /> {/* Daum Post 주소 검색 컴포넌트 */}
-                    <div>
-                        <label>전체 주소:</label>
-                        <input type="text" value={`${addressObj.areaAddress} ${addressObj.townAddress}`} readOnly />
-                    </div>
-                    <div>
-                        <label>상세 주소 입력:</label>
-                        <input type="text" placeholder="상세 주소 입력" value={addressObj.detailAddress} onChange={e => setAddressObj({ ...addressObj, detailAddress: e.target.value })} />
-                    </div>
-                    <button onClick={handleSubmitPost}>신청</button>
+                <form onSubmit={handleSubmitPost}>
+                    <Postcode onAddressChange={handleAddressChange} />
+                    <button type='submit'>신청</button>
+                </form>
                 </>
             )}
         </div>
