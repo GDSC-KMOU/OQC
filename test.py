@@ -4,7 +4,7 @@ import os
 import pprint
 
 def send_request(image):
-    res = r.post("http://localhost:3003/predict",
+    res = r.post("http://capstone.includer.site/predict",
         files = { 'file' : open(image, "rb") }
     )
 
