@@ -7,15 +7,15 @@ import torch
 
 app = FastAPI()
 
+device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
+model = torch.hub.load("WongKinYiu/yolov7", "custom", "best.pt", trust_repo = True)
+
 @app.get("/")
 def read_root():
     return "FastAPI"
 
 @app.post("/predict")
 async def process_home_form(file = File(...)):
-    device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
-    model = torch.hub.load("WongKinYiu/yolov7", "custom", "best.pt", trust_repo = True)
-
     results = model(Image.open(BytesIO(await file.read())))
     json_results = results_to_json(results, model)
 
