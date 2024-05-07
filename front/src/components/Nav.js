@@ -1,6 +1,77 @@
 import React, {useState, useEffect} from 'react';
 import { Link } from 'react-router-dom';
 import Logo from '../assets/Logo.png';
+import styled from 'styled-components';
+
+const StyledLink = styled(Link)`
+  text-decoration: none;
+  height: ${(props) => props.height || '100%'};
+  color: ${(props) => props.color || 'white'};
+  display: flex;  
+  justify-content: center;
+  align-items: center;
+`;
+const StyledNav = styled.nav`
+    width: 100%;
+`;
+const NavTop = styled.div`
+    width: 80%;
+    margin: auto;
+    display: flex;
+    justify-content: space-between;
+    height: 100px;
+`;
+const NavTopLeft = styled.div`
+    width: 269px;
+    display: flex;
+    align-items: center;
+`;
+const YgWDS = styled.p`
+    font-size: 35px;
+    font-weight: bold;
+    color: #4DA3D5;
+    padding-left: 10px;    
+`;
+const Button = styled.div`
+    width: ${(props) => props.width || '140px'};
+    height: 56px;
+    background-color: #4DA3D5;
+    font-size: 18px;
+    border-radius: 15px;
+    text-align: center;
+    line-height : 56px;
+`;
+const NavTopRight = styled.div`
+    width: 269px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+`;
+const NavBottomContainer = styled.div`
+    width: 100%;
+    background: linear-gradient(to right, #017CC4, #014194);
+`;
+const NavBottom = styled.div`
+    width: 80%;
+    margin: auto;
+    display: flex;
+    justify-content: space-between;
+    height: 60px;
+`;
+const Styledul = styled.ul`
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    list-style: none;
+    padding: 0;
+    align-items: center;
+`;
+const Styledli = styled.li`
+    height: 80%;
+    flex-grow: 1;
+    text-align: center;
+    font-weight: bold;
+`;
 
 const NavRender = () => {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -16,49 +87,61 @@ const NavRender = () => {
     }, []);
 
     return(
-        <nav id='Nav'>
-            <div id='NavTop'>
-                <div>
+        <StyledNav>
+            <NavTop>
+                <NavTopLeft>
                     <img src={Logo} alt="Logo" />
-                    <Link to="/">YgWDS</Link>
-                </div>
-                <div>
-                    <ul>
+                    <StyledLink to="/"><YgWDS>YgWDS</YgWDS></StyledLink>
+                </NavTopLeft>
+                <NavTopRight>
                         {/*로그인 안하면 밑에 두 개 출력*/}                
                         {!isLoggedIn && (
                             <>
-                                <li><Link to="/login">로그인</Link></li>
-                                <li><Link to="/signup">회원가입</Link></li>
+                            <Button width="120px">
+                                <StyledLink to="/login">
+                                    로그인
+                                </StyledLink>
+                            </Button>
+                            <Button width="140px">
+                                <StyledLink to="/signup">
+                                        회원가입
+                                </StyledLink>
+                            </Button>
                             </>
                         )}
                         {/*로그인시 밑에 세 개 출력, 어드민이면 관리자도 출력*/}
                         {isLoggedIn && (
                             <>
-                                <li>adaadadada 님</li> {/*유저 이름 출력*/}
-                                <li><Link to="/logout">로그아웃</Link></li>                          
-                                {isAdmin && <li><Link to="/admin">관리</Link></li>}
+                                <div>adaadadada 님</div> {/*유저 이름 출력*/}
+                                <Button>
+                                    <StyledLink to="/logout">
+                                        로그아웃
+                                    </StyledLink>   
+                                </Button>                           
+                                {isAdmin && <Button><StyledLink to="/admin">관리</StyledLink></Button>}
                             </>
                         )}
-                    </ul>
-                </div>
-            </div>
-            <div id='NavBottom'>
-            <ul>
-                <li>
-                    <Link to="/myposts">내 신청</Link>
-                </li>
-                <li>
-                    <Link to="/wastefee">폐기물 수수료 안내</Link>
-                </li>
-                <li>
-                    <Link to="/wasteout">폐기물 배출하기</Link>
-                </li>
-                <li>
-                    <Link to="/allposts">전체 신청 현황</Link>
-                </li>
-            </ul>
-            </div>
-        </nav>
+                </NavTopRight>
+            </NavTop>
+            <NavBottomContainer>
+                <NavBottom>
+                <Styledul>
+                    <Styledli>
+                        <StyledLink to="/myposts">내 신청</StyledLink>
+                    </Styledli>
+                    <Styledli>
+                        <StyledLink to="/wastefee">폐기물 수수료 안내</StyledLink>
+                    </Styledli>
+                    <Styledli>
+                        <StyledLink to="/wasteout">폐기물 배출하기</StyledLink>
+                    </Styledli>
+                    <Styledli>
+                        <StyledLink to="/allposts">전체 신청 현황</StyledLink>
+                    </Styledli>
+                </Styledul>
+                </NavBottom>
+            </NavBottomContainer>
+        </StyledNav>
     )
 };
 
