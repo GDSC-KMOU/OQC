@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 const fetchPosts = async (pageNumber, pageSize, setPosts, setErrorLoading, setTotalPages) => {
   try {
     const token = localStorage.getItem('token');
-    const response = await axios.get(`http://localhost:8080/posts?page=${pageNumber}&size=${pageSize}`, {
+    const response = await axios.get(`https://api.capserver.link/posts?page=${pageNumber}&size=${pageSize}`, {
       headers: {
         Authorization: `Bearer ${token}`
       }

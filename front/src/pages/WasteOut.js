@@ -23,7 +23,7 @@ function ImageUploadComponent() {
         formData.append('image', image);
         
         try {
-            const response = await axios.post('http://localhost:8080/image', formData, {
+            const response = await axios.post('https://api.capserver.link/image', formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                     'Authorization': `Bearer ${token}`
@@ -74,7 +74,7 @@ function ImageUploadComponent() {
             return;
         }
         try {
-            const response = await axios.post('http://localhost:8080/selection', formData, {
+            const response = await axios.post('https://api.capserver.link/selection', formData, {
                 headers: {
                     'Authorization': `Bearer ${token}`
                 }

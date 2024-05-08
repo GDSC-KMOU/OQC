@@ -14,7 +14,7 @@ function MyPosts() {
         const fetchUserPosts = async () => {
             try {
                 setToken(localStorage.getItem('token'));
-                const response = await axios.get('http://localhost:8080/user', {
+                const response = await axios.get('https://api.capserver.link/user', {
                     headers: {
                         Authorization: `Bearer ${token}`,
                         'Content-Type': 'application/json'

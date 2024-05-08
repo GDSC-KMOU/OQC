@@ -21,7 +21,7 @@ const GetMyStts = () => {
                     headers['Authorization'] = `Bearer ${token}`;
                 }
 
-                const response = await axios.get('http://localhost:8080/', { headers });
+                const response = await axios.get('https://api.capserver.link/', { headers });
                 if (response.data.myPosts) {
                     if (typeof response.data.myPosts === 'string') {
                         setError(response.data.myPosts);

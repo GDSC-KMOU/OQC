@@ -33,7 +33,7 @@ function ViewByPost() {
     const fetchData = useCallback(async () => {
         try {
             const token = localStorage.getItem('token');
-            const response = await axios.get(`http://localhost:8080/posts/${postId}`, {
+            const response = await axios.get(`https://api.capserver.link/posts/${postId}`, {
                 headers: { Authorization: `Bearer ${token}` }
             });
             setPost(response.data);

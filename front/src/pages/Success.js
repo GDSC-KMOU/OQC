@@ -16,7 +16,7 @@ export default function SuccessPage() {
 
         async function confirm() {
             const token = localStorage.getItem('token');
-            await fetch("http://localhost:8080/confirm", {
+            await fetch("https://api.capserver.link/confirm", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",

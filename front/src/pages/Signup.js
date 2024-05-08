@@ -38,7 +38,7 @@ const Signup = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post('http://localhost:8080/join', formData, {
+            const response = await axios.post('https://api.capserver.link/join', formData, {
                 headers: {
                     'Content-Type': 'application/json'
                 }

@@ -3,7 +3,7 @@ import { useLocation } from 'react-router-dom';
 import { loadPaymentWidget } from "@tosspayments/payment-widget-sdk";
 import { nanoid } from "nanoid";
 
-const widgetClientKey = "test_ck_DLJOpm5QrlYzaoB5oGB58PNdxbWn";
+const widgetClientKey = "test_gck_docs_Ovk5rk1EwkEbP0W43n07xlzm";
 
 export function CheckoutPage() {
     const location = useLocation();
@@ -70,7 +70,7 @@ export function CheckoutPage() {
 
         try {
             const token = localStorage.getItem('token');
-            await fetch("http://localhost:8080/hold", {
+            await fetch("https://api.capserver.link/hold", {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

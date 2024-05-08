@@ -16,7 +16,7 @@ const Login = () => {
         formData.append('password', password);
 
         try {
-            const response = await axios.post('http://localhost:8080/login', formData);
+            const response = await axios.post('https://api.capserver.link/login', formData);
 
             console.log('응답 헤더:', response.headers);
             const token = response.headers['authorization'] || response.headers['Authorization'];

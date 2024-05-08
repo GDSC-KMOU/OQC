@@ -21,7 +21,8 @@ const GetAllStts = () => {
                     headers['Authorization'] = `Bearer ${token}`;
                 }
 
-                const response = await axios.get('http://localhost:8080/', { headers });
+                const response = await axios.get('https://api.capserver.link/', { headers });
+                //ddddddddddd
                 if (response.data.allPosts) {
                     setAllPosts(response.data.allPosts.content.reverse().slice(0,6));
                 }
