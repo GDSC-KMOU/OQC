@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import LoadingSpinner from '../components/Loading';
 
 function MyPosts() {
     const [posts, setPosts] = useState([]);
@@ -36,7 +37,7 @@ function MyPosts() {
         return <p>로그인이 필요한 서비스입니다.</p>
     }
     if (loading) {
-        return <p>Loading posts...</p>;
+        return <LoadingSpinner />
     }
     if (error) {
         return <p>데이터 불러오기 실패</p>;

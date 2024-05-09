@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import LoadingSpinner from '../components/Loading';
 
 // API 요청을 별도의 함수로 분리
 const fetchPosts = async (pageNumber, pageSize, setPosts, setErrorLoading, setTotalPages) => {
@@ -53,7 +54,7 @@ function AllPosts() {
           <p>게시물이 없습니다.</p>
         )
       ) : (
-        <p>데이터를 불러오는 중입니다...</p>
+        <LoadingSpinner />
       )}
       {totalPages > 1 && (
         <div>

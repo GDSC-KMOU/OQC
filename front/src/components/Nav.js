@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import Logo from '../assets/Logo.png';
 import styled from 'styled-components';
 
@@ -62,20 +62,44 @@ const Styledul = styled.ul`
     width: 100%;
     display: flex;
     justify-content: space-between;
-    list-style: none;
-    padding: 0;
     align-items: center;
 `;
 const Styledli = styled.li`
     height: 80%;
     flex-grow: 1;
     text-align: center;
-    font-weight: bold;
+    font-weight: ${(props) => props.selected ? 'bold' : 'normal'};
+    &:hover {
+        cursor: pointer;
+        font-weight: bold;
+    }
 `;
 
 const NavRender = () => {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [isAdmin, setIsAdmin] = useState(false);
+    const [selectedItem, setSelectedItem] = useState(null);
+    const location = useLocation();
+
+    useEffect(() => {
+        switch(location.pathname) {
+            case '/myposts':
+                setSelectedItem(0);
+                break;
+            case '/wastefee':
+                setSelectedItem(1);
+                break;
+            case '/wasteout':
+                setSelectedItem(2);
+                break;
+            case '/allposts':
+                setSelectedItem(3);
+                break;
+            default:
+                setSelectedItem(null);
+        }
+    }, [location.pathname]);
+    
     //등급 확인
     useEffect(() => {
         const token = localStorage.getItem('token');
@@ -126,16 +150,16 @@ const NavRender = () => {
             <NavBottomContainer>
                 <NavBottom>
                 <Styledul>
-                    <Styledli>
+                    <Styledli selected={selectedItem === 0}>
                         <StyledLink to="/myposts">내 신청</StyledLink>
                     </Styledli>
-                    <Styledli>
+                    <Styledli selected={selectedItem === 1}>
                         <StyledLink to="/wastefee">폐기물 수수료 안내</StyledLink>
                     </Styledli>
-                    <Styledli>
+                    <Styledli selected={selectedItem === 2}>
                         <StyledLink to="/wasteout">폐기물 배출하기</StyledLink>
                     </Styledli>
-                    <Styledli>
+                    <Styledli selected={selectedItem === 3}>
                         <StyledLink to="/allposts">전체 신청 현황</StyledLink>
                     </Styledli>
                 </Styledul>
