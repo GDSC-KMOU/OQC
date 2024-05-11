@@ -1,6 +1,14 @@
 import React from 'react';
 import styled, { keyframes } from 'styled-components';
 
+const LoadingSpinner = () => {
+    return (
+        <StyledLoadingContainer>
+            <StyledLoadingIcon />
+        </StyledLoadingContainer>
+    );
+};
+
 const StyledLoadingContainer = styled.div`
     display: flex;
     justify-content: center;
@@ -25,13 +33,5 @@ const StyledLoadingIcon = styled.div`
     border-radius: 50%;
     animation: ${spinAnimation} 1s linear infinite;
 `;
-
-const LoadingSpinner = () => {
-    return (
-        <StyledLoadingContainer>
-            <StyledLoadingIcon />
-        </StyledLoadingContainer>
-    );
-};
 
 export default LoadingSpinner;

@@ -4,6 +4,46 @@ import GetMyStts from './GetMyStts';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
+const MainLeft = () => {
+    const [selectedItem, setSelectedItem] = useState("전체 배출 신청 현황");
+    const [isClicked, setIsClicked] = useState(false);
+
+    const clickHandler = (item) => {
+        setSelectedItem(item);
+        setIsClicked(true);
+    }
+
+    const ContentTop = () => {
+        return(
+            <ContentTopWrapper>
+                <StyledBtn width="221px" borderTopLeft="5px" borderRight="1px" clicked={selectedItem === "전체 배출 신청 현황"} onClick={() => clickHandler("전체 배출 신청 현황")}>전체 배출 신청 현황</StyledBtn> 
+                <StyledBtn width="162px" borderRight="1px" clicked={selectedItem === "My 신청 현황"} onClick={() => clickHandler("My 신청 현황")}>My 신청 현황</StyledBtn>
+                <StyledBtn width="90px" borderTopRight="5px" marginLeft="auto" fontSize="15px">
+                    <StyledLink to={selectedItem=== "전체 배출 신청 현황" ? "/allposts" : "/myposts"}>+ 더보기</StyledLink>
+                </StyledBtn>
+            </ContentTopWrapper>
+        )
+    }
+    const ContentMain = () => {
+        return(
+            <SelectWrapper>
+                {selectedItem === "전체 배출 신청 현황" && 
+                    (<>{<GetAllStts />}</>)
+                }
+                {selectedItem === "My 신청 현황" && 
+                    <>{<GetMyStts />}</>
+                    }
+            </SelectWrapper>
+        )
+    }
+    return(
+        <MainLeftWrapper>
+            <ContentTop />
+            <ContentMain />
+        </MainLeftWrapper>
+    )
+};
+
 const MainLeftWrapper = styled.div`
     width: 48%;
     height: 444px;
@@ -51,45 +91,5 @@ const SelectWrapper = styled.div`
     border-bottom-left-radius: 5px;
     border-bottom-right-radius: 5px;
 `;
-
-const MainLeft = () => {
-    const [selectedItem, setSelectedItem] = useState("전체 배출 신청 현황");
-    const [isClicked, setIsClicked] = useState(false);
-
-    const clickHandler = (item) => {
-        setSelectedItem(item);
-        setIsClicked(true);
-    }
-
-    const ContentTop = () => {
-        return(
-            <ContentTopWrapper>
-                <StyledBtn width="221px" borderTopLeft="5px" borderRight="1px" clicked={selectedItem === "전체 배출 신청 현황"} onClick={() => clickHandler("전체 배출 신청 현황")}>전체 배출 신청 현황</StyledBtn> 
-                <StyledBtn width="162px" borderRight="1px" clicked={selectedItem === "My 신청 현황"} onClick={() => clickHandler("My 신청 현황")}>My 신청 현황</StyledBtn>
-                <StyledBtn width="90px" borderTopRight="5px" marginLeft="auto" fontSize="15px">
-                    <StyledLink to={selectedItem=== "전체 배출 신청 현황" ? "/allposts" : "/myposts"}>+ 더보기</StyledLink>
-                </StyledBtn>
-            </ContentTopWrapper>
-        )
-    }
-    const ContentMain = () => {
-        return(
-            <SelectWrapper>
-                {selectedItem === "전체 배출 신청 현황" && 
-                    (<>{<GetAllStts />}</>)
-                }
-                {selectedItem === "My 신청 현황" && 
-                    <>{<GetMyStts />}</>
-                    }
-            </SelectWrapper>
-        )
-    }
-    return(
-        <MainLeftWrapper>
-            <ContentTop />
-            <ContentMain />
-        </MainLeftWrapper>
-    )
-};
 
 export default MainLeft;

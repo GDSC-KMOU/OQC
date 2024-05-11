@@ -1,6 +1,41 @@
 import React from 'react';
 import styled from 'styled-components';
-import NumberImg from '../assets/Number.png';
+import NumberImg from '../../assets/Number.png';
+
+const MainRight = () => {
+    const ContentTop = () => {
+        return(
+            <ContentTopWrapper>
+                <ContentTitle>폐기물 종류</ContentTitle>
+                <StyledUl>
+                    <StyledLi>밥상</StyledLi>
+                    <StyledLi>서랍장</StyledLi>
+                    <StyledLi>소파</StyledLi>
+                    <StyledLi borderLeft="5px">의자</StyledLi>
+                    <StyledLi>장롱</StyledLi>
+                    <StyledLi borderRight="5px">책상</StyledLi>
+                </StyledUl>
+            </ContentTopWrapper>
+        )
+    }
+    const ContentBottom = () => {
+        return(
+            <ContentBottomWrapper>
+                <ContentTitle>고객지원안내</ContentTitle>
+                <ContentBottomContent>
+                    <TextWrapper>불편이 생긴 경우 고객센터로 문의해주시길 바랍니다</TextWrapper>
+                    <img src={NumberImg} alt="" />
+                </ContentBottomContent>
+            </ContentBottomWrapper>
+        )
+    }
+    return(
+        <MainRightWrapper>
+            <ContentTop />
+            <ContentBottom />
+        </MainRightWrapper>
+    )
+};
 
 const MainRightWrapper = styled.div`
     width: 48%;
@@ -65,40 +100,5 @@ const ContentBottomContent = styled.div`
 const TextWrapper = styled.div`
     padding-bottom: 17px;
 `
-
-const MainRight = () => {
-    const ContentTop = () => {
-        return(
-            <ContentTopWrapper>
-                <ContentTitle>폐기물 종류</ContentTitle>
-                <StyledUl>
-                    <StyledLi>밥상</StyledLi>
-                    <StyledLi>서랍장</StyledLi>
-                    <StyledLi>소파</StyledLi>
-                    <StyledLi borderLeft="5px">의자</StyledLi>
-                    <StyledLi>장롱</StyledLi>
-                    <StyledLi borderRight="5px">책상</StyledLi>
-                </StyledUl>
-            </ContentTopWrapper>
-        )
-    }
-    const ContentBottom = () => {
-        return(
-            <ContentBottomWrapper>
-                <ContentTitle>고객지원안내</ContentTitle>
-                <ContentBottomContent>
-                    <TextWrapper>불편이 생긴 경우 고객센터로 문의해주시길 바랍니다</TextWrapper>
-                    <img src={NumberImg} alt="" />
-                </ContentBottomContent>
-            </ContentBottomWrapper>
-        )
-    }
-    return(
-        <MainRightWrapper>
-            <ContentTop />
-            <ContentBottom />
-        </MainRightWrapper>
-    )
-};
 
 export default MainRight;

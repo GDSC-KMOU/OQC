@@ -3,86 +3,6 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import Logo from '../assets/Logo.png';
 import styled from 'styled-components';
 
-const StyledLink = styled(Link)`
-  text-decoration: none;
-  height: ${(props) => props.height || '100%'};
-  color: ${(props) => props.color || 'white'};
-  display: flex;  
-  justify-content: center;
-  align-items: center;
-`;
-const StyledNav = styled.nav`
-    width: 100%;
-    position: fixed; /* 상단 고정 */
-    top: 0; /* 맨 위에 고정 */
-    background-color: white; /* 배경색 지정 */
-    z-index: 1000; /* 다른 요소 위로 표시 */
-`;
-const StyledDiv = styled.div`
-    width: 100%;
-    height: 160px; 
-`;
-const NavTop = styled.div`
-    width: 80%;
-    margin: auto;
-    display: flex;
-    justify-content: space-between;
-    height: 100px;
-`;
-const NavTopLeft = styled.div`
-    width: 269px;
-    display: flex;
-    align-items: center;
-`;
-const YgWDS = styled.p`
-    font-size: 35px;
-    font-weight: bold;
-    color: #4DA3D5;
-    padding-left: 10px;    
-`;
-const Button = styled.div`
-    width: ${(props) => props.width || '140px'};
-    height: 56px;
-    background-color: #4DA3D5;
-    font-size: 18px;
-    border-radius: 15px;
-    text-align: center;
-    line-height : 56px;
-`;
-const NavTopRight = styled.div`
-    width: 269px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-`;
-const NavBottomContainer = styled.div`
-    width: 100%;
-    background: linear-gradient(to right, #017CC4, #014194);
-`;
-const NavBottom = styled.div`
-    width: 80%;
-    margin: auto;
-    display: flex;
-    justify-content: space-between;
-    height: 60px;
-`;
-const Styledul = styled.ul`
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-`;
-const Styledli = styled.li`
-    height: 80%;
-    flex-grow: 1;
-    text-align: center;
-    font-weight: ${(props) => props.selected ? 'bold' : 'normal'};
-    &:hover {
-        cursor: pointer;
-        font-weight: bold;
-    }
-`;
-
 const NavRender = () => {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [isAdmin, setIsAdmin] = useState(false);
@@ -192,5 +112,85 @@ const Nav = () => {
         <NavRender />
     )
 };
+
+const StyledLink = styled(Link)`
+  text-decoration: none;
+  height: ${(props) => props.height || '100%'};
+  color: ${(props) => props.color || 'white'};
+  display: flex;  
+  justify-content: center;
+  align-items: center;
+`;
+const StyledNav = styled.nav`
+    width: 100%;
+    position: fixed; /* 상단 고정 */
+    top: 0; /* 맨 위에 고정 */
+    background-color: white; /* 배경색 지정 */
+    z-index: 1000; /* 다른 요소 위로 표시 */
+`;
+const StyledDiv = styled.div`
+    width: 100%;
+    height: 160px; 
+`;
+const NavTop = styled.div`
+    width: 80%;
+    margin: auto;
+    display: flex;
+    justify-content: space-between;
+    height: 100px;
+`;
+const NavTopLeft = styled.div`
+    width: 269px;
+    display: flex;
+    align-items: center;
+`;
+const YgWDS = styled.p`
+    font-size: 35px;
+    font-weight: bold;
+    color: #4DA3D5;
+    padding-left: 10px;    
+`;
+const Button = styled.div`
+    width: ${(props) => props.width || '140px'};
+    height: 56px;
+    background-color: #4DA3D5;
+    font-size: 18px;
+    border-radius: 15px;
+    text-align: center;
+    line-height : 56px;
+`;
+const NavTopRight = styled.div`
+    width: 269px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+`;
+const NavBottomContainer = styled.div`
+    width: 100%;
+    background: linear-gradient(to right, #017CC4, #014194);
+`;
+const NavBottom = styled.div`
+    width: 80%;
+    margin: auto;
+    display: flex;
+    justify-content: space-between;
+    height: 60px;
+`;
+const Styledul = styled.ul`
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+`;
+const Styledli = styled.li`
+    height: 80%;
+    flex-grow: 1;
+    text-align: center;
+    font-weight: ${(props) => props.selected ? 'bold' : 'normal'};
+    &:hover {
+        cursor: pointer;
+        font-weight: bold;
+    }
+`;
 
 export default Nav;
