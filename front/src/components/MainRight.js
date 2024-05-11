@@ -27,15 +27,13 @@ const ContentTitle = styled.div`
 `
 
 const StyledUl = styled.ul`
-    width: 100%;
-    display: flex;
-    flex-wrap: wrap; /* 2행 3열로 출력하기 위해 wrap 속성 추가 */
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
     justify-content: space-between;
     align-items: center;
 `;
 
 const StyledLi = styled.li`
-    width: calc(33.33% - 1.33px) ; /* 각 항목이 33.33%의 너비를 차지하도록 설정 (10px은 간격을 위한 패딩 등) */
     text-align: center;
     color: #0279C2;
     height: 83px; /* 각 항목 사이의 간격을 조절할 수 있습니다. */
