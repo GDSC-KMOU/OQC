@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import Logo from '../assets/Logo.png';
 import styled from 'styled-components';
 
@@ -88,6 +88,7 @@ const NavRender = () => {
     const [isAdmin, setIsAdmin] = useState(false);
     const [selectedItem, setSelectedItem] = useState(null);
     const location = useLocation();
+    const navigate = useNavigate();
 
     useEffect(() => {
         switch(location.pathname) {
@@ -118,25 +119,31 @@ const NavRender = () => {
         }
     }, []);
 
+    const handleLinkClick = (path) => {
+        if (location.pathname === path) {
+            navigate(0); // 현재 페이지 새로고침
+        }
+    };
+
     return(
         <>
         <StyledNav>
             <NavTop>
                 <NavTopLeft>
                     <img src={Logo} alt="Logo" />
-                    <StyledLink to="/"><YgWDS>YgWDS</YgWDS></StyledLink>
+                    <StyledLink to="/" onClick={() => handleLinkClick('/')}><YgWDS>YgWDS</YgWDS></StyledLink>
                 </NavTopLeft>
                 <NavTopRight>
                         {/*로그인 안하면 밑에 두 개 출력*/}                
                         {!isLoggedIn && (
                             <>
                             <Button width="120px">
-                                <StyledLink to="/login">
+                                <StyledLink to="/login" onClick={() => handleLinkClick('/login')}>
                                     로그인
                                 </StyledLink>
                             </Button>
                             <Button width="140px">
-                                <StyledLink to="/signup">
+                                <StyledLink to="/signup" onClick={() => handleLinkClick('/signup')}>
                                         회원가입
                                 </StyledLink>
                             </Button>
@@ -151,7 +158,7 @@ const NavRender = () => {
                                         로그아웃
                                     </StyledLink>   
                                 </Button>                           
-                                {isAdmin && <Button><StyledLink to="/admin">관리</StyledLink></Button>}
+                                {isAdmin && <Button><StyledLink to="/admin" onClick={() => handleLinkClick('/admin')}>관리</StyledLink></Button>}
                             </>
                         )}
                 </NavTopRight>
@@ -160,16 +167,16 @@ const NavRender = () => {
                 <NavBottom>
                 <Styledul>
                     <Styledli selected={selectedItem === 0}>
-                        <StyledLink to="/myposts">내 신청</StyledLink>
+                        <StyledLink to="/myposts" onClick={() => handleLinkClick('/myposts')}>내 신청</StyledLink>
                     </Styledli>
                     <Styledli selected={selectedItem === 1}>
-                        <StyledLink to="/wastefee">폐기물 수수료 안내</StyledLink>
+                        <StyledLink to="/wastefee" onClick={() => handleLinkClick('/wastefee')}>폐기물 수수료 안내</StyledLink>
                     </Styledli>
                     <Styledli selected={selectedItem === 2}>
-                        <StyledLink to="/wasteout">폐기물 배출하기</StyledLink>
+                        <StyledLink to="/wasteout" onClick={() => handleLinkClick('/wasteout')}>폐기물 배출하기</StyledLink>
                     </Styledli>
                     <Styledli selected={selectedItem === 3}>
-                        <StyledLink to="/allposts">전체 신청 현황</StyledLink>
+                        <StyledLink to="/allposts" onClick={() => handleLinkClick('/allposts')}>전체 신청 현황</StyledLink>
                     </Styledli>
                 </Styledul>
                 </NavBottom>
