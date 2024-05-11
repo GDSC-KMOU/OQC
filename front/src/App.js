@@ -13,6 +13,7 @@ import ViewByPost from './pages/ViewByPost';
 import Payment from './components/Payment';
 import SuccessPage from './pages/Success';
 import FailPage from './pages/Fail';
+import Footer from './components/Footer';
 
 const App = () => {
     return (
@@ -33,6 +34,7 @@ const App = () => {
                     <Route element={<SuccessPage />} path='/success' />
                     <Route element={<FailPage />} path='/fail' />
                 </Routes>
+                <Footer />
             </div>
         </Router>
     );

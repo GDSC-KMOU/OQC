@@ -49,7 +49,6 @@ const Login = () => {
                     <button>회원가입</button>
                 </Link>
             </form>
-            <Footer />
         </div>
         
     );

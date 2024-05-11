@@ -13,6 +13,14 @@ const StyledLink = styled(Link)`
 `;
 const StyledNav = styled.nav`
     width: 100%;
+    position: fixed; /* 상단 고정 */
+    top: 0; /* 맨 위에 고정 */
+    background-color: white; /* 배경색 지정 */
+    z-index: 1000; /* 다른 요소 위로 표시 */
+`;
+const StyledDiv = styled.div`
+    width: 100%;
+    height: 160px; 
 `;
 const NavTop = styled.div`
     width: 80%;
@@ -111,6 +119,7 @@ const NavRender = () => {
     }, []);
 
     return(
+        <>
         <StyledNav>
             <NavTop>
                 <NavTopLeft>
@@ -166,6 +175,8 @@ const NavRender = () => {
                 </NavBottom>
             </NavBottomContainer>
         </StyledNav>
+        <StyledDiv />
+        </>
     )
 };
 

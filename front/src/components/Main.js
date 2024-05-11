@@ -5,7 +5,7 @@ import styled from 'styled-components';
 
 const MainWrapper = styled.div`
     width: 80%;
-    height: 516px;
+    height: 444px;
     display: flex;
     justify-content: space-between;
     margin: auto;

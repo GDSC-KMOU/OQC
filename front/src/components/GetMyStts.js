@@ -107,7 +107,13 @@ const GetMyStts = () => {
         return <LoadingSpinner />
     }
     if(error){
-        return <p>데이터 불러오기 실패</p>
+        return(
+            <StyledContainer>
+                <StyledLoginMessage>
+                    <p>데이터 불러오기 실패</p>
+                </StyledLoginMessage> 
+            </StyledContainer>
+        )
     }
     return (
         <>
