@@ -7,7 +7,7 @@ import Signup from './pages/Signup';
 import Nav from './components/Nav';
 import WasteFee from './pages/WasteFee';
 import WasteOut from './pages/WasteOut';
-import MyPosts from './pages/MyPosts';
+import MyPosts from './pages/MyPosts/MyPosts';
 import AllPosts from './pages/AllPosts';
 import ViewByPost from './pages/ViewByPost';
 import Payment from './components/Payment';
