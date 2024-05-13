@@ -1,16 +1,14 @@
 import React, {useState} from 'react';
-import GetAllStts from './GetAllStts';
-import GetMyStts from './GetMyStts';
+import GetAllStts from './GetAllPosts';
+import GetMyStts from './GetMyPosts';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
 const MainLeft = () => {
     const [selectedItem, setSelectedItem] = useState("전체 배출 신청 현황");
-    const [isClicked, setIsClicked] = useState(false);
 
     const clickHandler = (item) => {
         setSelectedItem(item);
-        setIsClicked(true);
     }
 
     const ContentTop = () => {
