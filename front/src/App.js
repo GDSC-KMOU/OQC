@@ -5,7 +5,7 @@ import Login from './pages/Login';
 import Logout from './pages/Logout';
 import Signup from './pages/Signup';
 import Nav from './components/Nav';
-import WasteFee from './pages/WasteFee';
+import WasteFee from './pages/WasteFee/WasteFee';
 import WasteOut from './pages/WasteOut';
 import MyPosts from './pages/MyPosts/MyPosts';
 import AllPosts from './pages/AllPosts';

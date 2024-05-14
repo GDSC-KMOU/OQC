@@ -93,6 +93,7 @@ const Signup = () => {
                             onChange={handleChange} 
                             placeholder='비밀번호를 입력해주세요'
                             required
+                            autoComplete="off"
                         />
                     </label>
                     <label>
@@ -103,6 +104,7 @@ const Signup = () => {
                             value={formData.confirmPassword}
                             onChange={handleChange}
                             required
+                            autoComplete="off"
                         />
                     </label>
                     {formData.confirmPassword && !passwordsMatch() && (
