@@ -127,10 +127,17 @@ const StyledNav = styled.nav`
     top: 0; /* 맨 위에 고정 */
     background-color: white; /* 배경색 지정 */
     z-index: 1000; /* 다른 요소 위로 표시 */
+    @media (max-width: 768px){
+        height: 64px;
+        box-shadow: 0px 2px 4px 0px rgba(0,0,0,0.25);
+    }
 `;
 const StyledDiv = styled.div`
     width: 100%;
-    height: 160px; 
+    height: 160px;
+    @media (max-width: 768px){
+        height: 64px;
+    }
 `;
 const NavTop = styled.div`
     width: 80%;
@@ -138,17 +145,31 @@ const NavTop = styled.div`
     display: flex;
     justify-content: space-between;
     height: 100px;
+    @media (max-width: 768px){
+        width: 100%;
+        height: 64px;
+    }
 `;
 const NavTopLeft = styled.div`
     width: 269px;
     display: flex;
     align-items: center;
+    @media (max-width: 768px){
+        img {
+            width : 32px;
+            height : 32px;
+        }
+        padding: 16px;
+    }
 `;
 const YgWDS = styled.p`
     font-size: 35px;
     font-weight: bold;
     color: #4DA3D5;
     padding-left: 10px;    
+    @media (max-width: 768px){
+        font-size: 24px;
+    }
 `;
 const Button = styled.div`
     width: ${(props) => props.width || '140px'};
@@ -164,10 +185,16 @@ const NavTopRight = styled.div`
     display: flex;
     justify-content: space-between;
     align-items: center;
+    @media (max-width: 768px){
+        display : none;
+    }
 `;
 const NavBottomContainer = styled.div`
     width: 100%;
     background: linear-gradient(to right, #017CC4, #014194);
+    @media (max-width: 768px){
+        display : none;
+    }
 `;
 const NavBottom = styled.div`
     width: 80%;

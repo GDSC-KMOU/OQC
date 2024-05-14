@@ -34,12 +34,16 @@ const Top = () => {
 
 
 const Container = styled.div`
-    background-image: linear-gradient( rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3) ), url(${YDImg});
+    background-image: linear-gradient( rgba(37, 37, 37, 0.5), rgba(37, 37, 37, 0.5) ), url(${YDImg});
     height: 400px;
     display: flex;
     justify-content: center;
     align-items: center;  
     background-size : cover;
+    @media (max-width: 768px){
+        border-radius: 0 0 24px 24px;
+        box-shadow: 0 8px 8px 0 rgba(0,0,0,0.25);
+    }
 `;
 
 const Wrapper = styled.div`
@@ -47,10 +51,20 @@ const Wrapper = styled.div`
     display: flex;
     justify-content: space-between;
     margin: auto;
+    @media (max-width: 768px){
+        flex-direction : column-reverse;
+        gap: 30px;
+    }
 `;
 
 const RightImgComponentWrapper = styled.div`
     text-align: center;
+    @media (max-width: 768px){
+        img {
+            width : 180px;
+            height : 100px;
+        }
+    }
 `;
 
 const LeftTextWrapper = styled.div`
@@ -58,6 +72,14 @@ const LeftTextWrapper = styled.div`
     color: white;
     font-size: 30px;
     font-weight: bold;
+    @media (max-width: 768px){
+        div:first-child{
+            font-size: 24px;
+        }
+        div:last-child{
+            font-size:16px;
+        }
+    }
 `;
 
 export default Top;

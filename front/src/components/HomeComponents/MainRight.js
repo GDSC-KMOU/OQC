@@ -95,6 +95,11 @@ const ContentBottomContent = styled.div`
     align-items: center;
     justify-content: center;
     text-align: center;
+    @media (max-width: 768px){
+        img {
+            width: 16px;
+        }
+    }
 `
 
 const TextWrapper = styled.div`
