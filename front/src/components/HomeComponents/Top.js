@@ -1,6 +1,6 @@
 import React from 'react';
 import RightImg from '../../assets/RightImg.png';
-import YDImg from '../../assets/Youngdo-gu.png';
+import YDImg from '../../assets/Youngdo-gu.jpg';
 import styled from 'styled-components';
  
 const LeftText = () => {
@@ -40,6 +40,7 @@ const Container = styled.div`
     justify-content: center;
     align-items: center;  
     background-size : cover;
+    background-position: center;
     @media (max-width: 768px){
         border-radius: 0 0 24px 24px;
         box-shadow: 0 8px 8px 0 rgba(0,0,0,0.25);
@@ -73,11 +74,14 @@ const LeftTextWrapper = styled.div`
     font-size: 30px;
     font-weight: bold;
     @media (max-width: 768px){
+        width: 100%;
         div:first-child{
             font-size: 24px;
+            text-align: center;
         }
         div:last-child{
             font-size:16px;
+            text-align: center;
         }
     }
 `;

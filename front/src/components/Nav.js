@@ -2,6 +2,7 @@ import React, {useState, useEffect} from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import Logo from '../assets/Logo.png';
 import styled from 'styled-components';
+import MobileNav from './MobileNav';
 
 const NavRender = () => {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -82,6 +83,7 @@ const NavRender = () => {
                             </>
                         )}
                 </NavTopRight>
+                <MobileNav/>
             </NavTop>
             <NavBottomContainer>
                 <NavBottom>
