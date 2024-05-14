@@ -58,9 +58,9 @@ export const Item = styled.div`
 `;
 export const PostTitle = styled.div`
     background-color: ${props => {
-        if (props.status === 'paid') {
+        if (props.$status === 'paid') {
             return '#99B88C'; // 결제완료
-        } else if (props.status === 'accepted') {
+        } else if (props.$status === 'accepted') {
             return '#33B5E5'; // 승인완료
         } else {
             return '#FFBB33'; // 미결제
@@ -76,7 +76,7 @@ export const PostTitle = styled.div`
     border-top-right-radius: 5px;
 `;
 export const StyledP = styled.p`
-    font-size: ${(props) => props.fonsSize};
+    font-size: ${(props) => props.$fonsSize};
     font-weight: bold;
 `;
 export const PostContentWrapper = styled.div`

@@ -14,9 +14,9 @@ const MainLeft = () => {
     const ContentTop = () => {
         return(
             <ContentTopWrapper>
-                <StyledBtn width="221px" borderTopLeft="5px" borderRight="1px" clicked={selectedItem === "전체 배출 신청 현황"} onClick={() => clickHandler("전체 배출 신청 현황")}>전체 배출 신청 현황</StyledBtn> 
-                <StyledBtn width="162px" borderRight="1px" clicked={selectedItem === "My 신청 현황"} onClick={() => clickHandler("My 신청 현황")}>My 신청 현황</StyledBtn>
-                <StyledBtn width="90px" borderTopRight="5px" marginLeft="auto" fontSize="15px">
+                <StyledBtn width="221px" $borderTopLeft="5px" $borderRight="1px" $clicked={selectedItem === "전체 배출 신청 현황"} onClick={() => clickHandler("전체 배출 신청 현황")}>전체 배출 신청 현황</StyledBtn> 
+                <StyledBtn width="162px" $borderRight="1px" $clicked={selectedItem === "My 신청 현황"} onClick={() => clickHandler("My 신청 현황")}>My 신청 현황</StyledBtn>
+                <StyledBtn width="90px" $borderTopRight="5px" $marginLeft="auto" fontSize="15px">
                     <StyledLink to={selectedItem=== "전체 배출 신청 현황" ? "/allposts" : "/myposts"}>+ 더보기</StyledLink>
                 </StyledBtn>
             </ContentTopWrapper>
@@ -61,18 +61,18 @@ const ContentTopWrapper = styled.nav`
 const StyledBtn = styled.button`
     width: ${(props) => props.width || '0px'};
     height: 50px;
-    margin-left: ${(props) => props.marginLeft};
+    margin-left: ${(props) => props.$marginLeft};
     border: none;
-    border-right: solid white ${(props) => props.borderRight || '0px'};
-    border-left: solid white ${(props) => props.borderLeft || '0px'};
-    background-color: ${(props) => props.clicked ? '#024598' : '#0279C2'};
+    border-right: solid white ${(props) => props.$borderRight || '0px'};
+    border-left: solid white ${(props) => props.$borderLeft || '0px'};
+    background-color: ${(props) => props.$clicked ? '#024598' : '#0279C2'};
     color: white;
     cursor: pointer;
-    border-top-left-radius: ${(props) => props.borderTopLeft || '0px'};
-    border-top-right-radius: ${(props) => props.borderTopRight || '0px'};
+    border-top-left-radius: ${(props) => props.$borderTopLeft ? '5px' : '0px'};
+    border-top-right-radius: ${(props) => props.$borderTopRight ? '5px' : '0px'};
     font-weight: bold;
     font-size: ${(props) => props.fontSize || '20px'};
-`
+`;
 
 const StyledLink = styled(Link)`
   text-decoration: none;

@@ -11,9 +11,9 @@ const MainRight = () => {
                     <StyledLi>밥상</StyledLi>
                     <StyledLi>서랍장</StyledLi>
                     <StyledLi>소파</StyledLi>
-                    <StyledLi borderLeft="5px">의자</StyledLi>
+                    <StyledLi $borderLeft="5px">의자</StyledLi>
                     <StyledLi>장롱</StyledLi>
-                    <StyledLi borderRight="5px">책상</StyledLi>
+                    <StyledLi $borderRight="5px">책상</StyledLi>
                 </StyledUl>
             </ContentTopWrapper>
         )
@@ -76,8 +76,8 @@ const StyledLi = styled.li`
     display: flex;
     align-items: center;
     justify-content: center;
-    border-bottom-left-radius: ${(props) => props.borderLeft || '0px'};
-    border-bottom-right-radius: ${(props) => props.borderRight || '0px'};
+    border-bottom-left-radius: ${(props) => props.$borderLeft || '0px'};
+    border-bottom-right-radius: ${(props) => props.$borderRight || '0px'};
 `;
 
 const ContentBottomWrapper = styled.div`

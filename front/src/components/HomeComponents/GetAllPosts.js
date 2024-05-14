@@ -55,14 +55,13 @@ const GetAllStts = () => {
                                 <StyledP
                                     width="80px"
                                     height="36px"
-                                    marginY="80px" 
-                                    bgColor={post.accepted ? "#33B5E5" : "#FFBB33"}
+                                    $bgColor={post.accepted ? "#33B5E5" : "#FFBB33"}
                                 >
                                     {post.accepted ? "승인완료" : "대기중"}
                                 </StyledP>
                             </StyledTd>
-                            <StyledTd paddingLeft="10px">{post.garbageName}</StyledTd>
-                            <StyledTd width="40%" textAlign="right">{post.username} | 2024.00.00{/* {post.date} <-- 추가필요 */}</StyledTd>
+                            <StyledTd $paddingLeft="10px">{post.garbageName}</StyledTd>
+                            <StyledTd width="40%" $textAlign="right">{post.username} | 2024.00.00{/* {post.date} <-- 추가필요 */}</StyledTd>
                         </StyledTr>
                     ))} 
                 </tbody>
@@ -88,14 +87,14 @@ const StyledTr = styled.tr`
 
 const StyledTd = styled.td`
     width: ${(props) => props.width};
-    text-align: ${(props) => props.textAlign};
-    padding-left: ${(props) => props.paddingLeft};
+    text-align: ${(props) => props.$textAlign};
+    padding-left: ${(props) => props.$paddingLeft};
 `
 
 const StyledP = styled.div`
     width: ${(props) => props.width};
     height: ${(props) => props.height};
-    background-color: ${(props) => props.bgColor};
+    background-color: ${(props) => props.$bgColor};
     margin-left: ${(props) => props.marginLeft};
     display: flex;
     justify-content: center;

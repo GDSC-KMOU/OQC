@@ -5,7 +5,6 @@ import LoadingSpinner from '../../components/Loading';
 import {
     Container,
     MyPostsWrapper,
-    StateWrapper,
     StyledTitle,
     State,
     PostsContainer,
@@ -84,9 +83,9 @@ function MyPosts() {
                             <PostsContainer>
                                 {posts.length > 0 ? (
                                     posts.map(post => (
-                                        <Item onClick={() => navigate(`/view-by-post/${post.id}`)}>
-                                            <PostTitle status={post.paid ? (post.accepted ? 'accepted' : 'paid') : 'unpaid'}>
-                                                <StyledP fonsSize="20px">{post.paid ? (post.accepted ? '승인완료' : '결제완료') : '미결제'}</StyledP>
+                                        <Item key={post.id} onClick={() => navigate(`/view-by-post/${post.id}`)}>
+                                            <PostTitle $status={post.paid ? (post.accepted ? 'accepted' : 'paid') : 'unpaid'}>
+                                                <StyledP $fonsSize="20px">{post.paid ? (post.accepted ? '승인완료' : '결제완료') : '미결제'}</StyledP>
                                                 <StyledP>{formatPostTime(post.time)}</StyledP>
                                             </PostTitle>
                                             <PostContentWrapper>
