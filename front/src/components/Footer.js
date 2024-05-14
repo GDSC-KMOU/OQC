@@ -18,8 +18,8 @@ const StyledFooter = styled.footer`
     justify-content: center; /* 가로 중앙 정렬 */
     align-items: center; /* 세로 중앙 정렬 */
     font-weight: bold;
-    position : fixed;
-    bottom : -100;
+    position : absolute;
+    bottom : 0;
 `
 
 export default Footer;

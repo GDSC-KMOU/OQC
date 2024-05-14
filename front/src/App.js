@@ -14,7 +14,7 @@ import Payment from './components/Payment';
 import SuccessPage from './pages/Success';
 import FailPage from './pages/Fail';
 import Footer from './components/Footer';
-
+import './App.css'
 const App = () => {
     return (
         <Router>

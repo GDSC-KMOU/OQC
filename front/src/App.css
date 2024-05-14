@@ -1,0 +1,12 @@
+html, body {
+    height: 100%;
+}
+
+#root {
+    min-height: 100%;
+    position: relative;
+}
+
+.App {
+    padding-bottom: 100px;
+}
