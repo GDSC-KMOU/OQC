@@ -15,13 +15,6 @@ export const MyPostsWrapper = styled.div`
     justify-content: center;
     align-items: center;
 `;
-export const StateWrapper = styled.div`
-    width: 80%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-`;
 export const StyledTitle = styled.div`
     width: 98%;
     height: 50px;
@@ -42,24 +35,23 @@ export const State = styled.div`
     align-items: center;
 `;
 export const PostsContainer = styled.div`
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    
+    display: grid;
+    grid-gap: 0 3%;
+    grid-template-columns: 1fr 1fr 1fr;
+    @media (max-width: 1440px) {
+        grid-template-columns: 1fr 1fr;
+    }
+    @media (max-width: 992px) {
+        grid-template-columns: 1fr;
+    }
     width: 98%;
     height: 716px;
+    margin-bottom: 20px;
 `;
 export const Item = styled.div`
-    width: 32%;
+    width: 100%;
     height: 338px;
-    margin-bottom: 20px;
-    @media (max-width: 1440px) {
-        width: 48%;
-    }
-
-    @media (max-width: 992px) {
-        width: 100%; 
-    }
+    padding-bottom: 20px;
     &:hover {
         cursor: pointer;
     }

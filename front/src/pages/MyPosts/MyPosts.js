@@ -60,32 +60,26 @@ function MyPosts() {
     }, [token]);
     
     return (
-        <>
+        <Container>
+            <MyPostsWrapper>
             { 
                 !token ? (
-                    <Container>
-                        <StateWrapper>
+                        <>
                             <StyledTitle>MY 신청 현황</StyledTitle>
                             <State>로그인이 필요한 서비스입니다.</State>
-                        </StateWrapper>
-                    </Container>
+                        </>
                 ) : loading ? (
-                    <Container>
-                        <StateWrapper>
+                        <>
                             <StyledTitle>MY 신청 현황</StyledTitle>
                             <State><LoadingSpinner /></State>
-                        </StateWrapper>
-                    </Container>
+                        </>
                 ) : error ? (
-                    <Container>
-                        <StateWrapper>
+                        <>
                             <StyledTitle>MY 신청 현황</StyledTitle>
                             <State>데이터 불러오기 실패</State>
-                        </StateWrapper>
-                    </Container>
+                        </>
                 ) : (
-                    <Container>
-                        <MyPostsWrapper>
+                        <>
                             <StyledTitle>MY 신청 현황</StyledTitle>
                             <PostsContainer>
                                 {posts.length > 0 ? (
@@ -117,11 +111,11 @@ function MyPosts() {
                                     <State>신청된 폐기물이 없습니다.</State>
                                 )}
                             </PostsContainer>
-                        </MyPostsWrapper>
-                    </Container>
+                        </>
                 )
             }
-        </>
+            </MyPostsWrapper>
+        </Container>
     );
 }
 
