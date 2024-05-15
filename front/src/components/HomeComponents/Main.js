@@ -19,6 +19,15 @@ const MainWrapper = styled.div`
     justify-content: space-between;
     margin: auto;
     padding: 36px 16px 36px 16px;
+    @media (max-width: 768px) {
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        flex-direction: column;
+        align-items: center;
+        padding: 0;
+        margin-top: 24px;
+    }
 `
 
 export default Main;

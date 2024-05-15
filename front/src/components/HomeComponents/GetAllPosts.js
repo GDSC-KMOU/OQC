@@ -61,7 +61,7 @@ const GetAllStts = () => {
                                 </StyledP>
                             </StyledTd>
                             <StyledTd $paddingLeft="10px">{post.garbageName}</StyledTd>
-                            <StyledTd width="40%" $textAlign="right">{post.username} | 2024.00.00{/* {post.date} <-- 추가필요 */}</StyledTd>
+                            <StyledTd $textAlign="right">{post.username} | 2024.00.00{/* {post.date} <-- 추가필요 */}</StyledTd>
                         </StyledTr>
                     ))} 
                 </tbody>
@@ -77,18 +77,29 @@ const StyledTable = styled.table`
     margin: auto;
     border-collapse: separate;
     border-spacing: 10px 10px;
+    @media (max-width: 768px) {
+         width: 100%;
+         padding: 0;
+    }
 `
 
 const StyledTr = styled.tr`
     cursor: pointer;
     height: 59px;
     display: table;
+    @media (max-width: 768px) {
+        height: 28px;
+   }
 `
 
 const StyledTd = styled.td`
     width: ${(props) => props.width};
     text-align: ${(props) => props.$textAlign};
     padding-left: ${(props) => props.$paddingLeft};
+    @media (max-width: 768px) {
+        font-size: 12px;
+        padding-left: 0;
+   }
 `
 
 const StyledP = styled.div`
@@ -101,6 +112,11 @@ const StyledP = styled.div`
     align-items: center;
     border-radius: 30px;
     color: white;
+    @media (max-width: 768px) {
+        width: 54px;
+        height: 28px;
+        font-size: 10px;
+   }
 `
 
 export default GetAllStts;
