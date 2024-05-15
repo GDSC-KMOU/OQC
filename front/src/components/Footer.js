@@ -3,23 +3,37 @@ import styled from 'styled-components';
 
 const Footer = () => {
     return (
-        <StyledFooter>
-            한국해양대학교 인공지능공학부 캡스톤디자인2 - YOLOv7을 활용한 영도구 폐기물 처리시스템
-        </StyledFooter>
+        <StyledFooterWrapper>
+            <FooterText fontWeight="bold" fontSize="m">
+            한국해양대학교 인공지능공학부 캡스톤디자인
+            </FooterText>
+            <FooterText>
+            YOLOv7을 활용한 영도구 폐기물 처리시스템
+            </FooterText>
+        </StyledFooterWrapper>
     );
 };
 
-const StyledFooter = styled.footer`
+const StyledFooterWrapper = styled.footer`
     width:100%;
     height: 100px;
     background-color: #F6F6F6;
+    flex-direction: column;
     color: #666666;
     display: flex;
-    justify-content: center; /* 가로 중앙 정렬 */
-    align-items: center; /* 세로 중앙 정렬 */
+    justify-content: center; 
+    align-items: center; 
     font-weight: bold;
     position : absolute;
     bottom : 0;
+`
+const FooterText = styled.div`
+    font-size: ${(props) => props.fontSize === "m" ? "16px" : "14px"};
+    font-weight: ${(props) => props.fontWeight === "bold" ? "bold" : "normal"};
+    padding: 6px;
+    @media (max-width: 768px){
+        font-size: ${(props) => props.fontSize === "m" ? "12px" : "10px"};
+    }
 `
 
 export default Footer;
