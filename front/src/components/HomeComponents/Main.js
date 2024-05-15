@@ -27,6 +27,7 @@ const MainWrapper = styled.div`
         align-items: center;
         padding: 0;
         margin-top: 24px;
+        gap: 24px;
     }
 `
 

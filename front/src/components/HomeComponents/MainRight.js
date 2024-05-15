@@ -40,12 +40,19 @@ const MainRight = () => {
 const MainRightWrapper = styled.div`
     width: 48%;
     height: 444px;
+    @media (max-width: 768px) {
+        width: 95%;
+        height: 100%;
+    }
 `;
 
 const ContentTopWrapper = styled.div`
     width: 100%;
     height: 216px;
     margin-bottom: 48px;
+    @media (max-width: 768px) {
+        margin-bottom: 24px;
+    }
 `
 
 const ContentTitle = styled.div`
@@ -59,6 +66,10 @@ const ContentTitle = styled.div`
     align-items: center;
     padding-left: 15px;
     font-size: 20px;
+    @media (max-width: 768px) {
+        height: 36px;
+        font-size: 14px;
+    }
 `
 
 const StyledUl = styled.ul`
@@ -66,6 +77,7 @@ const StyledUl = styled.ul`
     grid-template-columns: 1fr 1fr 1fr;
     justify-content: space-between;
     align-items: center;
+    box-shadow: 0 2px 12px 0 rgba(0,0,0,0.25);
 `;
 
 const StyledLi = styled.li`
@@ -83,12 +95,15 @@ const StyledLi = styled.li`
 const ContentBottomWrapper = styled.div`
     width: 100%;
     height: 180px;
+    @media (max-width: 768px) {
+        margin-bottom: 24px;
+    }
 `
 
 const ContentBottomContent = styled.div`
     border-bottom-left-radius: 5px;
     border-bottom-right-radius: 5px;
-    border: solid rgb(207, 207, 207) 1px;
+    box-shadow: 0 2px 12px 0 rgba(0,0,0,0.25);
     height: 130px;
     display: flex; /* Added display flex */
     flex-direction: column; /* Added flex-direction column */
@@ -97,13 +112,16 @@ const ContentBottomContent = styled.div`
     text-align: center;
     @media (max-width: 768px){
         img {
-            width: 16px;
+            width: 70%;
         }
     }
 `
 
 const TextWrapper = styled.div`
     padding-bottom: 17px;
+    @media (max-width: 768px){
+        font-size: 12px;
+    }
 `
 
 export default MainRight;
