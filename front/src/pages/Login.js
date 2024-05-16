@@ -46,9 +46,9 @@ const Login = () => {
                     </StyledLabel>
                     <ButtonWrapper>
                         <StyledBtn type='submit'>로그인</StyledBtn>
-                        <Link to = {'/signup'}>
-                            <StyledBtn>회원가입</StyledBtn>
-                        </Link>
+                        
+                        <StyledLink to = {'/signup'}>회원가입</StyledLink>
+                        
                     </ButtonWrapper>
                 </StyledDivBottom>
             </StyledForm>
@@ -65,14 +65,14 @@ const FormWrapper = styled.div`
     align-items: center;
 `
 const StyledForm = styled.form`
-    width: 660px;
+    width: 40%;
     height: 313px;
     display:flex;
     flex-direction: column;
     align-items: center;
 `
 const StyledDivTop = styled.div`
-    width: 660px;
+    width: 100%;
     height: 50px;
     background-color: ${(props) => props.$backcolor};
     display: flex;
@@ -93,9 +93,13 @@ const StyledDivBottom = styled.div`
 
 const StyledLabel = styled.label`
     margin: 12px 0 12px 0;
+    width: calc(100% - 34px); 
+    display:flex;
+    flex-direction: column;
+    align-items: center;
 `
 const StyledInput = styled.input`
-    width: 550px;
+    width: calc(90% - 34px); 
     height: 17px;
     font-size: 16px;
     font-weight: bold;
@@ -106,14 +110,14 @@ const StyledInput = styled.input`
     border-radius: 5px;
 `
 const ButtonWrapper = styled.div`
-    width: 584px;
+    width: calc(90% - 34px); 
     height: 48px;
     display: flex;
     justify-content: space-between;
     margin: 12px 0 12px 0;
 `
 const StyledBtn = styled.button`
-    width: 280px;
+    width: 49%;
     height: 48px;
     border: none;
     border-radius: 5px;
@@ -125,5 +129,23 @@ const StyledBtn = styled.button`
         cursor: pointer;
     }
 `
+const StyledLink = styled(Link)`
+    text-decoration-line: none;
+    width: 49%;
+    height: 48px;
+    border: none;
+    border-radius: 5px;
+    background-color: #4DA3D5;
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    &:hover {
+        cursor: pointer;
+    }
+    display: flex;
+    align-items: center;
+    justify-content: center;
+`
+
 
 export default Login;
