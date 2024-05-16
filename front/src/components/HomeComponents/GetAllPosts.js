@@ -43,7 +43,13 @@ const GetAllStts = () => {
         return <LoadingSpinner />
     }
     if(error){
-        return <p>데이터 불러오기 실패</p>
+        return (
+            <StyledContainer>
+                <StyledLoginMessage>
+                    <p>데이터 불러오기 실패</p>
+                </StyledLoginMessage> 
+            </StyledContainer>
+        )
     }
     return (
         <>
@@ -117,6 +123,18 @@ const StyledP = styled.div`
         height: 28px;
         font-size: 10px;
    }
-`
+`;
+const StyledContainer = styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+`;
+const StyledLoginMessage = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 5px;
+`;
 
 export default GetAllStts;
