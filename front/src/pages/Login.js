@@ -36,7 +36,7 @@ const Login = () => {
     return (
         <FormWrapper>
             <StyledForm onSubmit={handleLogin}>
-                <StyledDivTop $backcolor="#4DA3D5" />
+                <StyledDivTop />
                 <StyledDivBottom>
                     <StyledLabel>
                         <StyledInput type="text" onChange={(e) => setUsername(e.target.value)} value={username} placeholder='아이디를 입력해주세요'/>
@@ -74,7 +74,7 @@ const StyledForm = styled.form`
 const StyledDivTop = styled.div`
     width: 100%;
     height: 50px;
-    background-color: ${(props) => props.$backcolor};
+    background-color: #4DA3D5;
     display: flex;
     justify-content: center;
     border-radius: 5px 5px 0 0;
