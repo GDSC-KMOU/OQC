@@ -1,25 +1,30 @@
 import React, {useState} from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import Postcode from '../components/Postcode';
+import styled from 'styled-components';
 
 const Signup = () => {
     const [formData, setFormData] = useState({
         username: '',
         name: '',
         password: '',
-        confirmPassword: '',
         phoneNumber: '', // 폰번호 필드 추가
         address: '', // 주소 필드 추가
         detailAddress: '',
     });
-
+    const [confirmPassword,setConfirmPassword] = useState('');
     const handleChange = (e) => {
         const { name, value } = e.target;
-        setFormData({
-            ...formData,
-            [name]: value,
-        });
+        if (name === 'confirmPassword'){
+            setConfirmPassword(value)
+        }
+        else{
+            setFormData({
+                ...formData,
+                [name]: value,
+            })
+        };
     };
 
     const handleAddressChange = (address, detailAddress) => {
@@ -31,12 +36,16 @@ const Signup = () => {
     };
 
     const passwordsMatch = () => {
-        return formData.password === formData.confirmPassword;
+        return formData.password === confirmPassword;
     };
 
     const navigate = useNavigate();
     const handleSubmit = async (e) => {
         e.preventDefault();
+        if (confirmPassword && !passwordsMatch()) {
+            alert('비밀번호가 일치하지 않습니다.');
+            return; // 일치하지 않을 경우 함수를 여기서 종료합니다.
+        }
         try {
             const response = await axios.post('https://api.capserver.link/join', formData, {
                 headers: {
@@ -53,87 +62,196 @@ const Signup = () => {
             alert('회원가입 실패: ' + error.response.data.message); // 오류 메시지 개선
         }
     };
+
     return (
-        <div>
-            <form onSubmit={handleSubmit}>
-                <div>
-                    <label htmlFor='name'> 
-                        <input 
-                            type="text" 
-                            id='name' 
-                            name='name' 
-                            value={formData.name} 
-                            onChange={handleChange} 
-                            placeholder='이름을 입력해주세요'
-                            required
-                        />
-                    </label>
-                </div>
-                <div>
-                    <label htmlFor='username'>
-                        <input 
-                            type="text" 
-                            id='username' 
-                            name='username' 
-                            value={formData.username} 
-                            onChange={handleChange} 
-                            placeholder='아이디를 입력해주세요'
-                            required
-                        />
-                        <button type='button'>중복확인</button>
-                    </label>
-                </div>
-                <div>
-                    <label htmlFor='password'>
-                        <input 
-                            type="password" 
-                            id='password' 
-                            name='password' 
-                            value={formData.password} 
-                            onChange={handleChange} 
-                            placeholder='비밀번호를 입력해주세요'
-                            required
-                            autoComplete="off"
-                        />
-                    </label>
-                    <label>
-                        <input 
-                            type="password" 
-                            placeholder='비밀번호를 다시 한 번 입력해주세요'
-                            name='confirmPassword'
-                            value={formData.confirmPassword}
-                            onChange={handleChange}
-                            required
-                            autoComplete="off"
-                        />
-                    </label>
-                    {formData.confirmPassword && !passwordsMatch() && (
-                        <p>비밀번호가 일치하지 않습니다.</p>
-                    )}
-                    {formData.confirmPassword && passwordsMatch() && (
-                        <p>비밀번호가 일치합니다.</p>
-                    )}
-                </div>
-                <Postcode onAddressChange={handleAddressChange} />
-                <div>
-                    <label htmlFor='phoneNumber'>
-                        휴대폰
-                        <input 
-                            type="text"     
-                            id='phoneNumber' 
-                            name='phoneNumber' 
-                            value={formData.phoneNumber} 
-                            onChange={handleChange} 
-                            required 
-                        />
-                    </label>
-                </div>
-                <button type='submit'>완료</button>
-                <button type='button'>취소</button>
-            </form>
-            
-        </div>
+        <FormWrapper>
+            <StyledForm onSubmit={handleSubmit}>
+                <StyledDivTop />
+                <StyledDivBottom>
+                    <LabelWrapper $marginBottom="24px">
+                        <StyledLabel htmlFor='name'> 
+                            <StyledInput 
+                                type="text" 
+                                id='name' 
+                                name='name' 
+                                value={formData.name} 
+                                onChange={handleChange} 
+                                placeholder='이름을 입력해주세요'
+                                required
+                            />
+                        </StyledLabel>
+                    </LabelWrapper>
+                    <LabelWrapper $marginBottom="24px">
+                        <StyledLabel htmlFor='username'>
+                            <StyledInput 
+                                type="text" 
+                                id='username' 
+                                name='username' 
+                                value={formData.username} 
+                                onChange={handleChange} 
+                                placeholder='아이디를 입력해주세요'
+                                required
+                            />
+                            <StyledBtn type="button" $marginLeft="5%">중복확인</StyledBtn>
+                        </StyledLabel>
+                    </LabelWrapper>
+                    <LabelWrapper $marginBottom="24px">
+                        <StyledLabel htmlFor='password'>
+                            <StyledInput 
+                                type="password" 
+                                id='password' 
+                                name='password' 
+                                value={formData.password} 
+                                onChange={handleChange} 
+                                placeholder='비밀번호를 입력해주세요'
+                                required
+                                autoComplete="off"
+                            />
+                        </StyledLabel>
+                    </LabelWrapper>
+                    <LabelWrapper $marginBottom="36px">
+                        <StyledLabel $display="inline">
+                            <StyledInput 
+                                $width="calc(100% - 34px)"
+                                type="password" 
+                                placeholder='비밀번호를 다시 한 번 입력해주세요'
+                                name='confirmPassword'
+                                value={confirmPassword}
+                                onChange={handleChange}
+                                required
+                                autoComplete="off"
+                            />
+                            {confirmPassword && !passwordsMatch() && (
+                                <StyledP $paddingTop="8px" $color="#FF0000">비밀번호가 일치하지 않습니다.</StyledP>
+                            )}
+                            {confirmPassword && passwordsMatch() && (
+                                <StyledP $paddingTop="8px" $color="#4DA3D5">비밀번호가 일치합니다.</StyledP>
+                            )}
+                        </StyledLabel>
+                    </LabelWrapper>
+                    <Postcode onAddressChange={handleAddressChange} />
+                    <LabelWrapper $marginBottom="53px" $hegiht="96px">
+                        <StyledLabel htmlFor='phoneNumber' $display="inline">
+                            <StyledP>휴대폰</StyledP>
+                            <StyledInput
+                                $width="calc(100% - 34px)"
+                                type="text"     
+                                id='phoneNumber' 
+                                name='phoneNumber' 
+                                value={formData.phoneNumber} 
+                                onChange={handleChange} 
+                                required
+                            />
+                        </StyledLabel>
+                    </LabelWrapper>
+                    <LabelWrapper $justifyContent="space-between">
+                        <StyledBtn type='submit' $width="49%">완료</StyledBtn>
+                        <StyledLink to="/"><StyledBtn type='button'>취소</StyledBtn></StyledLink>
+                    </LabelWrapper>
+                </StyledDivBottom>
+            </StyledForm>
+        </FormWrapper>
     );
 };
 
+const FormWrapper = styled.div`
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 23px 0 26px 0;
+`;
+const StyledForm = styled.form`
+    width: 40%;
+    height: 100%;
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+`;
+const StyledDivTop = styled.div`
+    width: 100%;
+    height: 50px;
+    background-color: #4DA3D5;
+    display: flex;
+    justify-content: center;
+    border-radius: 5px 5px 0 0;
+`;
+const StyledDivBottom = styled.div`
+    width: 100%;
+    height: 100%;
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border: solid rgb(207, 207, 207) 1px;
+    border-radius: 0 0 5px 5px;
+    box-sizing: border-box;
+    padding: 36px 0 51px 0;
+`;
+const LabelWrapper = styled.div`
+    width: 86%;
+    height: ${(props) => props.$hegiht || "48px"};
+    display:flex;
+    justify-content: ${(props) => props.$justifyContent || "center"};
+    margin-bottom: ${(props) => props.$marginBottom};
+`;
+const StyledLabel = styled.label`
+    width: 100%; 
+    height: 48px;
+    display: ${(props) => props.$display || 'flex'};
+    justify-content: center;
+    align-items: center;
+`;
+const StyledInput = styled.input`
+    width: ${(props) => props.$width || '100%'};
+    height: 21px;
+    font-size: 16px;
+    font-weight: bold;
+    padding: 14px 17px 13px 17px;
+    border: none;
+    background-color: #F6F6F6;
+    color: #666666;
+    border-radius: 5px;
+`;
+const StyledBtn = styled.button`
+    width: ${(props) => props.$width || '180px'};
+    height: 48px;
+    font-size: 16px;
+    font-weight: bold;
+    padding: 14px 17px 13px 17px;
+    border: none;
+    background-color: #4DA3D5;
+    color: white;
+    border-radius: 5px;
+    margin-left: ${(props) => props.$marginLeft};;
+    &:hover {
+        cursor: pointer;
+    }
+`;
+const StyledP = styled.p`
+    font-size: 16px;
+    font-weight: bold;
+    color: ${(props) => props.$color || '#666666'};;
+    margin-bottom: 24px;
+    padding-top: ${(props) => props.$paddingTop};
+`;
+const StyledLink = styled(Link)`
+text-decoration-line: none;
+    width: 49%;
+    height: 48px;
+    border: none;
+    border-radius: 5px;
+    background-color: #4DA3D5;
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    &:hover {
+        cursor: pointer;
+    }
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+`
 export default Signup;

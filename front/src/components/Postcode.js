@@ -1,6 +1,7 @@
 import React, { useState, useRef } from "react";
 import DaumPostcode from "react-daum-postcode";
 import Modal from "react-modal";
+import styled from "styled-components";
 
 const Postcode = ({onAddressChange}) => {
   const [roadAddress, setRoadAddress] = useState("");
@@ -17,9 +18,9 @@ const Postcode = ({onAddressChange}) => {
   const customStyles = {
     overlay: {
       backgroundColor: "rgba(0,0,0,0.5)",
+      zIndex: 1000,
     },
     content: {
-      left: "0",
       margin: "auto",
       width: "500px",
       height: "600px",
@@ -35,33 +36,36 @@ const Postcode = ({onAddressChange}) => {
 
   // 상세 주소검색 event
   const changeHandler = (e) => {
-    setDetailAddress(e.target.value);
     onAddressChange(roadAddress, e.target.value);
   };
 
   const modalRef = useRef();
 
   return (
-    <div>
-      <label htmlFor="address">
-        주소
-        <button type="button" onClick={toggle}>
-          주소찾기
-        </button>
-        <input 
+    <LabelWrapper $marginBottom="36px">
+      <StyledLabel htmlFor="address">
+        <StyledLabelTitle>
+          <StyledP>주소</StyledP>
+          <StyledBtn type="button" onClick={toggle}>
+            주소찾기
+          </StyledBtn>
+        </StyledLabelTitle>
+        <StyledInput 
+            $marginBottom="24px"
             value={roadAddress} 
             readOnly 
             placeholder="주소" 
-            required 
             onChange={changeHandler}
+            required
+            readonly
         />
-        <input
+        <StyledInput
           type="text"
           onChange={changeHandler}
           value={detailAddress}
           placeholder="상세 주소를 입력해주세요"
         />
-      </label>
+      </StyledLabel>
       <div ref={modalRef} onClick={toggle} >
         <Modal
           isOpen={isOpen}
@@ -72,8 +76,62 @@ const Postcode = ({onAddressChange}) => {
           <DaumPostcode onComplete={completeHandler} height="100%" />
         </Modal>
       </div>
-    </div>
+    </LabelWrapper>
   );
 };
+
+const LabelWrapper = styled.div`
+    width: 86%;
+    height: 192px;
+    display:flex;
+    justify-content: center;
+    margin-bottom: ${(props) => props.$marginBottom};
+`;
+const StyledLabel = styled.label`
+    width: 100%; 
+    height: 48px;
+    align-items: center;
+`;
+const StyledLabelTitle = styled.div`
+  width: 100%;
+  display:flex;
+  margin-bottom: 24px;
+`
+const StyledP = styled.p`
+    height: 48px;
+    font-size: 16px;
+    font-weight: bold;
+    color: ${(props) => props.$color || '#666666'};;
+    margin-right: 10px;
+    padding-top: ${(props) => props.$paddingTop};
+    display: flex;
+    align-items: center;
+`;
+const StyledBtn = styled.button`
+    width: 128px;
+    height: 48px;
+    font-size: 16px;
+    font-weight: bold;
+    padding: 14px 17px 13px 17px;
+    border: none;
+    background-color: #4DA3D5;
+    color: white;
+    border-radius: 5px;
+    &:hover {
+        cursor: pointer;
+    }
+`;
+const StyledInput = styled.input`
+    width: calc(100% - 34px);
+    height: 21px;
+    font-size: 16px;
+    font-weight: bold;
+    padding: 14px 17px 13px 17px;
+    border: none;
+    background-color: #F6F6F6;
+    color: #666666;
+    border-radius: 5px;
+    margin-bottom: ${(props) => props.$marginBottom};
+`;
 
 export default Postcode;
