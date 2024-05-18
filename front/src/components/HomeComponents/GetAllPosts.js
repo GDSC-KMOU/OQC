@@ -25,7 +25,7 @@ const GetAllStts = () => {
 
                 const response = await axios.get('https://api.capserver.link/', { headers });
                 if (response.data.allPosts) {
-                    setAllPosts(response.data.allPosts.content.reverse().slice(0,6));
+                    setAllPosts(response.data.allPosts.content.slice(0,6));
                 }
             } catch (err) {
                 console.error('Failed to fetch data:', err);
@@ -37,8 +37,21 @@ const GetAllStts = () => {
     };
         fetchPosts();
     }, [token]);
-
+    const formatPostTime = (time) => {
+        const date = new Date(time);
+        const year = date.getFullYear();
+        const month = date.getMonth() + 1;
+        const day = date.getDate();
     
+        // 형식화된 시간을 반환
+        return `${year}.${month < 10 ? '0' + month : month}.${day < 10 ? '0' + day : day}`;
+    };
+    const formatAnonymous = (userid) => {
+        const length = userid.length - 2;
+        userid = userid.slice(0, 2);
+        // 형식화된 이름을 반환
+        return `${userid}${'*'.repeat(length)}`;
+    };
     if(loading){
         return <LoadingSpinner />
     }
@@ -47,6 +60,15 @@ const GetAllStts = () => {
             <StyledContainer>
                 <StyledLoginMessage>
                     <p>데이터 불러오기 실패</p>
+                </StyledLoginMessage> 
+            </StyledContainer>
+        )
+    }
+    if(allPosts.length === 0){
+        return(
+            <StyledContainer>
+                <StyledLoginMessage>
+                    <p>신청된 폐기물이 없습니다.</p>
                 </StyledLoginMessage> 
             </StyledContainer>
         )
@@ -67,7 +89,7 @@ const GetAllStts = () => {
                                 </StyledP>
                             </StyledTd>
                             <StyledTd $paddingLeft="10px">{post.garbageName}</StyledTd>
-                            <StyledTd $textAlign="right">{post.username} | 2024.00.00{/* {post.date} <-- 추가필요 */}</StyledTd>
+                            <StyledTd $textAlign="right">{formatAnonymous(post.username)} | {formatPostTime(post.time)}</StyledTd>
                         </StyledTr>
                     ))} 
                 </tbody>

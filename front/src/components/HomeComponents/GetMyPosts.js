@@ -29,7 +29,7 @@ const GetMyStts = () => {
                     if (typeof response.data.myPosts === 'string') {
                         setError(response.data.myPosts);
                     } else {
-                        setMyPosts(response.data.myPosts.content.reverse().slice(0,6));
+                        setMyPosts(response.data.myPosts.content.slice(0,6));
                     }
                 }
             } catch (err) {
@@ -42,7 +42,15 @@ const GetMyStts = () => {
 
         fetchPosts();
     }, [token]);
-
+    const formatPostTime = (time) => {
+        const date = new Date(time);
+        const year = date.getFullYear();
+        const month = date.getMonth() + 1;
+        const day = date.getDate();
+    
+        // 형식화된 시간을 반환
+        return `${year}.${month < 10 ? '0' + month : month}.${day < 10 ? '0' + day : day}`;
+    };
     if(!token){
         return(
             <StyledContainer>
@@ -65,6 +73,15 @@ const GetMyStts = () => {
             </StyledContainer>
         )
     }
+    if(myPosts.length === 0){
+        return(
+            <StyledContainer>
+                <StyledLoginMessage>
+                    <p>신청된 폐기물이 없습니다.</p>
+                </StyledLoginMessage> 
+            </StyledContainer>
+        )
+    }
     return (
         <>
             <StyledTable>
@@ -81,7 +98,7 @@ const GetMyStts = () => {
                                 </StyledP>
                             </StyledTd>
                             <StyledTd $paddingLeft="10px">{post.garbageName}</StyledTd>
-                            <StyledTd $textAlign="right">{post.username} | 2024.00.00{/* {post.date} <-- 추가필요 */}</StyledTd>
+                            <StyledTd $textAlign="right">{post.username} | {formatPostTime(post.time)}</StyledTd>
                         </StyledTr>
                     ))} 
                 </tbody>
