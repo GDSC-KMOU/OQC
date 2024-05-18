@@ -1,9 +1,9 @@
 import React from 'react';
 import styled, { keyframes } from 'styled-components';
 
-const LoadingSpinner = () => {
+const LoadingSpinner = ({height}) => {
     return (
-        <StyledLoadingContainer>
+        <StyledLoadingContainer height={height}>
             <StyledLoadingIcon />
         </StyledLoadingContainer>
     );
@@ -13,7 +13,7 @@ const StyledLoadingContainer = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100%;
+    height: ${props => props.height || "100%"};
 `;
 
 const spinAnimation = keyframes`
