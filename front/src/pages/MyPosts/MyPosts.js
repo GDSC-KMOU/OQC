@@ -75,14 +75,14 @@ function MyPosts() {
                         <>
                             <StyledTitle>MY 신청 현황</StyledTitle>
                                 {posts.length > 0 ? (
-                                    posts.map(post => (
-                                        <PostsContainer>
-                                            <Card key={post.id} post={post} formatPostTime={formatPostTime} navigate={navigate} />
-                                        </PostsContainer>      
-                                    ))
+                                    <PostsContainer>
+                                    {posts.map(post => (
+                                        <Card key={post.id} post={post} formatPostTime={formatPostTime} navigate={navigate} />
+                                    ))}
+                                    </PostsContainer>  
                                 ) : (
                                     <State>신청된 폐기물이 없습니다.</State>
-                                )}
+                                )} 
                         </>
                 )
             }
