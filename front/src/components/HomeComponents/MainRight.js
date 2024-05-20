@@ -78,6 +78,8 @@ const StyledUl = styled.ul`
     justify-content: space-between;
     align-items: center;
     box-shadow: 0 2px 12px 0 rgba(0,0,0,0.25);
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
 `;
 
 const StyledLi = styled.li`

@@ -10,8 +10,6 @@ const Signup = () => {
         name: '',
         password: '',
         phoneNumber: '', // 폰번호 필드 추가
-        address: '', // 주소 필드 추가
-        detailAddress: '',
     });
     const [confirmPassword,setConfirmPassword] = useState('');
     const handleChange = (e) => {
@@ -25,14 +23,6 @@ const Signup = () => {
                 [name]: value,
             })
         };
-    };
-
-    const handleAddressChange = (address, detailAddress) => {
-        setFormData({
-            ...formData,
-            address: address,
-            detailAddress: detailAddress,
-        });
     };
 
     const passwordsMatch = () => {
@@ -129,7 +119,6 @@ const Signup = () => {
                             )}
                         </StyledLabel>
                     </LabelWrapper>
-                    <Postcode onAddressChange={handleAddressChange} />
                     <LabelWrapper $marginBottom="53px" $hegiht="96px">
                         <StyledLabel htmlFor='phoneNumber' $display="inline">
                             <StyledP>휴대폰</StyledP>
