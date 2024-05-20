@@ -3,6 +3,9 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import LoadingSpinner from '../components/Loading';
+import DaumPostcode from "react-daum-postcode";
+import Modal from "react-modal";
+import Find from "../assets/find.svg"
 
 function ImageUploadComponent() {
     const [image, setImage] = useState(null);
@@ -18,12 +21,15 @@ function ImageUploadComponent() {
     const [phoneNumber, setPhoneNumber] = useState('');
     const [address, setAddress] = useState('');
     const [detailAddress, setDetailAddress] = useState('');
+    const [isOpen, setIsOpen] = useState(false);
 
     const formData = new FormData();
+    // Form 데이터에 이름 추가
     formData.append('name', name);
+    // Form 데이터에 번호 추가
     formData.append('phoneNumber', phoneNumber);
-
     const handleImageUpload = async () => {
+        //ai 서버에 전송할 img 추가
         formData.append('image', image);
         setRecognitionLoading(true);
         try {
@@ -72,6 +78,7 @@ function ImageUploadComponent() {
             alert('규격을 선택해주세요.');
             return;
         }
+        // Form 데이터에 image, price, resValue, Adress, detailAddress 추가
         formData.append('image', image);
         formData.append('selectedOption', JSON.parse(selectedOption).price);
         formData.append('resValue', resValue);
@@ -112,9 +119,6 @@ function ImageUploadComponent() {
             case 'phoneNumber':
                 setPhoneNumber(value);
                 break;
-            case 'address':
-                setAddress(value);
-                break;
             case 'detailAddress':
                 setDetailAddress(value);
                 break;
@@ -123,9 +127,31 @@ function ImageUploadComponent() {
         }      
         
     };
-    const GetMyInfo = () => {
-        
+
+    // DaumPostCode관련 코드
+    const customStyles = {
+        overlay: {
+            backgroundColor: "rgba(0,0,0,0.5)",
+        },
+        content: {
+            left: "0",
+            margin: "auto",
+            width: "100%",
+            height: "480px",
+            padding: "0",
+            overflow: "hidden",
+        },
+    };
+    const completeHandler = (data) => {
+        const { address } = data;
+        setAddress(address);
+        setIsOpen(false);
+      };
+
+    const toggle = () =>{
+        setIsOpen(!isOpen);
     }
+
     return (
         <>
             {recognitionLoading && (
@@ -196,26 +222,25 @@ function ImageUploadComponent() {
                             </ContentsWrapper>
                             <ContentsWrapper>
                                 <StyledForm onSubmit={handleSubmitPost}>
-                                    <StyledTitle>배출자 정보
-                                        <StyledBtn type='button' $marginTop="8px" onClick={GetMyInfo}>내 정보 가져오기</StyledBtn>
-                                    </StyledTitle>
+                                    <StyledTitle>배출자 정보</StyledTitle>
                                     <StyledContent $marginBottom="100px">
                                         <TitleRenderWrapper>
                                             <StyledTitleRender>이름</StyledTitleRender>
                                         </TitleRenderWrapper>
-                                        <StyledInput type="text" name="name" value={formData.name} onChange={handleChange} required/>
+                                        <StyledInput type="text" name="name" value={name} onChange={handleChange} required/>
                                         <TitleRenderWrapper>
                                             <StyledTitleRender>휴대폰</StyledTitleRender>
                                         </TitleRenderWrapper>
-                                        <StyledInput type="text" name="phoneNumber" value={formData.phoneNumber} onChange={handleChange} required/>
-                                        <TitleRenderWrapper>
+                                        <StyledInput type="text" name="phoneNumber" value={phoneNumber} onChange={handleChange} required/>
+                                        <TitleRenderWrapper display="flex">
                                             <StyledTitleRender>주소</StyledTitleRender>
+                                            <AddressFindButton onClick={toggle}><img src={Find} alt='find' width="16px" height="16px"></img></AddressFindButton>
                                         </TitleRenderWrapper>
-                                        <StyledInput type="text" name="address" value={formData.address} onChange={handleChange} required/>
+                                        <StyledInput type="text" name="address" value={address} onChange={handleChange} required/>
                                         <TitleRenderWrapper>
                                             <StyledTitleRender>상세 주소</StyledTitleRender>
                                         </TitleRenderWrapper>
-                                        <StyledInput type="text" name="detailAddress" value={formData.detailAddress} onChange={handleChange} required/>
+                                        <StyledInput type="text" name="detailAddress" value={detailAddress} onChange={handleChange} required/>
                                     </StyledContent>
                                     <BtnWrapper>
                                         <StyledBtn type='submit' position="absolute" bottom="0" width="90%" height="48px" fontSize="18px">
@@ -224,10 +249,13 @@ function ImageUploadComponent() {
                                     </BtnWrapper>                              
                                 </StyledForm>
                             </ContentsWrapper>
-                            
                             </WasteOutWrapper>
                         </>
                     )}
+                    <Modal isOpen={isOpen} ariaHideApp={false} style={customStyles}>
+                        <ModalXButton onClick={toggle}>x</ModalXButton>
+                        <DaumPostcode onComplete={completeHandler} height="100%" />
+                    </Modal>
             </Container>
         </>
     );
@@ -266,6 +294,11 @@ const WasteOutWrapper = styled.div`
     justify-content: ${props => props.$justifyContent || "space-between"};
     align-items: center;
     margin-bottom:  ${props => props.$marginBottom || "57px"};
+    @media (max-width: 768px) {
+        width: 95%;
+        flex-direction : column;
+        gap: 24px;
+    }
 `;
 const ContentsWrapper = styled.div`
     width: 48%;
@@ -274,6 +307,10 @@ const ContentsWrapper = styled.div`
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
+    @media (max-width: 768px) {
+        width: 100%;
+        height: 100%;
+    }
 `;
 const StyledTitle = styled.div`
     width: ${props => props.$width || "96%" };
@@ -286,11 +323,19 @@ const StyledTitle = styled.div`
     font-size: 25px;
     font-weight: bold;
     justify-content: space-between;
+    @media (max-width: 768px) {
+       font-size: 20px;
+       border-bottom: solid #4DA3D5 2px;
+       height: 36px;
+    }
 `;
 const BtnWrapper = styled.div`
     width: 100%;
     display: flex;
     justify-content: center;
+    @media (max-width: 768px) {
+        margin-top: 36px;
+    }
 `
 const StyledBtn = styled.button`
     width: ${props => props.width || "120px"};
@@ -307,6 +352,10 @@ const StyledBtn = styled.button`
     &:hover {
         cursor: pointer;
     }
+    @media (max-width: 768px) {
+       height: 32px;
+       font-size: 16px;
+    }
 `;
 const State = styled.div`
     width: 100%;
@@ -322,6 +371,8 @@ const StyledContent = styled.div`
     justify-content: center;
     align-items: center;
     margin-bottom: ${props => props.$marginBottom};
+    @media (max-width: 768px) {
+        margin-bottom: 0;
 `;
 const ImgWrapper = styled.div`
     width: ${props => props.width || "280px"};
@@ -338,6 +389,7 @@ const ImgLabel = styled.label`
     &:hover {
         cursor: pointer;
     }
+    
 `;
 const StyledImg = styled.img`
     width: 100%;
@@ -363,10 +415,15 @@ const StyledInputFile = styled.input`
 const TitleRenderWrapper = styled.div`
     width: 90%;
     margin-bottom: 12px;
+    display: ${(props) => props.display};
+    justify-content: space-between;
 `;
 const StyledTitleRender = styled.div`
     font-size: 20px;
     font-weight: bold;
+    @media (max-width: 768px) {
+        font-size: 16px;
+    }
 `;
 const StyledValueRender = styled.div`
     width: calc(90% - 34px); 
@@ -378,6 +435,10 @@ const StyledValueRender = styled.div`
     background-color: #F6F6F6;
     border-radius: 5px;
     margin-bottom: 36px;
+    @media (max-width: 768px) {
+        padding: 10px 17px;
+        margin-bottom: 16px;
+    }
 `;
 const StyledSelectWrapper = styled.div`
     width: 90%;
@@ -395,6 +456,10 @@ const StyledSelect = styled.select`
     font-size: 16px;
     font-weight: bold;
     border-radius: 5px;
+    @media (max-width: 768px) {
+        padding: 10px 17px;
+        font-size: 12px;
+    }
 `;
 const StyledInput = styled.input`
     width: calc(90% - 34px); 
@@ -406,6 +471,10 @@ const StyledInput = styled.input`
     background-color: #F6F6F6;
     border-radius: 5px;
     margin-bottom: 36px;
+    @media (max-width: 768px) {
+        padding: 10px 17px;
+        margin-bottom: 16px;
+    }
 `
 const StyledForm = styled.form`
     width: 100%;
@@ -415,4 +484,19 @@ const StyledForm = styled.form`
     justify-content: space-between;
     align-items: center;
 `
+
+const ModalXButton = styled.button`
+    float: right;
+    margin: 6px 12px;
+    cursor: pointer;
+`
+
+const AddressFindButton = styled.button`
+    cursor: pointer;
+    background-color: #4dA3d6;
+    border: none;
+    height: 24px;
+    padding: 4px 16px;
+    border-radius: 5px;
+`;
 export default ImageUploadComponent;
