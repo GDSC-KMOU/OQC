@@ -82,7 +82,7 @@ const Signup = () => {
                                 placeholder='아이디를 입력해주세요'
                                 required
                             />
-                            <StyledBtn type="button" $marginLeft="5%">중복확인</StyledBtn>
+                            <StyledBtn type="button" $marginLeft="5%" alt="check">중복확인</StyledBtn>
                         </StyledLabel>
                     </LabelWrapper>
                     <LabelWrapper $marginBottom="24px">
@@ -133,9 +133,9 @@ const Signup = () => {
                             />
                         </StyledLabel>
                     </LabelWrapper>
-                    <LabelWrapper $justifyContent="space-between">
+                    <LabelWrapper $justifyContent="space-between" $marginTop="24px">
                         <StyledBtn type='submit' $width="49%">완료</StyledBtn>
-                        <StyledLink to="/"><StyledBtn type='button'>취소</StyledBtn></StyledLink>
+                        <StyledLink to="/"><StyledBtn type='button' color='gray'>취소</StyledBtn></StyledLink>
                     </LabelWrapper>
                 </StyledDivBottom>
             </StyledForm>
@@ -157,6 +157,9 @@ const StyledForm = styled.form`
     display:flex;
     flex-direction: column;
     align-items: center;
+    @media (max-width: 768px) {
+        width: 95%;
+    }
 `;
 const StyledDivTop = styled.div`
     width: 100%;
@@ -165,6 +168,9 @@ const StyledDivTop = styled.div`
     display: flex;
     justify-content: center;
     border-radius: 5px 5px 0 0;
+    @media (max-width: 768px) {
+        height: 36px;
+    }
 `;
 const StyledDivBottom = styled.div`
     width: 100%;
@@ -173,10 +179,12 @@ const StyledDivBottom = styled.div`
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    border: solid rgb(207, 207, 207) 1px;
     border-radius: 0 0 5px 5px;
-    box-sizing: border-box;
+    box-shadow: 0 2px 12px 0 rgba(0,0,0,0.25);
     padding: 36px 0 51px 0;
+    @media (max-width: 768px) {
+        padding: 24px 0 0 0;
+    }
 `;
 const LabelWrapper = styled.div`
     width: 86%;
@@ -184,6 +192,11 @@ const LabelWrapper = styled.div`
     display:flex;
     justify-content: ${(props) => props.$justifyContent || "center"};
     margin-bottom: ${(props) => props.$marginBottom};
+    @media (max-width: 768px) {
+        gap: 12px;
+        margin-bottom: 12px;
+        margin-top: ${(props) => props.$marginTop};
+    }
 `;
 const StyledLabel = styled.label`
     width: 100%; 
@@ -191,10 +204,13 @@ const StyledLabel = styled.label`
     display: ${(props) => props.$display || 'flex'};
     justify-content: center;
     align-items: center;
+    @media (max-width: 768px) {
+        margin-bottom: 12px;
+    }
 `;
 const StyledInput = styled.input`
     width: ${(props) => props.$width || '100%'};
-    height: 21px;
+    height: 17px;
     font-size: 16px;
     font-weight: bold;
     padding: 14px 17px 13px 17px;
@@ -202,6 +218,10 @@ const StyledInput = styled.input`
     background-color: #F6F6F6;
     color: #666666;
     border-radius: 5px;
+    @media (max-width: 768px) {
+        font-size: 10px;
+        padding: 10px 17px;
+    }
 `;
 const StyledBtn = styled.button`
     width: ${(props) => props.$width || '180px'};
@@ -210,12 +230,17 @@ const StyledBtn = styled.button`
     font-weight: bold;
     padding: 14px 17px 13px 17px;
     border: none;
-    background-color: #4DA3D5;
+    background-color:  ${(props) => props.color === "gray" ? "#666666" : "#4DA3D5"};
     color: white;
     border-radius: 5px;
     margin-left: ${(props) => props.$marginLeft};;
     &:hover {
         cursor: pointer;
+    }
+    @media (max-width: 768px) {
+        height: ${(props) => props.alt === "check"? "36px" : "32px"};
+        font-size: 12px;
+        padding: 0;
     }
 `;
 const StyledP = styled.p`
@@ -224,6 +249,11 @@ const StyledP = styled.p`
     color: ${(props) => props.$color || '#666666'};;
     margin-bottom: 24px;
     padding-top: ${(props) => props.$paddingTop};
+    @media (max-width: 768px) {
+        margin-top: 24px;
+        margin-bottom: 12px;
+    }
+    
 `;
 const StyledLink = styled(Link)`
 text-decoration-line: none;
@@ -231,7 +261,7 @@ text-decoration-line: none;
     height: 48px;
     border: none;
     border-radius: 5px;
-    background-color: #4DA3D5;
+    background-color: #666666;
     color: white;
     font-size: 16px;
     font-weight: bold;
@@ -241,6 +271,10 @@ text-decoration-line: none;
     display: flex;
     align-items: center;
     justify-content: center;
-
+    @media (max-width: 768px) {
+        height: 32px;
+        font-size: 12px;
+        padding: 0;
+    }
 `
 export default Signup;

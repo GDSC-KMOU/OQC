@@ -63,6 +63,10 @@ const FormWrapper = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
+    @media (max-width: 768px) {
+        align-items: normal;
+        margin-top: 24px;
+    }
 `
 const StyledForm = styled.form`
     width: 40%;
@@ -70,6 +74,13 @@ const StyledForm = styled.form`
     display:flex;
     flex-direction: column;
     align-items: center;
+    box-shadow: 0 2px 12px 0 rgba(0,0,0,0.25);
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    @media (max-width: 768px) {
+        width: 95%;
+        height:246px;
+    }
 `
 const StyledDivTop = styled.div`
     width: 100%;
@@ -78,6 +89,9 @@ const StyledDivTop = styled.div`
     display: flex;
     justify-content: center;
     border-radius: 5px 5px 0 0;
+    @media (max-width: 768px) {
+        height: 36px;
+    }
 `
 const StyledDivBottom = styled.div`
     width: 100%;
@@ -86,9 +100,13 @@ const StyledDivBottom = styled.div`
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    border: solid rgb(207, 207, 207) 1px;
     border-radius: 0 0 5px 5px;
     box-sizing: border-box;
+    @media (max-width: 768px) {
+        height: 210px;
+        padding-top: 12px;
+    }
+    
 `
 
 const StyledLabel = styled.label`
@@ -108,6 +126,10 @@ const StyledInput = styled.input`
     background-color: #F6F6F6;
     color: #666666;
     border-radius: 5px;
+    @media (max-width: 768px) {
+        font-size: 10px;
+        padding: 10px 17px;
+    }
 `
 const ButtonWrapper = styled.div`
     width: calc(90% - 34px); 
@@ -115,6 +137,9 @@ const ButtonWrapper = styled.div`
     display: flex;
     justify-content: space-between;
     margin: 12px 0 12px 0;
+    @media (max-width: 768px) {
+        gap: 12px;
+    }
 `
 const StyledBtn = styled.button`
     width: 49%;
@@ -127,6 +152,10 @@ const StyledBtn = styled.button`
     font-weight: bold;
     &:hover {
         cursor: pointer;
+    }
+    @media (max-width: 768px) {
+        font-size: 12px;
+        height: 36px;
     }
 `
 const StyledLink = styled(Link)`
@@ -145,6 +174,10 @@ const StyledLink = styled(Link)`
     display: flex;
     align-items: center;
     justify-content: center;
+    @media (max-width: 768px) {
+        font-size: 12px;
+        height: 36px;
+    }
 `
 
 
