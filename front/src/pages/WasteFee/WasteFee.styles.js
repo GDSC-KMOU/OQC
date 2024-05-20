@@ -29,7 +29,6 @@ export const StyledTitle = styled.div`
 `;
 export const StyledContent = styled.div`
     display: grid;
-    grid-template-rows: 200px;
     grid-template-columns: 1fr 1fr 1fr;
     @media (max-width: 1280px) {
         grid-template-columns: 1fr 1fr;
@@ -37,12 +36,16 @@ export const StyledContent = styled.div`
     }
     @media (max-width: 720px) {
         grid-template-columns: 1fr;
+        padding-bottom: 24px;
     }
     grid-gap: 36px 3%;
     width: 98%;
 `;
 export const TableWrapper = styled.div`
-    height: 200px;
+    height: 100%;
+    @media (max-width: 720px) {
+        font-size: 12px;
+    }
 `;
 export const StyledTable = styled.table`
     width: 100%;
