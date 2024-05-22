@@ -14,6 +14,7 @@ function AllPostsContainer() {
     const [postId, setPostId] = useState("")
     const [showPopup, setShowPopup] = useState(false);
     const [loading, setLoading] = useState(true);
+    const token = localStorage.getItem('token');
 
     useEffect(() => {
         fetchPosts(currentPage, pageSize, setPosts,  setTotalPages);
@@ -34,7 +35,6 @@ function AllPostsContainer() {
     const fetchPosts = async (pageNumber, pageSize, setPosts, setTotalPages) => {
         try {
             setLoading(true);
-            const token = localStorage.getItem('token');
             const response = await axios.get(`https://api.capserver.link/posts?page=${pageNumber}&size=${pageSize}`, {
                 headers: {
                 Authorization: `Bearer ${token}`
@@ -97,49 +97,60 @@ function AllPostsContainer() {
             postId={postId}
             setPostId={setPostId}
             showPopup={showPopup}
+            token={token}
         />
     );
 }
 
-const AllPostsPresentation = ({loading, posts, totalPages, handlePageChange, currentPage, renderPageNumbers, formatPostTime, formatAnonymous, handlePopup, postId, setPostId, showPopup }) => {
+const AllPostsPresentation = ({loading, posts, totalPages, handlePageChange, currentPage, renderPageNumbers, formatPostTime, formatAnonymous, handlePopup, postId, setPostId, showPopup, token }) => {
     return(
         <Container>
         <AllPostsWrapper>
             <StyledTitle>전체 배출 신청 현황</StyledTitle>
-            <PostListWrapper>
-                <PostListTop />
-                <PostListMain>
-                    {loading ? (
-                        <StyledMessage>
-                            <LoadingSpinner />
-                        </StyledMessage>
-                    ) : (
-                        posts && posts.length > 0 ? (
-                            posts.map(post => (
-                                <Post key={post.id} onClick={() => handlePopup(post.id)}>
-                                    <StyledData width="10%" $justifyContent="center"> 
-                                        <Status
-                                            width="80px"
-                                            height="36px"
-                                            $bgColor={post.accepted ? "#33B5E5" : "#FFBB33"}
-                                        >
-                                            {post.accepted ? "승인완료" : "대기중"}
-                                        </Status>
-                                    </StyledData>
-                                    <StyledData $paddingLeft="3%" width="50%">{post.garbageName}</StyledData>
-                                    <StyledData $justifyContent="end" width="40%">
-                                        {formatAnonymous(post.username)} | {formatPostTime(post.time)}
-                                    </StyledData>
-                                </Post>
-                            ))
+            {!token ? (
+                <StyledMessage>
+                    로그인이 필요한 서비스입니다.
+                </StyledMessage>
+            ) : (
+                <PostListWrapper>
+                    <PostListTop />
+                    <PostListMain>
+                        {loading ? (
+                            <>
+                                <StyledMessage>
+                                    <LoadingSpinner />
+                                </StyledMessage>
+                            </>
                         ) : (
-                            <StyledMessage>
-                                <p>신청된 폐기물이 없습니다.</p>
-                            </StyledMessage> 
-                        )
-                    )}
+                            <>
+                                {posts && posts.length > 0 ? (
+                                    posts.map(post => (
+                                        <Post key={post.id} onClick={() => handlePopup(post.id)}>
+                                            <StyledData width="10%" $justifyContent="center"> 
+                                                <Status
+                                                    width="80px"
+                                                    height="36px"
+                                                    $bgColor={post.accepted ? "#33B5E5" : "#FFBB33"}
+                                                >
+                                                    {post.accepted ? "승인완료" : "대기중"}
+                                                </Status>
+                                            </StyledData>
+                                            <StyledData $paddingLeft="3%" width="50%">{post.garbageName}</StyledData>
+                                            <StyledData $justifyContent="end" width="40%">
+                                                {formatAnonymous(post.username)} | {formatPostTime(post.time)}
+                                            </StyledData>
+                                        </Post>
+                                    ))
+                                ) : (
+                                    <StyledMessage>
+                                        <p>신청된 폐기물이 없습니다.</p>
+                                    </StyledMessage> 
+                                )}
+                            </>
+                        )}    
                     </PostListMain>
                 </PostListWrapper>
+                )}
                 {totalPages > 1 && (
                     <Paging>
                         <StyledBtn $width="35px" onClick={() => handlePageChange(0)} $borderTopLeft="5px" $borderBottomLeft="5px">{"<<"}</StyledBtn>
@@ -262,7 +273,8 @@ const StyledBtn = styled.button`
     }
 `;
 const StyledMessage = styled.div`
-    height: calc(100vh - 160px - 100px - 30px - 54.67px - 50px - 65px - 20px);
+    width: 100%;
+    height: calc(100vh - 160px - 100px - 54.67px - 30px - 20px);
     display: flex;
     justify-content: center;
     align-items: center;
