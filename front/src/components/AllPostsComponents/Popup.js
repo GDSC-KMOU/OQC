@@ -117,7 +117,7 @@ const PopupPresentation = ({ paid, accepted, time, userName, phoneNumber, garbag
                                     </ImgWrapper>
                                 </PopupMain>    
                             </PopupMainContainer>
-                            <SubmitBtn>승인</SubmitBtn>
+                            <SubmitBtn disabled={accepted ? false : true} accepted={accepted}>승인</SubmitBtn>
                         </>
                     )}
                 </PopupMainWrapper>
@@ -200,7 +200,7 @@ const PopupCloseBtn = styled.button`
     height: 24px;
 `;
 const SubmitBtn = styled.button`
-    background-color: #0D6EFD;
+    background-color: ${(props) => props.accepted ? '#666666;' : '#0D6EFD;'};
     border-radius: 5px;
     color: white;
     width: calc(100% - 32px);
@@ -210,7 +210,7 @@ const SubmitBtn = styled.button`
     position: absolute;
     bottom: 24px;
     &:hover{
-        cursor: pointer;
+        ${(props) => props.accepted ? null : 'cursor: pointer;'};
     };
 `;
 const StyledP = styled.p`

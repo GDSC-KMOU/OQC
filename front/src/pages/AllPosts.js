@@ -15,6 +15,7 @@ function AllPostsContainer() {
     const [showPopup, setShowPopup] = useState(false);
     const [loading, setLoading] = useState(true);
     const token = localStorage.getItem('token');
+    const [isAdmin, setIsAdmin] = useState(true);
 
     useEffect(() => {
         fetchPosts(currentPage, pageSize, setPosts,  setTotalPages);
@@ -25,6 +26,12 @@ function AllPostsContainer() {
             setCurrentPage(newPage);
         }
     };
+    useEffect(() => {
+        if (token) {
+            const payload = JSON.parse(atob(token.split('.')[1]));
+            setIsAdmin(payload.role === 'ROLE_ADMIN');
+        }
+    }, []);
 
     const handlePopup = (postId) => {
         setShowPopup(!showPopup)
@@ -98,11 +105,12 @@ function AllPostsContainer() {
             setPostId={setPostId}
             showPopup={showPopup}
             token={token}
+            isAdmin={isAdmin}
         />
     );
 }
 
-const AllPostsPresentation = ({loading, posts, totalPages, handlePageChange, currentPage, renderPageNumbers, formatPostTime, formatAnonymous, handlePopup, postId, setPostId, showPopup, token }) => {
+const AllPostsPresentation = ({loading, posts, totalPages, handlePageChange, currentPage, renderPageNumbers, formatPostTime, formatAnonymous, handlePopup, postId, setPostId, showPopup, token, isAdmin }) => {
     return(
         <Container>
         <AllPostsWrapper>
@@ -125,7 +133,7 @@ const AllPostsPresentation = ({loading, posts, totalPages, handlePageChange, cur
                             <>
                                 {posts && posts.length > 0 ? (
                                     posts.map(post => (
-                                        <Post key={post.id} onClick={() => handlePopup(post.id)}>
+                                        <Post key={post.id} onClick={() => isAdmin ? handlePopup(post.id) : undefined} isAdmin={isAdmin}>
                                             <StyledData width="10%" $justifyContent="center"> 
                                                 <Status
                                                     width="80px"
@@ -137,7 +145,7 @@ const AllPostsPresentation = ({loading, posts, totalPages, handlePageChange, cur
                                             </StyledData>
                                             <StyledData $paddingLeft="3%" width="50%">{post.garbageName}</StyledData>
                                             <StyledData $justifyContent="end" width="40%">
-                                                {formatAnonymous(post.username)} | {formatPostTime(post.time)}
+                                                {isAdmin ? post.username : formatAnonymous(post.username)} | {formatPostTime(post.time)}
                                             </StyledData>
                                         </Post>
                                     ))
@@ -219,7 +227,7 @@ const Post = styled.div`
     padding: 7px 20px;
     border-bottom: solid #C7D1D0 1px;
     &:hover{
-        cursor: pointer;
+        ${(props) => props.isAdmin ? "cursor: pointer;" : null}
     }
 `;
 const Status = styled.div`
