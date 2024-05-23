@@ -160,6 +160,9 @@ const StyledForm = styled.form`
     @media (max-width: 768px) {
         width: 95%;
     }
+    @media (min-width: 769px) and (max-width: 1024px) {
+        width: 60%;
+    }
 `;
 const StyledDivTop = styled.div`
     width: 100%;

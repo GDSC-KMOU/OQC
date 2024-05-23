@@ -10,11 +10,15 @@ const Login = () => {
 
     const handleLogin = async (e) => {
         e.preventDefault();
-
+        if (!username){
+            alert("아이디를 입력해주세요.")
+        }else if (!password){
+            alert("비밀번호를 입력해주세요.")
+        }else{
         const formData = new FormData();
         formData.append('username', username);
         formData.append('password', password);
-
+        
         try {
             const response = await axios.post('https://api.capserver.link/login', formData);
 
@@ -30,7 +34,9 @@ const Login = () => {
             
         } catch (error) {
             console.error('로그인 실패', error.response ? error.response.data : error);
+            alert("아이디 또는 비밀번호가 올바르지 않습니다.")
         }
+    }
     };
 
     return (
@@ -80,6 +86,9 @@ const StyledForm = styled.form`
     @media (max-width: 768px) {
         width: 95%;
         height:246px;
+    }
+    @media (min-width: 769px) and (max-width: 1024px) {
+        width: 60%;
     }
 `
 const StyledDivTop = styled.div`
