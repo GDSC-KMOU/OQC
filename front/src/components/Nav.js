@@ -1,8 +1,9 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useCallback} from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import Logo from '../assets/Logo.png';
 import styled from 'styled-components';
 import MobileNav from './MobileNav';
+import axios from 'axios';
 
 const NavRender = () => {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -10,7 +11,9 @@ const NavRender = () => {
     const [selectedItem, setSelectedItem] = useState(null);
     const location = useLocation();
     const navigate = useNavigate();
-
+    const token = localStorage.getItem('token');
+    const [username, setUsername] = useState("");
+    
     useEffect(() => {
         switch(location.pathname) {
             case '/myposts':
@@ -32,11 +35,11 @@ const NavRender = () => {
     
     //등급 확인
     useEffect(() => {
-        const token = localStorage.getItem('token');
         if (token) {
             setIsLoggedIn(true);
             const payload = JSON.parse(atob(token.split('.')[1]));
             setIsAdmin(payload.role === 'ROLE_ADMIN');
+            setUsername(payload.username);
         }
     }, []);
 
@@ -45,7 +48,7 @@ const NavRender = () => {
             navigate(0); // 현재 페이지 새로고침
         }
     };
-
+    
     return(
         <>
         <StyledNav>
@@ -70,10 +73,12 @@ const NavRender = () => {
                             </Button>
                             </>
                         )}
-                        {/*로그인시 밑에 세 개 출력, 어드민이면 관리자도 출력*/}
                         {isLoggedIn && (
                             <>
-                                <div>adaadadada 님</div> {/*유저 이름 출력*/}
+                                <Username>
+                                    <StyledP color='#0279C2' fontSize="18px" fontWeight="bold">{username}</StyledP> 
+                                    <StyledP>&nbsp;님</StyledP>
+                                </Username>
                                 <Button>
                                     <StyledLink to="/logout">
                                         로그아웃
@@ -172,6 +177,18 @@ const YgWDS = styled.p`
     @media (max-width: 768px){
         font-size: 24px;
     }
+`;
+const Username = styled.div`
+    width: 115px;
+    height: 56px;
+    display: flex;
+    align-items: center;
+    justify-content: end;
+`;
+const StyledP = styled.p`
+    color: ${(props) => props.color || '#024598'};
+    font-size: ${(props) => props.fontSize};
+    font-weight: ${(props) => props.fontWeight};
 `;
 const Button = styled.div`
     width: ${(props) => props.width || '140px'};
