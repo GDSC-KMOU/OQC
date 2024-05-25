@@ -1,31 +1,40 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import LoadingSpinner from '../components/Loading';
 import styled from "styled-components";
-import Popup from "../components/AllPostsComponents/Popup"
+import Popup from "../components/AllPostsComponents/Popup";
 
 function AllPostsContainer() {
-    const [posts, setPosts] = useState([]);
-    const [currentPage, setCurrentPage] = useState(0);
-    const [totalPages, setTotalPages] = useState(0);
+    const { page } = useParams();
     const navigate = useNavigate();
-    const pageSize = 15; // 한 페이지당 게시물 수
-    const [postId, setPostId] = useState("")
+    const [posts, setPosts] = useState([]);
+    const [currentPage, setCurrentPage] = useState(Number(page) ? Number(page) - 1 : 0);
+    const [totalPages, setTotalPages] = useState(0);
+    const [postId, setPostId] = useState("");
     const [showPopup, setShowPopup] = useState(false);
     const [loading, setLoading] = useState(true);
     const token = localStorage.getItem('token');
     const [isAdmin, setIsAdmin] = useState(true);
+    const pageSize = 15; // 한 페이지당 게시물 수
 
     useEffect(() => {
-        fetchPosts(currentPage, pageSize, setPosts,  setTotalPages);
+        fetchPosts(currentPage, pageSize, setPosts, setTotalPages);
     }, [currentPage]);
 
+    useEffect(() => {
+        if (page !== undefined) {
+            setCurrentPage(Number(page) - 1);
+        }
+    }, [page]);
+
     const handlePageChange = (newPage) => {
-        if(0<= newPage && newPage < totalPages){
-            setCurrentPage(newPage);
+        if (0 <= newPage && newPage < totalPages) {
+            navigate(`/allposts/${newPage + 1}`);
+            window.scrollTo({ top: 0});
         }
     };
+
     useEffect(() => {
         if (token) {
             const payload = JSON.parse(atob(token.split('.')[1]));
@@ -34,9 +43,9 @@ function AllPostsContainer() {
     }, []);
 
     const handlePopup = (postId) => {
-        setShowPopup(!showPopup)
-        setPostId(postId)
-    }
+        setShowPopup(!showPopup);
+        setPostId(postId);
+    };
 
     // API 요청을 별도의 함수로 분리
     const fetchPosts = async (pageNumber, pageSize, setPosts, setTotalPages) => {
@@ -44,7 +53,7 @@ function AllPostsContainer() {
             setLoading(true);
             const response = await axios.get(`https://api.capserver.link/posts?page=${pageNumber}&size=${pageSize}`, {
                 headers: {
-                Authorization: `Bearer ${token}`
+                    Authorization: `Bearer ${token}`
                 }
             });
             setPosts(response.data.content);
@@ -62,10 +71,10 @@ function AllPostsContainer() {
             totalPagesToShow = 9;
         }
         const pageRange = Math.floor(totalPagesToShow / 2);
-    
+
         let startPage = currentPage - pageRange;
         let endPage = currentPage + pageRange;
-    
+
         if (startPage < 0) {
             endPage -= startPage;
             startPage = 0;
@@ -74,9 +83,10 @@ function AllPostsContainer() {
             endPage = totalPages - 1;
             startPage = Math.max(0, totalPages - totalPagesToShow);
         }
-    
+
         return Array.from({ length: endPage - startPage + 1 }, (_, index) => startPage + index);
     };
+
     const formatPostTime = (time) => {
         const date = new Date(time);
         const year = date.getFullYear();
@@ -84,6 +94,7 @@ function AllPostsContainer() {
         const day = date.getDate();
         return `${year}.${month < 10 ? '0' + month : month}.${day < 10 ? '0' + day : day}`;
     };
+
     const formatAnonymous = (userid) => {
         const length = userid.length - 2;
         userid = userid.slice(0, 2);
@@ -110,54 +121,54 @@ function AllPostsContainer() {
     );
 }
 
-const AllPostsPresentation = ({loading, posts, totalPages, handlePageChange, currentPage, renderPageNumbers, formatPostTime, formatAnonymous, handlePopup, postId, setPostId, showPopup, token, isAdmin }) => {
-    return(
+const AllPostsPresentation = ({ loading, posts, totalPages, handlePageChange, currentPage, renderPageNumbers, formatPostTime, formatAnonymous, handlePopup, postId, setPostId, showPopup, token, isAdmin }) => {
+    return (
         <Container>
-        <AllPostsWrapper>
-            <StyledTitle>전체 배출 신청 현황</StyledTitle>
-            {!token ? (
-                <StyledMessage>
-                    로그인이 필요한 서비스입니다.
-                </StyledMessage>
-            ) : (
-                <PostListWrapper>
-                    <PostListTop />
-                    <PostListMain>
-                        {loading ? (
-                            <>
-                                <StyledMessage>
-                                    <LoadingSpinner />
-                                </StyledMessage>
-                            </>
-                        ) : (
-                            <>
-                                {posts && posts.length > 0 ? (
-                                    posts.map(post => (
-                                        <Post key={post.id} onClick={() => isAdmin ? handlePopup(post.id) : undefined} isAdmin={isAdmin}>
-                                            <StyledData width="10%" $justifyContent="center"> 
-                                                <Status
-                                                    width="80px"
-                                                    height="36px"
-                                                    $bgColor={post.accepted ? "#33B5E5" : "#FFBB33"}
-                                                >
-                                                    {post.accepted ? "승인완료" : "대기중"}
-                                                </Status>
-                                            </StyledData>
-                                            <StyledData $paddingLeft="3%" width="50%">{post.garbageName}</StyledData>
-                                            <StyledData $justifyContent="end" width="40%">
-                                                {isAdmin ? post.username : formatAnonymous(post.username)} | {formatPostTime(post.time)}
-                                            </StyledData>
-                                        </Post>
-                                    ))
-                                ) : (
+            <AllPostsWrapper>
+                <StyledTitle>전체 배출 신청 현황</StyledTitle>
+                {!token ? (
+                    <StyledMessage>
+                        로그인이 필요한 서비스입니다.
+                    </StyledMessage>
+                ) : (
+                    <PostListWrapper>
+                        <PostListTop />
+                        <PostListMain>
+                            {loading ? (
+                                <>
                                     <StyledMessage>
-                                        <p>신청된 폐기물이 없습니다.</p>
-                                    </StyledMessage> 
-                                )}
-                            </>
-                        )}    
-                    </PostListMain>
-                </PostListWrapper>
+                                        <LoadingSpinner />
+                                    </StyledMessage>
+                                </>
+                            ) : (
+                                <>
+                                    {posts && posts.length > 0 ? (
+                                        posts.map(post => (
+                                            <Post key={post.id} onClick={() => isAdmin ? handlePopup(post.id) : undefined} isAdmin={isAdmin}>
+                                                <StyledData width="10%" $justifyContent="center">
+                                                    <Status
+                                                        width="80px"
+                                                        height="36px"
+                                                        $bgColor={post.accepted ? "#33B5E5" : "#FFBB33"}
+                                                    >
+                                                        {post.accepted ? "승인완료" : "대기중"}
+                                                    </Status>
+                                                </StyledData>
+                                                <StyledData $paddingLeft="3%" width="50%">{post.garbageName}</StyledData>
+                                                <StyledData $justifyContent="end" width="40%">
+                                                    {isAdmin ? post.username : formatAnonymous(post.username)} | {formatPostTime(post.time)}
+                                                </StyledData>
+                                            </Post>
+                                        ))
+                                    ) : (
+                                        <StyledMessage>
+                                            <p>신청된 폐기물이 없습니다.</p>
+                                        </StyledMessage>
+                                    )}
+                                </>
+                            )}
+                        </PostListMain>
+                    </PostListWrapper>
                 )}
                 {totalPages > 1 && (
                     <Paging>
@@ -175,8 +186,8 @@ const AllPostsPresentation = ({loading, posts, totalPages, handlePageChange, cur
             </AllPostsWrapper>
             {showPopup && <Popup postId={postId} setPostId={setPostId} handlePopup={handlePopup} />}
         </Container>
-    )
-}
+    );
+};
 
 const Container = styled.div`
     width: 100%;

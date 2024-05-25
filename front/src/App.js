@@ -29,6 +29,7 @@ const App = () => {
                     <Route element={<WasteFee />} path='/wastefee' />
                     <Route element={<WasteOut />} path='/wasteout' />
                     <Route element={<AllPosts />} path='/allposts' />
+                    <Route element={<AllPosts />} path='/allposts/:page' />
                     <Route element={<ViewByPost />} path='/view-by-post/:postId' />
                     <Route element={<Payment />} path='/payment' />
                     <Route element={<SuccessPage />} path='/success' />

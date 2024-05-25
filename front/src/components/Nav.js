@@ -15,22 +15,9 @@ const NavRender = () => {
     const [username, setUsername] = useState("");
     
     useEffect(() => {
-        switch(location.pathname) {
-            case '/myposts':
-                setSelectedItem(0);
-                break;
-            case '/wastefee':
-                setSelectedItem(1);
-                break;
-            case '/wasteout':
-                setSelectedItem(2);
-                break;
-            case '/allposts':
-                setSelectedItem(3);
-                break;
-            default:
-                setSelectedItem(null);
-        }
+        const paths = ['/myposts', '/wastefee', '/wasteout', '/allposts'];
+        const index = paths.findIndex(path => location.pathname.startsWith(path));
+        setSelectedItem(index !== -1 ? index : null);
     }, [location.pathname]);
     
     //등급 확인
@@ -57,7 +44,7 @@ const NavRender = () => {
                     <img src={Logo} alt="Logo" />
                     <StyledLink to="/" onClick={() => handleLinkClick('/')}><YgWDS>YgWDS</YgWDS></StyledLink>
                 </NavTopLeft>
-                <NavTopRight>
+                <NavTopRight >
                         {/*로그인 안하면 밑에 두 개 출력*/}                
                         {!isLoggedIn && (
                             <>
@@ -84,7 +71,7 @@ const NavRender = () => {
                                         로그아웃
                                     </StyledLink>   
                                 </Button>                           
-                                {isAdmin && <Button><StyledLink to="/admin" onClick={() => handleLinkClick('/admin')}>관리</StyledLink></Button>}
+                                {/*isAdmin && <Button><StyledLink to="/admin" onClick={() => handleLinkClick('/admin')}>관리</StyledLink></Button>*/}
                             </>
                         )}
                 </NavTopRight>
