@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
 import { useParams, useNavigate } from 'react-router-dom';
+import styled from 'styled-components';
 
 function getUsernameFromToken() {
     const token = localStorage.getItem('token');
@@ -61,20 +62,149 @@ function ViewByPost() {
 
     console.log("data: ", post)
     return (
-        <div>
-            <h2>{post.title}</h2>
-            <p>{post.content}</p>
-            {post.image && <img src={`data:image/jpeg;base64,${post.image}`} alt={post.title} />}
-            <p>폐기물명: {post.garbageName}</p>
-            <p>폐기물 사이즈: {post.garbageContent}</p>
-            <p>가격: {post.price}원</p>
-            <p>주소: {post.address}</p>
-            <p>결제 여부: {post.paid ? (post.accepted ? '승인 완료' : '승인 대기중') : '미결제'}</p>
-            <p>신청자: {post.userId}</p>
-            <p>게시일: {post.time}</p>
-            {canPay && <button onClick={handleGoToCheckout}>결제하기</button>}
-        </div>
+        <VBPContainer>
+            <VBPCotents>
+                <ContentTop />
+                <ContentBottom>
+                    <ContentImg src={`data:image/jpeg;base64,${post.image}`} alt={post.title}/>
+                    <ContentText>폐기물명</ContentText>
+                    <InputWrapper>
+                        <ContentInput value={post.garbageName} readOnly></ContentInput>
+                    </InputWrapper>
+
+                    <ContentText>폐기물 사이즈</ContentText>
+                    <InputWrapper>
+                        <ContentInput value={post.garbageContent} readOnly></ContentInput>
+                    </InputWrapper>
+
+                    <ContentText>가격</ContentText>
+                    <InputWrapper>
+                        <ContentInput value={`${post.price}원`} readOnly></ContentInput>
+                    </InputWrapper>
+
+                    <ContentText>주소</ContentText>
+                    <InputWrapper>
+                        <ContentInput value={post.address} readOnly></ContentInput>
+                    </InputWrapper>
+
+                    <ContentText>신청자</ContentText>
+                    <InputWrapper>
+                        <ContentInput value={post.userName} readOnly></ContentInput>
+                    </InputWrapper>
+
+                    <ContentText>신청일</ContentText>
+                    <InputWrapper>
+                        <ContentInput value={post.time} readOnly></ContentInput>
+                    </InputWrapper>
+                    
+                    {canPay ? 
+                    <ContentBtn onClick={handleGoToCheckout} color="#4DA3D5" alt="canpay">결제하기</ContentBtn> 
+                    : <ContentBtn color="#666666">결제완료</ContentBtn>
+                    }
+                </ContentBottom>
+            </VBPCotents>
+        </VBPContainer>
     );
 }
+
+const VBPContainer = styled.div`
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 23px 0 26px 0;
+`;
+const VBPCotents = styled.div`
+    width: 40%;
+    height: 100%;
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+    @media (max-width: 768px) {
+        width: 95%;
+    }
+    @media (min-width: 769px) and (max-width: 1024px) {
+        width: 60%;
+    }
+`;
+const ContentTop = styled.div`
+    width: 100%;
+    height: 50px;
+    background-color: #4DA3D5;
+    display: flex;
+    justify-content: center;
+    border-radius: 5px 5px 0 0;
+    @media (max-width: 768px) {
+        height: 36px;
+    }
+`;
+const ContentBottom = styled.div`
+    width: 100%;
+    height: 100%;
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border-radius: 0 0 5px 5px;
+    box-shadow: 0 2px 12px 0 rgba(0,0,0,0.25);
+    padding: 36px 0 51px 0;
+    gap: 16px;
+    @media (max-width: 768px) {
+        padding: 24px 0;
+    }
+`;
+
+const ContentImg = styled.img`
+    width: 80%;
+    height: 400px;
+    margin-bottom: 12px;
+    @media (max-width: 768px) {
+        height: 360px;
+    }
+`
+
+const ContentText = styled.p`
+    width: 90%;
+    font-size:20px;
+    font-weight: bold;
+    @media (max-width: 768px) {
+        font-size: 16px;
+    }
+`;
+
+const InputWrapper = styled.div `
+    width: 90%;
+`;
+
+const ContentInput = styled.input`
+    width: calc(100% - 24px);
+    padding: 12px;
+    border: none;
+    background-color: #F6F6F6;
+    color: #666666;
+    border-radius: 5px;
+    font-size: 16px;
+    @media (max-width: 768px) {
+        font-size: 12px;
+    }
+`;
+
+const ContentBtn = styled.button`
+    width: 90%;
+    height: 48px;
+    margin-top: 24px;
+    border: none;
+    cursor: ${(props) => props.alt === "canpay" ? "pointer" : ""};
+    font-size: 20px;
+    font-weight: bold;
+    background-color: ${(props) => props.color};
+    color: #fff;
+    border-radius: 5px;
+    @media (max-width: 768px) {
+        font-size: 16px;
+        height: 36px;
+    }
+`
 
 export default ViewByPost;
