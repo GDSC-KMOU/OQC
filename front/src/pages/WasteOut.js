@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import styled from 'styled-components';
+import styled, {createGlobalStyle} from 'styled-components';
 import LoadingSpinner from '../components/Loading';
 import DaumPostcode from "react-daum-postcode";
 import Modal from "react-modal";
@@ -90,14 +90,15 @@ function ImageUploadComponent() {
         }
         try {
             setPostingLoading(true);
-            await axios.post('https://api.capserver.link/selection', formData, {
+            const data = await axios.post('https://api.capserver.link/selection', formData, {
                 headers: {
                     'Authorization': `Bearer ${token}`
                 }
             });
+            
             setPostingLoading(false);
-            alert('포스트 생성 성공');
-            navigate('/');
+            alert('신청 완료! 결제 부탁드립니다!');
+            navigate(`/view-by-post/${data.data.id}`);
         } catch (error) {
             setPostingLoading(false);
             setError('Failed to upload posts');
@@ -136,7 +137,7 @@ function ImageUploadComponent() {
         content: {
             left: "0",
             margin: "auto",
-            width: "100%",
+            width: "50%",
             height: "480px",
             padding: "0",
             overflow: "hidden",
@@ -252,6 +253,7 @@ function ImageUploadComponent() {
                             </WasteOutWrapper>
                         </>
                     )}
+                    <ModalContainer />
                     <Modal isOpen={isOpen} ariaHideApp={false} style={customStyles}>
                         <ModalXButton onClick={toggle}>x</ModalXButton>
                         <DaumPostcode onComplete={completeHandler} height="100%" />
@@ -499,4 +501,13 @@ const AddressFindButton = styled.button`
     padding: 4px 16px;
     border-radius: 5px;
 `;
+
+const ModalContainer = createGlobalStyle`
+  .ReactModal__Content {
+    @media (max-width: 768px) {
+      width: 100% !important;
+    }
+  }
+`;
+
 export default ImageUploadComponent;

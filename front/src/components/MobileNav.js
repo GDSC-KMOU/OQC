@@ -8,15 +8,17 @@ const MobileNav = () => {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [isAdmin, setIsAdmin] = useState(false);
     const [isOpen, setIsOpen] = useState(false);
+    const [username, setUsername] = useState("");
     const location = useLocation();
     const navigate = useNavigate();
 
     useEffect(() => {
         const token = localStorage.getItem("token");
         if (token) {
-        setIsLoggedIn(true);
-        const payload = JSON.parse(atob(token.split(".")[1]));
-        setIsAdmin(payload.role === "ROLE_ADMIN");
+            setIsLoggedIn(true);
+            const payload = JSON.parse(atob(token.split('.')[1]));
+            setIsAdmin(payload.role === 'ROLE_ADMIN');
+            setUsername(payload.username);
         }
     }, []);
 
@@ -65,7 +67,7 @@ const MobileNav = () => {
                 )}
                 {isLoggedIn && (
                 <>
-                    <StyledLink alt={"light"}>username</StyledLink>
+                    <StyledLink alt={"light"}>{username}</StyledLink>
                     <StyledLink to="/logout" onClick={() => handleLinkClick('/logout')} alt={"light"}>
                         로그아웃
                         <img src={Arrow} alt="arrow"></img>
