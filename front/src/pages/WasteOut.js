@@ -151,7 +151,9 @@ function ImageUploadComponent() {
     const toggle = () =>{
         setIsOpen(!isOpen);
     }
-
+    useEffect(() => {
+        window.scrollTo({ top: 0});
+    }, []);
     return (
         <>
             {recognitionLoading && (

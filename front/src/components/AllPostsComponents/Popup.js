@@ -16,7 +16,6 @@ const PopupContainer = ({ postId, setPostId, handlePopup }) => {
                 headers: { Authorization: `Bearer ${token}` }
             });
             setPopupContents(response.data);
-            console.log("setCon")
         } catch (error) {
             setErrorLog(error.message);
         } finally {
@@ -64,7 +63,7 @@ const PopupContainer = ({ postId, setPostId, handlePopup }) => {
     return (
         <PopupPresentation
             paid={popupContents?.paid}
-            accepted={popupContents?.accepted}
+            $accepted={popupContents?.accepted}
             time={popupContents?.time}
             userName={popupContents?.userName}
             //phoneNumber={popupContents?.phoneNumber} // 추가 필요
@@ -82,13 +81,13 @@ const PopupContainer = ({ postId, setPostId, handlePopup }) => {
     );
 };
 
-const PopupPresentation = ({ paid, accepted, time, userName, phoneNumber, garbageName, garbageContent, price, address, image, handleClose, formatPostTime, formatPrice, handleOverlayClick, loading}) => {
+const PopupPresentation = ({ paid, $accepted, time, userName, phoneNumber, garbageName, garbageContent, price, address, image, handleClose, formatPostTime, formatPrice, handleOverlayClick, loading}) => {
     return (
         <PopupOverlay onClick={handleOverlayClick}>
             <StyledPopupContainer>
-                <PopupTop accepted={accepted}>
+                <PopupTop $accepted={$accepted}>
                     <PopupTopLeft>
-                        {loading ? null : (accepted ? "승인완료" : "대기중")}
+                        {loading ? null : ($accepted ? "승인완료" : "대기중")}
                     </PopupTopLeft>
                     <PopupTopRight>
                         {loading ? null : formatPostTime(time)}
@@ -117,7 +116,7 @@ const PopupPresentation = ({ paid, accepted, time, userName, phoneNumber, garbag
                                     </ImgWrapper>
                                 </PopupMain>    
                             </PopupMainContainer>
-                            <SubmitBtn disabled={accepted ? false : true} accepted={accepted}>승인</SubmitBtn>
+                            <SubmitBtn disabled={$accepted ? false : true} $accepted={$accepted}>승인</SubmitBtn>
                         </>
                     )}
                 </PopupMainWrapper>
@@ -151,7 +150,7 @@ const StyledPopupContainer = styled.div`
     }
 `;
 const PopupTop = styled.div`
-    background-color: ${(props) => props.accepted ? "#33B5E5" : "#FFBB33"};
+    background-color: ${(props) => props.$accepted ? "#33B5E5" : "#FFBB33"};
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;
     height: 30px;
@@ -203,7 +202,7 @@ const PopupCloseBtn = styled.button`
     height: 24px;
 `;
 const SubmitBtn = styled.button`
-    background-color: ${(props) => props.accepted ? '#666666;' : '#0D6EFD;'};
+    background-color: ${(props) => props.$accepted ? '#666666;' : '#0D6EFD;'};
     border-radius: 5px;
     color: white;
     width: calc(100% - 32px);
@@ -213,7 +212,7 @@ const SubmitBtn = styled.button`
     position: absolute;
     bottom: 24px;
     &:hover{
-        ${(props) => props.accepted ? null : 'cursor: pointer;'};
+        ${(props) => props.$accepted ? null : 'cursor: pointer;'};
     };
 `;
 const StyledP = styled.p`

@@ -42,6 +42,7 @@ function AllPostsContainer() {
             const payload = JSON.parse(atob(token.split('.')[1]));
             setIsAdmin(payload.role === 'ROLE_ADMIN');
         }
+        window.scrollTo({ top: 0});
     }, []);
 
     const handlePopup = (postId) => {
@@ -118,12 +119,12 @@ function AllPostsContainer() {
             setPostId={setPostId}
             showPopup={showPopup}
             token={token}
-            isAdmin={isAdmin}
+            $isAdmin={isAdmin}
         />
     );
 }
 
-const AllPostsPresentation = ({ loading, posts, totalPages, handlePageChange, currentPage, renderPageNumbers, formatPostTime, formatAnonymous, handlePopup, postId, setPostId, showPopup, token, isAdmin }) => {
+const AllPostsPresentation = ({ loading, posts, totalPages, handlePageChange, currentPage, renderPageNumbers, formatPostTime, formatAnonymous, handlePopup, postId, setPostId, showPopup, token, $isAdmin }) => {
     return (
         <Container>
             <AllPostsWrapper>
@@ -146,7 +147,7 @@ const AllPostsPresentation = ({ loading, posts, totalPages, handlePageChange, cu
                                 <>
                                     {posts && posts.length > 0 ? (
                                         posts.map(post => (
-                                            <Post key={post.id} onClick={() => isAdmin ? handlePopup(post.id) : undefined} isAdmin={isAdmin}>
+                                            <Post key={post.id} $isAdmin={$isAdmin} onClick={() => $isAdmin ? handlePopup(post.id) : undefined}>
                                                 <StyledData $justifyContent="center" $paddingLeft="24px" $width="10%">
                                                     <Status
                                                         $bgColor={post.accepted ? "#33B5E5" : "#FFBB33"}
@@ -156,7 +157,7 @@ const AllPostsPresentation = ({ loading, posts, totalPages, handlePageChange, cu
                                                 </StyledData>
                                                 <StyledData $paddingLeft="10px">{post.garbageName}</StyledData>
                                                 <StyledData $textAlign="right" $paddingRight="24px">
-                                                    {isAdmin ? post.username : formatAnonymous(post.username)} | {formatPostTime(post.time)}
+                                                    {$isAdmin ? post.username : formatAnonymous(post.username)} | {formatPostTime(post.time)}
                                                 </StyledData>
                                             </Post>
                                         ))
@@ -248,7 +249,7 @@ const Post = styled.div`
     padding: 7px 0px;
     border-bottom: solid #C7D1D0 1px;
     &:hover{
-        ${(props) => props.isAdmin ? "cursor: pointer;" : null}
+        ${(props) => props.$isAdmin ? "cursor: pointer;" : null}
     }
 `;
 const Status = styled.div`
