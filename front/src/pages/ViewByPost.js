@@ -54,7 +54,7 @@ function ViewByPost() {
     };
 
     if (loading) return <div>데이터를 불러오는 중입니다...</div>;
-    if (error) return <div>에러가 발생했습니다: {error.message}</div>;
+    if (error) return <VBPContainer><div>데이터를 불러오지 못하였습니다.</div></VBPContainer>;
     if (!post) return null;
 
     const isAuthor = post.userId === loggedInUsername;
