@@ -25,6 +25,8 @@ function AllPostsContainer() {
     useEffect(() => {
         if (page !== undefined) {
             setCurrentPage(Number(page) - 1);
+        } else {
+            setCurrentPage(0);
         }
     }, [page]);
 
@@ -275,10 +277,10 @@ const Paging = styled.div`
     display: flex;
 `;
 const StyledBtn = styled.button`
-    border: ${(props) => props.$currentPage ? 'solid #6a6a6a 1px' : 'solid #C7D1D0 1px'};    
+    border: ${(props) => props.$currentPage ? 'solid #4DA3D5 1px' : 'solid #C7D1D0 1px'};    
     width: ${(props) => props.$width || '30px'}; 
     height: 30px;
-    background-color: ${(props) => props.$currentPage ? '#024598' : 'white'};
+    background-color: ${(props) => props.$currentPage ? '#4DA3D5' : 'white'};
     color: ${(props) => props.$currentPage ? 'white' : '#0279C2'};
     box-sizing: border-box;
     border-top-left-radius: ${(props) => props.$borderTopLeft};
@@ -287,8 +289,8 @@ const StyledBtn = styled.button`
     border-bottom-right-radius: ${(props) => props.$borderBottomRight};
     &:hover{
         cursor: pointer;
-        color: white;
-        background-color: ${(props) => props.$currentPage ? '#024598' : '#4DA3D5'};
+        color: ${(props) => props.$currentPage ? 'white' : '#0279C2'};
+        background-color: ${(props) => props.$currentPage ? '#4DA3D5' : '#F6F6F6'};
     }
 `;
 const StyledMessage = styled.div`
