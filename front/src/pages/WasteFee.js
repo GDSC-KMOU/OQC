@@ -1,14 +1,5 @@
 import React from 'react';
-import {
-    Container,
-    WasteFeeWrapper,
-    StyledTitle,
-    StyledContent,
-    TableWrapper,
-    StyledTable,
-    StyledTr,
-    StyledTd,
-} from './WasteFee.styles';
+import styled from "styled-components";
 
 const WasteFee = () => {
     return (
@@ -140,5 +131,77 @@ const WasteFee = () => {
 
     );
 };
+
+const Container = styled.div`
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-top: 15px;
+    margin-bottom: 15px;
+`;
+const WasteFeeWrapper = styled.div`
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    @media (max-width: 768px) {
+        width: 95%;
+    }    
+`;
+const StyledTitle = styled.div`
+    width: 98%;
+    height: 50px;
+    margin: auto;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    border-bottom: solid #4DA3D5 5px;
+    color: #4DA3D5;
+    font-size: 25px;
+    font-weight: bold;
+    @media (max-width: 768px) {
+        width: 100%;
+    }    
+`;
+const StyledContent = styled.div`
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    @media (max-width: 1280px) {
+        grid-template-columns: 1fr 1fr;
+        
+    }
+    @media (max-width: 720px) {
+        grid-template-columns: 1fr;
+        padding-bottom: 24px;
+        width: 100%;
+    }
+    grid-gap: 36px 3%;
+    width: 98%;
+`;
+const TableWrapper = styled.div`
+    height: 100%;
+    @media (max-width: 720px) {
+        font-size: 12px;
+    }
+`;
+const StyledTable = styled.table`
+    width: 100%;
+    border: solid #C7D1D0 1px;
+    text-align: center;
+`;
+const StyledTr = styled.tr`
+    border: solid #C7D1D0 1px;
+    color: #666666;
+    vertical-align: middle;
+    height: 50px;
+`;
+const StyledTd = styled.td`
+    border: solid #C7D1D0 1px;
+    color: #666666;
+    vertical-align: middle;
+    width: 33.33%;
+    
+`;
 
 export default WasteFee;

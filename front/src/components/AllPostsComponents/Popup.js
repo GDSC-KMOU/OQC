@@ -86,7 +86,7 @@ const PopupPresentation = ({ paid, accepted, time, userName, phoneNumber, garbag
     return (
         <PopupOverlay onClick={handleOverlayClick}>
             <StyledPopupContainer>
-                <PopupTop>
+                <PopupTop accepted={accepted}>
                     <PopupTopLeft>
                         {loading ? null : (accepted ? "승인완료" : "대기중")}
                     </PopupTopLeft>
@@ -146,9 +146,12 @@ const StyledPopupContainer = styled.div`
     max-width: 740px;
     min-height: 434px;
     z-index: 1001;
+    @media (max-width: 768px) {
+        width: 98%;
+    }
 `;
 const PopupTop = styled.div`
-    background-color: #FFBB33;
+    background-color: ${(props) => props.accepted ? "#33B5E5" : "#FFBB33"};
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;
     height: 30px;

@@ -147,17 +147,15 @@ const AllPostsPresentation = ({ loading, posts, totalPages, handlePageChange, cu
                                     {posts && posts.length > 0 ? (
                                         posts.map(post => (
                                             <Post key={post.id} onClick={() => isAdmin ? handlePopup(post.id) : undefined} isAdmin={isAdmin}>
-                                                <StyledData width="10%" $justifyContent="center">
+                                                <StyledData $justifyContent="center" $paddingLeft="24px" $width="10%">
                                                     <Status
-                                                        width="80px"
-                                                        height="36px"
                                                         $bgColor={post.accepted ? "#33B5E5" : "#FFBB33"}
                                                     >
                                                         {post.accepted ? "승인완료" : "대기중"}
                                                     </Status>
                                                 </StyledData>
-                                                <StyledData $paddingLeft="3%" width="50%">{post.garbageName}</StyledData>
-                                                <StyledData $justifyContent="end" width="40%">
+                                                <StyledData $paddingLeft="10px">{post.garbageName}</StyledData>
+                                                <StyledData $textAlign="right" $paddingRight="24px">
                                                     {isAdmin ? post.username : formatAnonymous(post.username)} | {formatPostTime(post.time)}
                                                 </StyledData>
                                             </Post>
@@ -205,6 +203,9 @@ const AllPostsWrapper = styled.div`
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    @media (max-width: 768px) {
+        width: 95%;
+    }
 `;
 const StyledTitle = styled.div`
     width: 98%;
@@ -217,11 +218,17 @@ const StyledTitle = styled.div`
     color: #4DA3D5;
     font-size: 25px;
     font-weight: bold;
+    @media (max-width: 768px) {
+        width: 100%;
+    }
 `;
 const PostListWrapper = styled.div`
     width: 98%;
     box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.25);
     border-radius: 5px;
+    @media (max-width: 768px) {
+        width: 100%;
+    }
 `;
 const PostListTop = styled.div`
     background-color: #4DA3D5;
@@ -235,17 +242,18 @@ const PostListMain = styled.div`
     border-bottom-right-radius: 5px;
 `;
 const Post = styled.div`
-    display: flex;
+    width: 100%;
+    display: table;
     align-items: center;
-    padding: 7px 20px;
+    padding: 7px 0px;
     border-bottom: solid #C7D1D0 1px;
     &:hover{
         ${(props) => props.isAdmin ? "cursor: pointer;" : null}
     }
 `;
 const Status = styled.div`
-    width: ${(props) => props.width};
-    height: ${(props) => props.height};
+    width: 80px;
+    height: 36px;
     background-color: ${(props) => props.$bgColor};
     margin-left: ${(props) => props.marginLeft};
     display: flex;
@@ -260,14 +268,15 @@ const Status = styled.div`
 }
 `;
 const StyledData = styled.div`
-    width: ${(props) => props.width};
+    width: ${(props) => props.$width};
     text-align: ${(props) => props.$textAlign};
     padding-left: ${(props) => props.$paddingLeft};
-    display: flex;
+    padding-right: ${(props) => props.$paddingRight};
+    display: table-cell;
+    
     justify-content: ${(props) => props.$justifyContent};
     @media (max-width: 768px) {
         font-size: 12px;
-        padding-left: 0;
     }
 `;
 
