@@ -59,8 +59,9 @@ function ViewByPost() {
 
     const isAuthor = post.userId === loggedInUsername;
     const canPay = !post.paid && isAuthor;
-
-    console.log("data: ", post)
+    
+    if(post.userId !== loggedInUsername)
+        return navigate('/');
     return (
         <VBPContainer>
             <VBPCotents>
