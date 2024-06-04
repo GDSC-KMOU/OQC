@@ -125,6 +125,7 @@ const StyledTr = styled.tr`
     display: table;
     @media (max-width: 768px) {
         height: 28px;
+        width: 100%;
    }
    
 `

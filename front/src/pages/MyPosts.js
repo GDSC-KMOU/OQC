@@ -49,35 +49,26 @@ function MyPosts() {
     return (
         <Container>
             <MyPostsWrapper>
+            <StyledTitle>MY 신청 현황</StyledTitle>
             { 
                 !token ? (
-                        <>
-                            <StyledTitle>MY 신청 현황</StyledTitle>
-                            <State>로그인이 필요한 서비스입니다.</State>
-                        </>
+                    <State>로그인이 필요한 서비스입니다.</State>
                 ) : loading ? (
-                        <>
-                            <StyledTitle>MY 신청 현황</StyledTitle>
-                            <State><LoadingSpinner /></State>
-                        </>
+                    <State><LoadingSpinner /></State>
                 ) : error ? (
-                        <>
-                            <StyledTitle>MY 신청 현황</StyledTitle>
-                            <State>데이터 불러오기 실패</State>
-                        </>
+                    <State>데이터 불러오기 실패</State>
                 ) : (
-                        <>
-                            <StyledTitle>MY 신청 현황</StyledTitle>
-                                {posts.length > 0 ? (
-                                    <PostsContainer>
-                                    {posts.map(post => (
-                                        <Card key={post.id} post={post} formatPostTime={formatPostTime} navigate={navigate} />
-                                    ))}
-                                    </PostsContainer>  
-                                ) : (
-                                    <State>신청된 폐기물이 없습니다.</State>
-                                )} 
-                        </>
+                    <>
+                        {posts.length > 0 ? (
+                            <PostsContainer>
+                            {posts.map(post => (
+                                <Card key={post.id} post={post} formatPostTime={formatPostTime} navigate={navigate} />
+                            ))}
+                            </PostsContainer>  
+                        ) : (
+                            <State>신청된 폐기물이 없습니다.</State>
+                        )} 
+                    </>
                 )
             }
             </MyPostsWrapper>
@@ -131,6 +122,7 @@ const PostsContainer = styled.div`
     grid-template-columns: 1fr 1fr 1fr;
     @media (max-width: 1440px) {
         grid-template-columns: 1fr 1fr;
+        width: 98%;
     }
     @media (max-width: 992px) {
         grid-template-columns: 1fr;

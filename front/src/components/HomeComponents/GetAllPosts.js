@@ -9,6 +9,7 @@ const GetAllStts = () => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
     const token = localStorage.getItem('token');
+    const [isAdmin, setIsAdmin] = useState(false);
 
     const navigate = useNavigate();
 
@@ -21,7 +22,7 @@ const GetAllStts = () => {
                 };
                 if (token) {
                     headers['Authorization'] = `Bearer ${token}`;
-                }
+                }   
 
                 const response = await axios.get('https://api.capserver.link/', { headers });
                 if (response.data.allPosts) {
@@ -37,6 +38,12 @@ const GetAllStts = () => {
     };
         fetchPosts();
     }, [token]);
+    useEffect(() => {
+        if (token) {
+            const payload = JSON.parse(atob(token.split('.')[1]));
+            setIsAdmin(payload.role === 'ROLE_ADMIN');
+        }
+    }, []);
     const formatPostTime = (time) => {
         const date = new Date(time);
         const year = date.getFullYear();
@@ -78,7 +85,7 @@ const GetAllStts = () => {
             <StyledTable>
                 <tbody>
                     {allPosts.map(post => (
-                        <StyledTr key={post.id} onClick={() => navigate(`/view-by-post/${post.id}`)}>
+                        <StyledTr key={post.id} onClick={() => isAdmin ? navigate(`/view-by-post/${post.id}`) : null} $isAdmin={isAdmin}>
                             <StyledTd width="10%">
                                 <StyledP
                                     width="80px"
@@ -89,7 +96,7 @@ const GetAllStts = () => {
                                 </StyledP>
                             </StyledTd>
                             <StyledTd $paddingLeft="10px">{post.garbageName}</StyledTd>
-                            <StyledTd $textAlign="right">{formatAnonymous(post.username)} | {formatPostTime(post.time)}</StyledTd>
+                            <StyledTd $textAlign="right">{isAdmin ? post.username : formatAnonymous(post.username)} | {formatPostTime(post.time)}</StyledTd>
                         </StyledTr>
                     ))} 
                 </tbody>
@@ -108,15 +115,18 @@ const StyledTable = styled.table`
     @media (max-width: 768px) {
          width: 100%;
          padding: 0;
+         
     }
 `
 
 const StyledTr = styled.tr`
-    cursor: pointer;
+    cursor: ${(props) => props.$isAdmin ? 'pointer' : ''};
     height: 59px;
     display: table;
+    width: 100%;
     @media (max-width: 768px) {
         height: 28px;
+        width: 100%;
    }
 `
 

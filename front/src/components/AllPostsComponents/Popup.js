@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { useState, useEffect, useCallback } from 'react';
 import styled from "styled-components";
 import LoadingSpinner from "../Loading";
+import Xmark from "../../assets/xmark(white).svg";
 
 const PopupContainer = ({ postId, setPostId, handlePopup }) => {
     const [popupContents, setPopupContents] = useState(null);
@@ -58,8 +59,6 @@ const PopupContainer = ({ postId, setPostId, handlePopup }) => {
             handleClose();
         }
     };
-
-
     return (
         <PopupPresentation
             paid={popupContents?.paid}
@@ -91,7 +90,7 @@ const PopupPresentation = ({ paid, $accepted, time, userName, phoneNumber, garba
                     </PopupTopLeft>
                     <PopupTopRight>
                         {loading ? null : formatPostTime(time)}
-                        <PopupCloseBtn onClick={handleClose}>X</PopupCloseBtn>
+                        <PopupCloseBtn onClick={handleClose}><img src={Xmark} alt="Xmark"></img></PopupCloseBtn>
                     </PopupTopRight>
                 </PopupTop>
                 <PopupMainWrapper>
@@ -102,7 +101,7 @@ const PopupPresentation = ({ paid, $accepted, time, userName, phoneNumber, garba
                             <PopupMainContainer>
                                 <PopupMain>
                                     <StyledDiv>배출자명: <StyledSpan>{userName}</StyledSpan></StyledDiv>
-                                    <StyledDiv>휴대폰 : <StyledSpan>01012345678</StyledSpan></StyledDiv>
+                                    <StyledDiv>휴대폰 : <StyledSpan>010</StyledSpan></StyledDiv>
                                     <StyledDiv>폐기물명: <StyledSpan>{garbageName}({garbageContent})</StyledSpan></StyledDiv>
                                     <StyledDiv>결제금액: <StyledSpan>{formatPrice(price)}원</StyledSpan></StyledDiv>
                                     <StyledDiv>
@@ -192,10 +191,12 @@ const PopupTopLeft = styled.div`
     font-size: 20px;
 `;
 const PopupTopRight = styled.div`
+    display: flex;
+    align-items: center;
 `;
 const StyledDiv = styled.div`
 `;
-const PopupCloseBtn = styled.button`
+const PopupCloseBtn = styled.div`
     cursor: pointer;
     margin-left: 16px;
     width: 24px;

@@ -30,7 +30,9 @@ function ViewByPost() {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const loggedInUsername = getUsernameFromToken();
-
+    const [isAdmin, setIsAdmin] = useState(true);
+    const token = localStorage.getItem('token');
+    
     const fetchData = useCallback(async () => {
         try {
             const token = localStorage.getItem('token');
@@ -48,6 +50,13 @@ function ViewByPost() {
     useEffect(() => {
         fetchData();
     }, [fetchData]);
+    
+    useEffect(() => {
+        if (token) {
+            const payload = JSON.parse(atob(token.split('.')[1]));
+            setIsAdmin(payload.role === 'ROLE_ADMIN');
+        }
+    }, []);
 
     const handleGoToCheckout = () => {
         navigate('/payment', { state: { post } });
@@ -60,8 +69,9 @@ function ViewByPost() {
     const isAuthor = post.userId === loggedInUsername;
     const canPay = !post.paid && isAuthor;
     
-    if(post.userId !== loggedInUsername)
-        return navigate('/');
+    if (!isAdmin && post && post.userId !== loggedInUsername) {
+        navigate('/');
+    }
     return (
         <VBPContainer>
             <VBPCotents>

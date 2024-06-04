@@ -6,7 +6,6 @@ import Xmark from "../assets/xmark(white).svg";
 import Arrow from "../assets/arrow.svg";
 const MobileNav = () => {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
-    const [isAdmin, setIsAdmin] = useState(false);
     const [isOpen, setIsOpen] = useState(false);
     const [username, setUsername] = useState("");
     const location = useLocation();
@@ -17,7 +16,6 @@ const MobileNav = () => {
         if (token) {
             setIsLoggedIn(true);
             const payload = JSON.parse(atob(token.split('.')[1]));
-            setIsAdmin(payload.role === 'ROLE_ADMIN');
             setUsername(payload.username);
         }
     }, []);
@@ -32,6 +30,11 @@ const MobileNav = () => {
     const handleToggle = () => {
         setIsOpen(!isOpen);
     };
+    const handleOverlayClick = (e) => {
+        if (e.target === e.currentTarget) {
+            handleToggle();
+        }
+    };
 
     return (
         <>
@@ -41,7 +44,7 @@ const MobileNav = () => {
             <div />
         </Hamburger>
         {isOpen && (
-            <NavContainer>
+            <NavContainer onClick={handleOverlayClick}>
             <NavMenu>
                 <NavTop>
                 <div>

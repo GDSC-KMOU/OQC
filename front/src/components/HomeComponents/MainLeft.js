@@ -47,10 +47,9 @@ const MainLeftWrapper = styled.div`
     height: 444px;
     @media (max-width: 768px) {
         width: 95%;
-        height: 100%;
+        height: 344px;
     }
 `;
-
 const ContentTopWrapper = styled.nav`
     height: 50px;
     background-color: #0279C2;
@@ -79,10 +78,12 @@ const StyledBtn = styled.button`
     border-top-right-radius: ${(props) => props.$borderTopRight ? '5px' : '0px'};
     font-weight: bold;
     font-size: ${(props) => props.fontSize === "sm"? '15px' : '20px'};
+    word-break: keep-all;
     @media (max-width: 768px) {
         font-size: ${(props) => props.fontSize === "sm"?  '10px': '14px'};
         height: 36px;
         width: ${(props) => props.alt === "1"? '37%' : '26%'};
+        
     }
 `;
 
@@ -96,7 +97,7 @@ const StyledLink = styled(Link)`
   @media (max-width: 768px) {
     float: right;
     padding-right: 6px;
-}
+  }
 `;
 
 const SelectWrapper = styled.div`
@@ -104,6 +105,10 @@ const SelectWrapper = styled.div`
     box-shadow: 0 2px 12px 0 rgba(0,0,0,0.25);
     border-bottom-left-radius: 5px;
     border-bottom-right-radius: 5px;
+    @media (max-width: 768px) {
+        width: 100%;
+        height: 308px;
+    }
 `;
 
 export default MainLeft;

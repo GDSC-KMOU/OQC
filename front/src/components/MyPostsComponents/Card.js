@@ -1,5 +1,5 @@
 import React from 'react';
-import { Card, PostTitle, PostContentWrapper, PostContent, PostImg, StyledP, StyledSpan } from './Card.styles'; // 스타일 및 컴포넌트 임포트 
+import styled from 'styled-components';
 
 const PostCard = ({ post, formatPostTime, navigate }) => {
     return (
@@ -11,21 +11,77 @@ const PostCard = ({ post, formatPostTime, navigate }) => {
             <PostContentWrapper>
                 <PostContent>
                     <p>배출자명: <StyledSpan>{post.username}</StyledSpan></p>
-                    <p>휴대폰 : <StyledSpan>01012345678</StyledSpan></p>
+                    <p>휴대폰 : <StyledSpan>{post.phoneNumber}</StyledSpan></p>
                     <p>폐기물명: <StyledSpan>{post.garbageName}</StyledSpan></p>
-                    <p>결제금액: <StyledSpan>8,000원</StyledSpan></p>
-                    <p>배출장소: <br /><StyledSpan>부산 영도구 태종로 727 한국해양대학교 공학1관</StyledSpan></p>
-                    {/* 추가 필요
-                    <p>결제금액: {post.paymentAmount}</p>
-                    <p>배출장소: {post.address}</p>
-                    */}
+                    <p>결제금액: <StyledSpan>{post.price}원</StyledSpan></p>
+                    <p>배출장소: <br /><StyledSpan>{post.address}</StyledSpan></p>
                 </PostContent>
-                <PostImg>
-                    사진
-                </PostImg>
+                <PostImgWrapper>
+                    <PostImg src={`data:image/jpeg;base64,${post.image}`} alt={post.title}/>
+                </PostImgWrapper>
             </PostContentWrapper>                            
         </Card>
     );
 };
+
+const Card = styled.div`
+    width: 100%;
+    height: 338px;
+    &:hover {
+        cursor: pointer;
+    }
+`;
+const PostImg = styled.img`
+    width: 100%;
+    height: 100%;
+`
+const PostTitle = styled.div`
+    background-color: ${props => {
+        if (props.$status === 'paid') {
+            return '#99B88C'; // 결제완료
+        } else if (props.$status === 'accepted') {
+            return '#33B5E5'; // 승인완료
+        } else {
+            return '#FFBB33'; // 미결제
+        }
+    }};
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 15px 0 15px;
+    height: 50px;
+    color: white;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+`;
+const StyledP = styled.p`
+    font-size: ${(props) => props.$fonsSize};
+    font-weight: bold;
+`;
+const PostContentWrapper = styled.div`
+    border: solid rgb(207, 207, 207) 1px;
+    box-sizing: border-box;
+    border-radius: 0 0 5px 5px;
+    height: 288px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+`;
+
+const PostContent = styled.div`
+    width: 45%;
+    height: 240px;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+`;
+const StyledSpan = styled.span`
+    color: #666666;
+`;
+const PostImgWrapper = styled.div`
+    width: 40%;
+    height: 240px;
+    background-color: #ccc;
+`;
 
 export default PostCard;
