@@ -54,11 +54,20 @@ const GetAllStts = () => {
         return `${year}.${month < 10 ? '0' + month : month}.${day < 10 ? '0' + day : day}`;
     };
     const formatAnonymous = (userid) => {
-        const length = userid.length - 2;
-        userid = userid.slice(0, 2);
-        // 형식화된 이름을 반환
-        return `${userid}${'*'.repeat(length)}`;
+        if(userid.length > 2){
+            const length = userid.length - 2;
+            userid = userid.slice(0, 2);
+            return `${userid}${'*'.repeat(length)}`;
+        }else if(userid.length == 2){
+            const length = userid.length - 1;
+            userid = userid.slice(0, 1);
+            return `${userid}${'*'.repeat(length)}`;
+        }
+        else{
+            return `${userid}`;
+        }
     };
+
     if(loading){
         return <LoadingSpinner />
     }
