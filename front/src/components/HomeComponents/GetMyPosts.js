@@ -98,7 +98,7 @@ const GetMyStts = () => {
                                 </StyledP>
                             </StyledTd>
                             <StyledTd $paddingLeft="10px">{post.garbageName}</StyledTd>
-                            <StyledTd $textAlign="right">{post.username} | {formatPostTime(post.time)}</StyledTd>
+                            <StyledTd $textAlign="right" color="#666666">{post.username} | {formatPostTime(post.time)}</StyledTd>
                         </StyledTr>
                     ))} 
                 </tbody>
@@ -134,6 +134,7 @@ const StyledTd = styled.td`
     width: ${(props) => props.width};
     text-align: ${(props) => props.$textAlign};
     padding-left: ${(props) => props.$paddingLeft};
+    color: ${(props) => props.color || ""};
     @media (max-width: 768px) {
         font-size: 12px;
         padding-left: 0;
