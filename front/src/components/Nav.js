@@ -41,19 +41,19 @@ const NavRender = () => {
         <StyledNav>
             <NavTop>
                 <NavTopLeft>
-                    <img src={Logo} alt="Logo" />
+                    <img src={Logo} alt="Logo" style={{height: "36px"}}/>
                     <StyledLink to="/" onClick={() => handleLinkClick('/')}><YgWDS>YgWDS</YgWDS></StyledLink>
                 </NavTopLeft>
                 <NavTopRight >
                         {/*로그인 안하면 밑에 두 개 출력*/}                
                         {!isLoggedIn && (
                             <>
-                            <Button width="120px">
+                            <Button width="80px">
                                 <StyledLink to="/login" onClick={() => handleLinkClick('/login')}>
                                     로그인
                                 </StyledLink>
                             </Button>
-                            <Button width="140px">
+                            <Button width="100px">
                                 <StyledLink to="/signup" onClick={() => handleLinkClick('/signup')}>
                                         회원가입
                                 </StyledLink>
@@ -63,7 +63,7 @@ const NavRender = () => {
                         {isLoggedIn && (
                             <>
                                 <Username>
-                                    <StyledP color='#0279C2' fontSize="18px" fontWeight="bold">{username}</StyledP> 
+                                    <StyledP color='#0279C2' fontSize="18px" fontWeight="bold" style={{paddingLeft: "24px"}}>{username}</StyledP> 
                                     <StyledP>&nbsp;님</StyledP>
                                 </Username>
                                 <Button>
@@ -128,7 +128,7 @@ const StyledNav = styled.nav`
 `;
 const StyledDiv = styled.div`
     width: 100%;
-    height: 160px;
+    height: 120px;
     @media (max-width: 768px){
         height: 64px;
     }
@@ -138,7 +138,7 @@ const NavTop = styled.div`
     margin: auto;
     display: flex;
     justify-content: space-between;
-    height: 100px;
+    height: 60px;
     @media (max-width: 768px){
         width: 100%;
         height: 64px;
@@ -157,7 +157,7 @@ const NavTopLeft = styled.div`
     }
 `;
 const YgWDS = styled.p`
-    font-size: 35px;
+    font-size: 24px;
     font-weight: bold;
     color: #4DA3D5;
     padding-left: 10px;    
@@ -170,7 +170,7 @@ const Username = styled.div`
     height: 56px;
     display: flex;
     align-items: center;
-    justify-content: end;
+    justify-content: center;
 `;
 const StyledP = styled.p`
     color: ${(props) => props.color || '#024598'};
@@ -178,16 +178,16 @@ const StyledP = styled.p`
     font-weight: ${(props) => props.fontWeight};
 `;
 const Button = styled.div`
-    width: ${(props) => props.width || '140px'};
-    height: 56px;
+    width: ${(props) => props.width || '100px'};
+    height: 48px;
     background-color: #4DA3D5;
-    font-size: 18px;
-    border-radius: 15px;
+    font-size: 16px;
+    border-radius: 12px;
     text-align: center;
     line-height : 56px;
 `;
 const NavTopRight = styled.div`
-    width: 269px;
+    width: 192px;
     display: flex;
     justify-content: space-between;
     align-items: center;
