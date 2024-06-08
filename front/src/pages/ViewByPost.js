@@ -39,6 +39,7 @@ function ViewByPost() {
             const response = await axios.get(`https://api.capserver.link/posts/${postId}`, {
                 headers: { Authorization: `Bearer ${token}` }
             });
+            console.log(response.data);
             setPost(response.data);
             setLoading(false);
         } catch (error) {
@@ -75,7 +76,7 @@ function ViewByPost() {
     return (
         <VBPContainer>
             <VBPCotents>
-                <ContentTop />
+                <ContentTop $paid={post.paid.toString()} $accepted={post.accepted.toString()}/>
                 <ContentBottom>
                     <ContentImg src={`data:image/jpeg;base64,${post.image}`} alt={post.title}/>
                     <ContentText>폐기물명</ContentText>
@@ -108,8 +109,8 @@ function ViewByPost() {
                         <ContentInput value={post.time} readOnly></ContentInput>
                     </InputWrapper>
                     
-                    {canPay ? 
-                    <ContentBtn onClick={handleGoToCheckout} color="#4DA3D5" alt="canpay">결제하기</ContentBtn> 
+                    {isAdmin? <></> : canPay ? 
+                    <ContentBtn onClick={handleGoToCheckout} color="#0D6EFD" alt="canpay">결제하기</ContentBtn> 
                     : <ContentBtn color="#666666">결제완료</ContentBtn>
                     }
                 </ContentBottom>
@@ -125,6 +126,15 @@ const VBPContainer = styled.div`
     justify-content: center;
     align-items: center;
     margin: 23px 0 26px 0;
+    animation: slideRight 0.75s;
+    @keyframes slideRight {
+    from {
+        transform: translateX(480px);
+    }
+    to {   
+        transform: translateX(0);
+    }
+}
 `;
 const VBPCotents = styled.div`
     width: 40%;
@@ -142,7 +152,12 @@ const VBPCotents = styled.div`
 const ContentTop = styled.div`
     width: 100%;
     height: 50px;
-    background-color: #4DA3D5;
+    background-color: ${(props) => 
+        props.$paid === "true"?  "#33B5E5" 
+        : 
+        (props.$accepted === "true"? "#000" 
+        : 
+        "#FFBB33")};
     display: flex;
     justify-content: center;
     border-radius: 5px 5px 0 0;
@@ -212,6 +227,10 @@ const ContentBtn = styled.button`
     background-color: ${(props) => props.color};
     color: #fff;
     border-radius: 5px;
+    &:hover {
+        background-color: ${(props) => props.alt === "canpay" ? "#0257d5" : ""};
+        transition: 0.3s;
+    }
     @media (max-width: 768px) {
         font-size: 16px;
         height: 36px;

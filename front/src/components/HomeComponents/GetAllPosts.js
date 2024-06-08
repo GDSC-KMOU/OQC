@@ -25,6 +25,7 @@ const GetAllStts = () => {
                 }   
 
                 const response = await axios.get('https://api.capserver.link/', { headers });
+                console.log(response);
                 if (response.data.allPosts) {
                     setAllPosts(response.data.allPosts.content.slice(0,6));
                 }
@@ -94,14 +95,14 @@ const GetAllStts = () => {
             <StyledTable>
                 <tbody>
                     {allPosts.map(post => (
-                        <StyledTr key={post.id} onClick={() => isAdmin ? navigate(`/view-by-post/${post.id}`) : null} $isAdmin={isAdmin}>
+                        <StyledTr>
                             <StyledTd width="10%">
                                 <StyledP
                                     width="80px"
                                     height="36px"
-                                    $bgColor={post.accepted ? "#33B5E5" : "#FFBB33"}
+                                    $bgColor={post.paid? (post.accepted ? "#5cb85c" : "#33B5E5") : "#FFBB33"}
                                 >
-                                    {post.accepted ? "승인완료" : "대기중"}
+                                    {post.paid? (post.accepted ? "승인완료" : "대기중") : "미결제"}
                                 </StyledP>
                             </StyledTd>
                             <StyledTd $paddingLeft="10px">{post.garbageName}</StyledTd>
@@ -111,7 +112,6 @@ const GetAllStts = () => {
                 </tbody>
             </StyledTable>
         </>
-        
     );
 };
 

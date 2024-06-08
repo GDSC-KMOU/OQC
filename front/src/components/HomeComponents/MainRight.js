@@ -22,9 +22,22 @@ const MainRight = () => {
         return(
             <ContentBottomWrapper>
                 <ContentTitle>고객지원안내</ContentTitle>
+                
                 <ContentBottomContent>
-                    <TextWrapper>불편이 생긴 경우 고객센터로 문의해주시길 바랍니다</TextWrapper>
-                    <img src={NumberImg} alt="" />
+                    <StatusContentWrapper>
+                        <StatusWrapper>
+                            <Status $bgColor= {"#FFBB33"}>미결제?</Status> 
+                            <StatusDescription>: 배출 신청 후 결제하지 않은 상태</StatusDescription> 
+                        </StatusWrapper>
+                        <StatusWrapper>
+                        <Status $bgColor= {"#33B5E5"}>대기중?</Status> 
+                            <StatusDescription>: 결제완료 후 관리자 승인 대기 상태</StatusDescription> 
+                        </StatusWrapper>
+                        <StatusWrapper>
+                            <Status $bgColor= {"#5cb85c"}>승인완료?</Status>
+                            <StatusDescription>: 관리자 승인 완료 상태</StatusDescription> 
+                        </StatusWrapper>
+                    </StatusContentWrapper>
                 </ContentBottomContent>
             </ContentBottomWrapper>
         )
@@ -125,5 +138,38 @@ const TextWrapper = styled.div`
         font-size: 12px;
     }
 `
+const StatusContentWrapper = styled.div`
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+`
+const StatusWrapper = styled.div`
+    display: flex;
+    align-items: center;
+`
+
+const StatusDescription = styled.span`
+    margin-left: 12px;
+    color: #666666;
+    font-weight: bold;
+    @media (max-width: 768px) {
+        font-size: 12px;
+    }
+`
+const Status = styled.div`
+    width: 100px;
+    height: 28px;
+    background-color: ${(props) => props.$bgColor};
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 30px;
+    color: white;
+    @media (max-width: 768px) {
+        width: 54px;
+        height: 28px;
+        font-size: 10px;
+}
+`;
 
 export default MainRight;

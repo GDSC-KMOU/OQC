@@ -5,7 +5,7 @@ const WasteFee = () => {
     return (
         <Container>
             <WasteFeeWrapper>
-                <StyledTitle>폐기물 수수료</StyledTitle>
+                <StyledTitle  $width="98%">폐기물 수수료</StyledTitle>
                 <StyledContent>
                     <TableWrapper>
                         <StyledTable>
@@ -161,8 +161,10 @@ const StyledTitle = styled.div`
     font-size: 25px;
     font-weight: bold;
     @media (max-width: 768px) {
-        width: 100%;
-    }    
+        font-size: 20px;
+        border-bottom: solid #4DA3D5 2px;
+        height: 36px;
+    } 
 `;
 const StyledContent = styled.div`
     display: grid;

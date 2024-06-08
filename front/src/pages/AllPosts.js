@@ -137,7 +137,7 @@ const AllPostsPresentation = ({ loading, posts, totalPages, handlePageChange, cu
     return (
         <Container>
             <AllPostsWrapper>
-                <StyledTitle>전체 배출 신청 현황</StyledTitle>
+                <StyledTitle $width="98%">전체 배출 신청 현황</StyledTitle>
                 {!token ? (
                     <StyledMessage>
                         로그인이 필요한 서비스입니다.
@@ -159,13 +159,13 @@ const AllPostsPresentation = ({ loading, posts, totalPages, handlePageChange, cu
                                             <Post key={post.id} $isAdmin={$isAdmin} onClick={() => $isAdmin ? handlePopup(post.id) : undefined}>
                                                 <StyledData $justifyContent="center" $paddingLeft="24px" $width="10%">
                                                     <Status
-                                                        $bgColor={post.accepted ? "#33B5E5" : "#FFBB33"}
+                                                        $bgColor={post.paid? (post.accepted ? "#5cb85c" : "#33B5E5") : "#FFBB33"}
                                                     >
-                                                        {post.accepted ? "승인완료" : "대기중"}
+                                                        {post.paid? (post.accepted ? "승인완료" : "대기중") : "미결제"}
                                                     </Status>
                                                 </StyledData>
                                                 <StyledData $paddingLeft="10px">{post.garbageName}</StyledData>
-                                                <StyledData $textAlign="right" $paddingRight="24px">
+                                                <StyledData $textAlign="right" $paddingRight="24px" color="#666666">
                                                     {$isAdmin ? post.username : formatAnonymous(post.username)} | {formatPostTime(post.time)}
                                                 </StyledData>
                                             </Post>
@@ -229,8 +229,10 @@ const StyledTitle = styled.div`
     font-size: 25px;
     font-weight: bold;
     @media (max-width: 768px) {
-        width: 100%;
-    }
+        font-size: 20px;
+        border-bottom: solid #4DA3D5 2px;
+        height: 36px;
+    }  
 `;
 const PostListWrapper = styled.div`
     width: 98%;
@@ -245,6 +247,8 @@ const PostListTop = styled.div`
     height: 50px;
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;
+    @media (max-width: 768px) {
+        height: 36px;
 `;
 const PostListMain = styled.div`
     height: 100%;
@@ -283,8 +287,8 @@ const StyledData = styled.div`
     padding-left: ${(props) => props.$paddingLeft};
     padding-right: ${(props) => props.$paddingRight};
     display: table-cell;
-    
     justify-content: ${(props) => props.$justifyContent};
+    color: ${(props) => props.color || ""};
     @media (max-width: 768px) {
         font-size: 12px;
     }

@@ -91,7 +91,6 @@ function ImageUploadComponent() {
                 }
             });
             setPostingLoading(false);
-            alert('신청 완료! 결제 부탁드립니다!');
             navigate(`/view-by-post/${data.data.id}`);
         } catch (error) {
             setPostingLoading(false);
@@ -339,6 +338,8 @@ const StyledBtn = styled.button`
     background-color: #4DA3D5;
     margin-top: ${props => props.$marginTop};
     &:hover {
+        background-color: #2e8bc1;
+        transition: 0.3s;
         cursor: pointer;
     }
     @media (max-width: 768px) {
@@ -490,6 +491,11 @@ const AddressFindButton = styled.button`
     height: 24px;
     padding: 4px 16px;
     border-radius: 5px;
+    &:hover {
+        background-color: #2e8bc1;
+        transition: 0.3s;
+        cursor: pointer;
+    }
 `;
 
 const ModalContainer = createGlobalStyle`

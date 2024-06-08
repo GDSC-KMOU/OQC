@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 const PostCard = ({ post, formatPostTime, navigate }) => {
+    console.log(post);
     return (
         <Card key={post.id} onClick={() => navigate(`/view-by-post/${post.id}`)}>
             <PostTitle $status={post.paid ? (post.accepted ? 'accepted' : 'paid') : 'unpaid'}>
@@ -27,8 +28,10 @@ const PostCard = ({ post, formatPostTime, navigate }) => {
 const Card = styled.div`
     width: 100%;
     height: 338px;
+    transition: 400ms ease;
     &:hover {
         cursor: pointer;
+        transform: translateY(-0.5rem);
     }
 `;
 const PostImg = styled.img`
@@ -53,10 +56,16 @@ const PostTitle = styled.div`
     color: white;
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;
+    @media (max-width: 768px) {
+        height: 36px;
+    }
 `;
 const StyledP = styled.p`
     font-size: ${(props) => props.$fonsSize};
     font-weight: bold;
+    @media (max-width: 768px) {
+        font-size: 16px;
+    }
 `;
 const PostContentWrapper = styled.div`
     border: solid rgb(207, 207, 207) 1px;

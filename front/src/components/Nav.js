@@ -41,8 +41,10 @@ const NavRender = () => {
         <StyledNav>
             <NavTop>
                 <NavTopLeft>
-                    <img src={Logo} alt="Logo" style={{height: "36px"}}/>
-                    <StyledLink to="/" onClick={() => handleLinkClick('/')}><YgWDS>YgWDS</YgWDS></StyledLink>
+                    <StyledLink to="/" onClick={() => handleLinkClick('/')}>
+                        <img src={Logo} alt="Logo" style={{height: "36px"}}/>
+                        <YgWDS>YgWDS</YgWDS>
+                    </StyledLink>
                 </NavTopLeft>
                 <NavTopRight >
                         {/*로그인 안하면 밑에 두 개 출력*/}                
@@ -63,7 +65,7 @@ const NavRender = () => {
                         {isLoggedIn && (
                             <>
                                 <Username>
-                                    <StyledP color='#0279C2' fontSize="18px" fontWeight="bold" style={{paddingLeft: "24px"}}>{username}</StyledP> 
+                                    <StyledP color='#0279C2' fontSize="18px" fontWeight="bold">{username}</StyledP> 
                                     <StyledP>&nbsp;님</StyledP>
                                 </Username>
                                 <Button>
@@ -185,12 +187,17 @@ const Button = styled.div`
     border-radius: 12px;
     text-align: center;
     line-height : 56px;
+    &:hover {
+    background-color: #2e8bc1;
+    transition: 0.3s;
+  }
 `;
 const NavTopRight = styled.div`
     width: 192px;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    gap: 12px;
     @media (max-width: 768px){
         display : none;
     }

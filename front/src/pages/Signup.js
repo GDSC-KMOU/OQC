@@ -227,7 +227,7 @@ const StyledInput = styled.input`
     }
 `;
 const StyledBtn = styled.button`
-    width: ${(props) => props.$width || '180px'};
+    width: ${(props) => props.$width || '100%'};
     height: 48px;
     font-size: 16px;
     font-weight: bold;
@@ -238,6 +238,8 @@ const StyledBtn = styled.button`
     border-radius: 5px;
     margin-left: ${(props) => props.$marginLeft};;
     &:hover {
+        background-color: ${(props) => props.color === "gray" ? "#4d4d4d" : "#2e8bc1"};
+        transition: 0.3s;
         cursor: pointer;
     }
     @media (max-width: 768px) {
@@ -270,6 +272,8 @@ text-decoration-line: none;
     font-weight: bold;
     &:hover {
         cursor: pointer;
+        background-color: #4d4d4d;
+        transition: 0.3s;
     }
     display: flex;
     align-items: center;

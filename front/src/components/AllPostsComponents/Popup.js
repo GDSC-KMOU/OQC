@@ -16,6 +16,7 @@ const PopupContainer = ({ postId, setPostId, handlePopup }) => {
             const response = await axios.get(`https://api.capserver.link/posts/${postId}`, {
                 headers: { Authorization: `Bearer ${token}` }
             });
+            console.log(response.data)
             setPopupContents(response.data);
         } catch (error) {
             setErrorLog(error.message);
@@ -65,7 +66,7 @@ const PopupContainer = ({ postId, setPostId, handlePopup }) => {
             $accepted={popupContents?.accepted}
             time={popupContents?.time}
             userName={popupContents?.userName}
-            //phoneNumber={popupContents?.phoneNumber} // 추가 필요
+            phoneNumber={popupContents?.phoneNumber} // 추가 필요
             garbageName={popupContents?.garbageName}
             garbageContent={popupContents?.garbageContent}
             price={popupContents?.price}
@@ -84,9 +85,9 @@ const PopupPresentation = ({ paid, $accepted, time, userName, phoneNumber, garba
     return (
         <PopupOverlay onClick={handleOverlayClick}>
             <StyledPopupContainer>
-                <PopupTop $accepted={$accepted}>
+                <PopupTop $accepted={$accepted} $paid={paid}>
                     <PopupTopLeft>
-                        {loading ? null : ($accepted ? "승인완료" : "대기중")}
+                        {loading ? null : (paid? ($accepted ? "승인완료" : "대기중") : "미결제")}
                     </PopupTopLeft>
                     <PopupTopRight>
                         {loading ? null : formatPostTime(time)}
@@ -101,7 +102,7 @@ const PopupPresentation = ({ paid, $accepted, time, userName, phoneNumber, garba
                             <PopupMainContainer>
                                 <PopupMain>
                                     <StyledDiv>배출자명: <StyledSpan>{userName}</StyledSpan></StyledDiv>
-                                    <StyledDiv>휴대폰 : <StyledSpan>010</StyledSpan></StyledDiv>
+                                    <StyledDiv>휴대폰 : <StyledSpan>{phoneNumber}</StyledSpan></StyledDiv>
                                     <StyledDiv>폐기물명: <StyledSpan>{garbageName}({garbageContent})</StyledSpan></StyledDiv>
                                     <StyledDiv>결제금액: <StyledSpan>{formatPrice(price)}원</StyledSpan></StyledDiv>
                                     <StyledDiv>
@@ -148,8 +149,9 @@ const StyledPopupContainer = styled.div`
         width: 98%;
     }
 `;
+
 const PopupTop = styled.div`
-    background-color: ${(props) => props.$accepted ? "#33B5E5" : "#FFBB33"};
+    background-color: ${(props) => props.$paid? (props.$accepted ? "#5cb85c" : "#33B5E5") : "#FFBB33"};
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;
     height: 30px;
@@ -212,8 +214,10 @@ const SubmitBtn = styled.button`
     border: none;
     position: absolute;
     bottom: 24px;
+    cursor: ${(props) => props.$accepted ? "" : "pointer"};
     &:hover{
-        ${(props) => props.$accepted ? null : 'cursor: pointer;'};
+        background-color: ${(props) => props.$accepted ? '#666666;' : '#0257d5;'};
+        transition: 0.3s;
     };
 `;
 const StyledP = styled.p`

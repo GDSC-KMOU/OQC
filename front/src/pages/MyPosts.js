@@ -49,7 +49,7 @@ function MyPosts() {
     return (
         <Container>
             <MyPostsWrapper>
-            <StyledTitle>MY 신청 현황</StyledTitle>
+            <StyledTitle $width="98%">MY 신청 현황</StyledTitle>
             { 
                 !token ? (
                     <State>로그인이 필요한 서비스입니다.</State>
@@ -95,7 +95,7 @@ const MyPostsWrapper = styled.div`
     }    
 `;
 const StyledTitle = styled.div`
-    width: 98%;
+    width: ${props => props.$width || "96%" };
     height: 50px;
     margin: auto;
     margin-bottom: 20px;
@@ -106,7 +106,9 @@ const StyledTitle = styled.div`
     font-size: 25px;
     font-weight: bold;
     @media (max-width: 768px) {
-        width: 100%;
+        font-size: 20px;
+        border-bottom: solid #4DA3D5 2px;
+        height: 36px;
     }    
 `;
 const State = styled.div`

@@ -160,6 +160,8 @@ const StyledBtn = styled.button`
     font-size: 16px;
     font-weight: bold;
     &:hover {
+        background-color: #2e8bc1;
+        transition: 0.3s;
         cursor: pointer;
     }
     @media (max-width: 768px) {
@@ -178,6 +180,8 @@ const StyledLink = styled(Link)`
     font-size: 16px;
     font-weight: bold;
     &:hover {
+        background-color: #2e8bc1;
+        transition: 0.3s;
         cursor: pointer;
     }
     display: flex;
