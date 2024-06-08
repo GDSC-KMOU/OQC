@@ -17,17 +17,12 @@ function ImageUploadComponent() {
     const [error, setError] = useState('');
     const [recognitionLoading, setRecognitionLoading] = useState(false);
     const [postingLoading, setPostingLoading] = useState(false);
-    const [name, setName] = useState('');        
-    const [phoneNumber, setPhoneNumber] = useState('');
     const [address, setAddress] = useState('');
     const [detailAddress, setDetailAddress] = useState('');
     const [isOpen, setIsOpen] = useState(false);
 
     const formData = new FormData();
-    // Form 데이터에 이름 추가
-    formData.append('name', name);
-    // Form 데이터에 번호 추가
-    formData.append('phoneNumber', phoneNumber);
+
     const handleImageUpload = async () => {
         //ai 서버에 전송할 img 추가
         formData.append('image', image);
@@ -113,12 +108,6 @@ function ImageUploadComponent() {
     const handleChange = (e) => {
         const { name, value } = e.target;        
         switch (name) {
-            case 'name':
-                setName(value);
-                break;
-            case 'phoneNumber':
-                setPhoneNumber(value);
-                break;
             case 'detailAddress':
                 setDetailAddress(value);
                 break;
@@ -224,16 +213,8 @@ function ImageUploadComponent() {
                             </ContentsWrapper>
                             <ContentsWrapper>
                                 <StyledForm onSubmit={handleSubmitPost}>
-                                    <StyledTitle>배출자 정보</StyledTitle>
+                                    <StyledTitle>배출 장소</StyledTitle>
                                     <StyledContent $marginBottom="100px">
-                                        <TitleRenderWrapper>
-                                            <StyledTitleRender>이름</StyledTitleRender>
-                                        </TitleRenderWrapper>
-                                        <StyledInput type="text" name="name" value={name} onChange={handleChange} required/>
-                                        <TitleRenderWrapper>
-                                            <StyledTitleRender>휴대폰</StyledTitleRender>
-                                        </TitleRenderWrapper>
-                                        <StyledInput type="text" name="phoneNumber" value={phoneNumber} onChange={handleChange} required/>
                                         <TitleRenderWrapper display="flex">
                                             <StyledTitleRender>주소</StyledTitleRender>
                                             <AddressFindButton onClick={toggle}><img src={Find} alt='find' width="16px" height="16px"></img></AddressFindButton>
@@ -288,6 +269,9 @@ const Container = styled.div`
     justify-content: center;
     margin-top: 15px;
     margin-bottom: 15px;
+    @media (max-width: 768px) {
+        margin-bottom: 0;
+    }
 `;
 const WasteOutWrapper = styled.div`
     width: 80%;
@@ -336,6 +320,8 @@ const BtnWrapper = styled.div`
     width: 100%;
     display: flex;
     justify-content: center;
+    position: absolute;
+    bottom: 0;
     @media (max-width: 768px) {
         margin-top: 36px;
     }
@@ -484,8 +470,11 @@ const StyledForm = styled.form`
     height: 100%;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
     align-items: center;
+    position: relative;
+    @media (max-width: 768px) {
+        height: 290px;
+    }
 `
 
 const ModalXButton = styled.button`
