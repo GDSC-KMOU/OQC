@@ -4,6 +4,13 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import HomeIcon from "../assets/home.svg";
 import Xmark from "../assets/xmark(white).svg";
 import Arrow from "../assets/arrow.svg";
+
+function base64DecodeUnicode(str) {
+    return decodeURIComponent(atob(str).split('').map(function (c) {
+        return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+    }).join(''));
+}
+
 const MobileNav = () => {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [isOpen, setIsOpen] = useState(false);
@@ -15,8 +22,8 @@ const MobileNav = () => {
         const token = localStorage.getItem("token");
         if (token) {
             setIsLoggedIn(true);
-            const payload = JSON.parse(atob(token.split('.')[1]));
-            setUsername(payload.username);
+            const payload = JSON.parse(base64DecodeUnicode(token.split('.')[1]));
+            setUsername(payload.name);
         }
     }, []);
 

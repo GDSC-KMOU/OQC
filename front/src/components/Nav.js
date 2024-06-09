@@ -5,6 +5,12 @@ import styled from 'styled-components';
 import MobileNav from './MobileNav';
 import axios from 'axios';
 
+function base64DecodeUnicode(str) {
+    return decodeURIComponent(atob(str).split('').map(function (c) {
+        return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+    }).join(''));
+}
+
 const NavRender = () => {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [isAdmin, setIsAdmin] = useState(false);
@@ -24,9 +30,10 @@ const NavRender = () => {
     useEffect(() => {
         if (token) {
             setIsLoggedIn(true);
-            const payload = JSON.parse(atob(token.split('.')[1]));
+            const payload = JSON.parse(base64DecodeUnicode(token.split('.')[1]));
+            console.log(payload);
             setIsAdmin(payload.role === 'ROLE_ADMIN');
-            setUsername(payload.username);
+            setUsername(payload.name);
         }
     }, []);
 

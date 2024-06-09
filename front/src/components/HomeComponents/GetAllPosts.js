@@ -95,7 +95,7 @@ const GetAllStts = () => {
             <StyledTable>
                 <tbody>
                     {allPosts.map(post => (
-                        <StyledTr>
+                        <StyledTr key={post.id}>
                             <StyledTd width="10%">
                                 <StyledP
                                     width="80px"
