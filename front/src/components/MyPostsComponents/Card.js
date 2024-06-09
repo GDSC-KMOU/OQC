@@ -6,7 +6,7 @@ const PostCard = ({ post, formatPostTime, navigate }) => {
     return (
         <Card key={post.id} onClick={() => navigate(`/view-by-post/${post.id}`)}>
             <PostTitle $status={post.paid ? (post.accepted ? 'accepted' : 'paid') : 'unpaid'}>
-                <StyledP $fonsSize="20px">{post.paid ? (post.accepted ? '승인완료' : '결제완료') : '미결제'}</StyledP>
+                <StyledP $fonsSize="20px">{post.paid ? (post.accepted ? '승인완료' : '대기중') : '미결제'}</StyledP>
                 <StyledP>{formatPostTime(post.time)}</StyledP>
             </PostTitle>
             <PostContentWrapper>
@@ -41,9 +41,9 @@ const PostImg = styled.img`
 const PostTitle = styled.div`
     background-color: ${props => {
         if (props.$status === 'paid') {
-            return '#99B88C'; // 결제완료
+            return '#33B5E5'; // 결제완료
         } else if (props.$status === 'accepted') {
-            return '#33B5E5'; // 승인완료
+            return '#5cb85c'; // 승인완료
         } else {
             return '#FFBB33'; // 미결제
         }

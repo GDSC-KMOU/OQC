@@ -97,7 +97,7 @@ export function CheckoutPage() {
                 <div id="agreement" />
                 {/* 결제하기 버튼 */}
                 <PaymentButtonWrapper>
-                <PaymentButton onClick={handlePaymentRequest}>결제하기</PaymentButton>
+                <PaymentButton onClick={handlePaymentRequest}>결제</PaymentButton>
                 </PaymentButtonWrapper>
                 
             </PaymentContent>
