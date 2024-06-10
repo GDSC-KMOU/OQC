@@ -1,5 +1,6 @@
 import axios from "axios";
 import React, { useState, useEffect, useCallback } from 'react';
+import { useNavigate } from 'react-router-dom';
 import styled from "styled-components";
 import LoadingSpinner from "../Loading";
 import Xmark from "../../assets/xmark(white).svg";
@@ -8,6 +9,7 @@ const PopupContainer = ({ postId, setPostId, handlePopup }) => {
     const [popupContents, setPopupContents] = useState(null);
     const [errorLog, setErrorLog] = useState(null); 
     const [loading, setLoading] = useState(true);
+    const navigate = useNavigate();
 
     const fetchData = useCallback(async () => {
         try {
@@ -60,13 +62,27 @@ const PopupContainer = ({ postId, setPostId, handlePopup }) => {
             handleClose();
         }
     };
+    const handleApprove = async (postId) => {
+        const token = localStorage.getItem('token');
+        try {
+            await axios.post(`https://api.capserver.link/admin/${postId}`, {}, {
+                headers: { Authorization: `Bearer ${token}` }
+            });
+            alert('승인이 완료되었습니다.');
+            navigate(0);
+        } catch (error) {
+            alert('승인 처리 중 오류가 발생했습니다.');
+            navigate(0);
+        }
+    };
     return (
         <PopupPresentation
+            postId={popupContents?.id}
             paid={popupContents?.paid}
             $accepted={popupContents?.accepted}
             time={popupContents?.time}
             userName={popupContents?.userName}
-            phoneNumber={popupContents?.phoneNumber} // 추가 필요
+            phoneNumber={popupContents?.phoneNumber}
             garbageName={popupContents?.garbageName}
             garbageContent={popupContents?.garbageContent}
             price={popupContents?.price}
@@ -76,12 +92,13 @@ const PopupContainer = ({ postId, setPostId, handlePopup }) => {
             formatPostTime={formatPostTime}
             formatPrice={formatPrice}
             handleOverlayClick={handleOverlayClick}
+            handleApprove={handleApprove}
             loading={loading}
         />
     );
 };
 
-const PopupPresentation = ({ paid, $accepted, time, userName, phoneNumber, garbageName, garbageContent, price, address, image, handleClose, formatPostTime, formatPrice, handleOverlayClick, loading}) => {
+const PopupPresentation = ({ postId, paid, $accepted, time, userName, phoneNumber, garbageName, garbageContent, price, address, image, handleClose, formatPostTime, formatPrice, handleOverlayClick, handleApprove, loading}) => {
     return (
         <PopupOverlay onClick={handleOverlayClick}>
             <StyledPopupContainer>
@@ -116,7 +133,7 @@ const PopupPresentation = ({ paid, $accepted, time, userName, phoneNumber, garba
                                     </ImgWrapper>
                                 </PopupMain>    
                             </PopupMainContainer>
-                            <SubmitBtn disabled={$accepted ? false : true} $accepted={$accepted}>승인</SubmitBtn>
+                            <SubmitBtn onClick={() => handleApprove(postId)} disabled={paid ? ($accepted ? true : false) : true} $accepted={$accepted} $paid={paid}>승인</SubmitBtn>
                         </>
                     )}
                 </PopupMainWrapper>
@@ -205,7 +222,7 @@ const PopupCloseBtn = styled.div`
     height: 24px;
 `;
 const SubmitBtn = styled.button`
-    background-color: ${(props) => props.$accepted ? '#666666;' : '#0D6EFD;'};
+    background-color: ${(props) => props.$paid ? ( props.$accepted ? '#666666;' : '#0D6EFD;') : '#666666'};
     border-radius: 5px;
     color: white;
     width: calc(100% - 32px);
@@ -214,9 +231,9 @@ const SubmitBtn = styled.button`
     border: none;
     position: absolute;
     bottom: 24px;
-    cursor: ${(props) => props.$accepted ? "" : "pointer"};
+    cursor: ${(props) => props.$paid ? ( props.$accepted ? '' : 'pointer;') : ''};
     &:hover{
-        background-color: ${(props) => props.$accepted ? '#666666;' : '#0257d5;'};
+        background-color: ${(props) => props.$paid ? ( props.$accepted ? '#666666;' : '#0257d5;') : '#666666'};
         transition: 0.3s;
     };
 `;
