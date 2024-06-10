@@ -2,6 +2,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
 import { useParams, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
+import LoadingSpinner from '../components/Loading';
 
 function getUsernameFromToken() {
     const token = localStorage.getItem('token');
@@ -63,7 +64,7 @@ function ViewByPost() {
         navigate('/payment', { state: { post } });
     };
 
-    if (loading) return <div>데이터를 불러오는 중입니다...</div>;
+    if (loading) return <LoadingWrapper><LoadingSpinner /></LoadingWrapper>;
     if (error) return <VBPContainer><div>데이터를 불러오지 못하였습니다.</div></VBPContainer>;
     if (!post) return null;
 
@@ -76,7 +77,7 @@ function ViewByPost() {
     return (
         <VBPContainer>
             <VBPCotents>
-                <ContentTop $paid={post.paid.toString()} $accepted={post.accepted.toString()}/>
+                <ContentTop $paid={post.paid} $accepted={post.accepted}/>
                 <ContentBottom>
                     <ContentImg src={`data:image/jpeg;base64,${post.image}`} alt={post.title}/>
                     <ContentText>폐기물명</ContentText>
@@ -119,6 +120,9 @@ function ViewByPost() {
     );
 }
 
+const LoadingWrapper = styled.div`
+    height: calc(100vh - 120px - 100px);
+`;
 const VBPContainer = styled.div`
     width: 100%;
     height: 100%;
@@ -153,11 +157,12 @@ const ContentTop = styled.div`
     width: 100%;
     height: 50px;
     background-color: ${(props) => 
-        props.$paid === "true"?  "#33B5E5" 
-        : 
-        (props.$accepted === "true"? "#000" 
-        : 
-        "#FFBB33")};
+        props.$paid ? ( 
+            props.$accepted ? "#5cb85c" 
+            :
+            "#33B5E5") 
+        :
+        "#FFBB33"};
     display: flex;
     justify-content: center;
     border-radius: 5px 5px 0 0;
