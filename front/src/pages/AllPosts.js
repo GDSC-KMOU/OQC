@@ -106,11 +106,7 @@ function AllPostsContainer() {
     };
 
     const formatAnonymous = (userid) => {
-        if(userid.length > 2){
-            const length = userid.length - 2;
-            userid = userid.slice(0, 2);
-            return `${userid}${'*'.repeat(length)}`;
-        }else if(userid.length == 2){
+        if(userid.length > 1){
             const length = userid.length - 1;
             userid = userid.slice(0, 1);
             return `${userid}${'*'.repeat(length)}`;
