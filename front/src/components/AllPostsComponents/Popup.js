@@ -64,6 +64,12 @@ const PopupContainer = ({ postId, setPostId, handlePopup }) => {
     };
     const handleApprove = async (postId) => {
         const token = localStorage.getItem('token');
+
+        const userConfirmed = window.confirm('승인 하시겠습니까?');
+        if (!userConfirmed) {
+            return;
+        }
+    
         try {
             await axios.post(`https://api.capserver.link/admin/${postId}`, {}, {
                 headers: { Authorization: `Bearer ${token}` }
