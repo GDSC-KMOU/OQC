@@ -26,15 +26,9 @@ export default function SuccessPage() {
             });
         }
         confirm();
+        alert("결제에 성공하였습니다.")
+        window.location.href = "/myposts";
     }, [navigate, searchParams, post]);
 
-
-    return (
-        <div className="result wrapper">
-            <div className="box_section">
-                <h2>결제 성공</h2>
-                <p>{`결제 금액: ${Number(searchParams.get("amount")).toLocaleString()}원`}</p>
-            </div>
-        </div>
-    );
+    return null;
 }
