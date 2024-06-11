@@ -18,6 +18,13 @@ function AllPostsContainer() {
     const [isAdmin, setIsAdmin] = useState(true);
     const pageSize = 15; // 한 페이지당 게시물 수
 
+    function base64DecodeUnicode(str) {
+        str = str.replace(/-/g, '+').replace(/_/g, '/');
+        return decodeURIComponent(atob(str).split('').map(function (c) {
+            return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+        }).join(''));
+    }
+
     useEffect(() => {
         fetchPosts(currentPage, pageSize, setPosts, setTotalPages);
     }, [currentPage]);
@@ -39,7 +46,7 @@ function AllPostsContainer() {
 
     useEffect(() => {
         if (token) {
-            const payload = JSON.parse(atob(token.split('.')[1]));
+            const payload = JSON.parse(base64DecodeUnicode(token.split('.')[1]));
             setIsAdmin(payload.role === 'ROLE_ADMIN');
         }
         window.scrollTo({ top: 0});

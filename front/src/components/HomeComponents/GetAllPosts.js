@@ -13,6 +13,14 @@ const GetAllStts = () => {
 
     const navigate = useNavigate();
 
+
+    function base64DecodeUnicode(str) {
+        str = str.replace(/-/g, '+').replace(/_/g, '/');
+        return decodeURIComponent(atob(str).split('').map(function (c) {
+            return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+        }).join(''));
+    }
+
     useEffect(() => {
         const fetchPosts = async () => {
             try {
@@ -25,7 +33,6 @@ const GetAllStts = () => {
                 }   
 
                 const response = await axios.get('https://api.capserver.link/', { headers });
-                console.log(response);
                 if (response.data.allPosts) {
                     setAllPosts(response.data.allPosts.content.slice(0,6));
                 }
@@ -41,7 +48,7 @@ const GetAllStts = () => {
     }, [token]);
     useEffect(() => {
         if (token) {
-            const payload = JSON.parse(atob(token.split('.')[1]));
+            const payload = JSON.parse(base64DecodeUnicode(token.split('.')[1]));
             setIsAdmin(payload.role === 'ROLE_ADMIN');
         }
     }, []);

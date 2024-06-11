@@ -15,7 +15,6 @@ function getUsernameFromToken() {
     const jsonPayload = decodeURIComponent(atob(base64).split('').map(c =>
         '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2)
     ).join(''));
-
     try {
         return JSON.parse(jsonPayload).username;
     } catch (e) {
@@ -34,6 +33,13 @@ function ViewByPost() {
     const [isAdmin, setIsAdmin] = useState(true);
     const token = localStorage.getItem('token');
     
+    function base64DecodeUnicode(str) {
+        str = str.replace(/-/g, '+').replace(/_/g, '/');
+        return decodeURIComponent(atob(str).split('').map(function (c) {
+            return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+        }).join(''));
+    }
+
     const fetchData = useCallback(async () => {
         try {
             const token = localStorage.getItem('token');
@@ -55,9 +61,10 @@ function ViewByPost() {
     
     useEffect(() => {
         if (token) {
-            const payload = JSON.parse(atob(token.split('.')[1]));
+            const payload = JSON.parse(base64DecodeUnicode(token.split('.')[1]));
             setIsAdmin(payload.role === 'ROLE_ADMIN');
         }
+        window.scrollTo({ top: 0});
     }, []);
 
     const handleGoToCheckout = () => {
