@@ -3,7 +3,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from "styled-components";
 import LoadingSpinner from "../Loading";
-import Xmark from "../../assets/xmark(white).svg";
+import Xmark from "../../../assets/xmark(white).svg";
 
 const PopupContainer = ({ postId, setPostId, handlePopup }) => {
     const [popupContents, setPopupContents] = useState(null);

@@ -2,7 +2,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
 import { useParams, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import LoadingSpinner from '../components/Loading';
+import LoadingSpinner from '../components/units/Loading';
 
 function getUsernameFromToken() {
     const token = localStorage.getItem('token');

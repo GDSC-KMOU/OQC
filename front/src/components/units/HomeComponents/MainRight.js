@@ -1,6 +1,5 @@
 import React from 'react';
 import styled from 'styled-components';
-import NumberImg from '../../assets/Number.png';
 
 const MainRight = () => {
     const ContentTop = () => {
@@ -98,7 +97,7 @@ const StyledUl = styled.ul`
 const StyledLi = styled.li`
     text-align: center;
     color: #0279C2;
-    height: 83px; /* 각 항목 사이의 간격을 조절할 수 있습니다. */
+    height: 83px; 
     border: solid rgb(207, 207, 207) 1px;
     display: flex;
     align-items: center;

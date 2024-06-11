@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate, useParams } from 'react-router-dom';
-import LoadingSpinner from '../components/Loading';
+import LoadingSpinner from '../components/units/Loading';
 import styled from "styled-components";
-import Popup from "../components/AllPostsComponents/Popup";
+import Popup from "../components/units/AllPostsComponents/Popup";
 
 function AllPostsContainer() {
     const { page } = useParams();

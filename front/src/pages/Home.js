@@ -1,6 +1,6 @@
 import React from 'react';
-import Top from '../components/HomeComponents/Top';
-import Main from '../components/HomeComponents/Main'
+import Top from '../components/units/HomeComponents/Top';
+import Main from '../components/units/HomeComponents/Main'
 
 const Home = () => {
     return(

@@ -1,6 +1,6 @@
 import React from 'react';
-import RightImg from '../../assets/RightImg.png';
-import YDImg from '../../assets/Youngdo-gu.jpg';
+import RightImg from '../../../assets/RightImg.png';
+import YDImg from '../../../assets/Youngdo-gu.jpg';
 import styled from 'styled-components';
  
 const LeftText = () => {

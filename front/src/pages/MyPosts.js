@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import LoadingSpinner from '../components/Loading';
-import Card from '../components/MyPostsComponents/Card'
+import LoadingSpinner from '../components/units/Loading';
+import Card from '../components/units/MyPostsComponents/Card'
 import styled from "styled-components";
 
 function MyPosts() {

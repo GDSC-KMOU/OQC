@@ -10,7 +10,7 @@ import WasteOut from './pages/WasteOut';
 import MyPosts from './pages/MyPosts';
 import AllPosts from './pages/AllPosts';
 import ViewByPost from './pages/ViewByPost';
-import Payment from './components/Payment';
+import Payment from './components/units/Payment';
 import SuccessPage from './pages/Success';
 import FailPage from './pages/Fail';
 import Footer from './components/commons/Footer/Footer.container';
