@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState,useEffect} from 'react';
 import axios from 'axios';
 import { useNavigate, Link } from 'react-router-dom';
 import styled from 'styled-components';
@@ -11,7 +11,8 @@ const Signup = () => {
         phoneNumber: '', // 폰번호 필드 추가
     });
     const [confirmPassword,setConfirmPassword] = useState('');
-    const [isUsernameAvailable, setIsUsernameAvailable] = useState(true);
+    const [isUsernameAvailable, setIsUsernameAvailable] = useState(false);
+    const [idCheck, setIdCheck] = useState(false);
     const handleChange = (e) => {
         const { name, value } = e.target;
         if (name === 'confirmPassword'){
@@ -29,6 +30,10 @@ const Signup = () => {
         return formData.password === confirmPassword;
     };
 
+    useEffect(() => {
+        setIdCheck(false);
+    }, [formData.username]);
+
     const checkUsernameAvailability = async () => {
         if (!formData.username) {
             alert('아이디를 입력해주세요.');
@@ -37,6 +42,7 @@ const Signup = () => {
         try {
             const response = await axios.get(`https://api.capserver.link/username?username=${formData.username}`);
             setIsUsernameAvailable(response.data);
+            setIdCheck(true);
             if (!response.data) {
                 alert('이미 사용중인 아이디입니다.');
             } else {
@@ -55,6 +61,12 @@ const Signup = () => {
         if (confirmPassword && !passwordsMatch()) {
             alert('비밀번호가 일치하지 않습니다.');
             return;
+        }else if (!idCheck) {
+            alert('아이디 중복확인을 해주세요.')
+            return;
+        }else if (!isUsernameAvailable) {
+            alert('이미 사용중인 아이디입니다. 다른 아이디로 다시 중복확인을 해주세요.')
+            return;
         }
         try {
             const response = await axios.post('https://api.capserver.link/join', formData, {
@@ -69,7 +81,7 @@ const Signup = () => {
             }
         } catch (error) {
             console.error('회원가입 오류', error);
-            alert('회원가입 실패: ' + error.response.data.message); // 오류 메시지 개선
+            alert('회원가입 중 오류가 발생했습니다. 관리자에게 문의해주세요.');
         }
     };
 
