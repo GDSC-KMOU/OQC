@@ -11,6 +11,7 @@ const Signup = () => {
         phoneNumber: '', // 폰번호 필드 추가
     });
     const [confirmPassword,setConfirmPassword] = useState('');
+    const [isUsernameAvailable, setIsUsernameAvailable] = useState(true);
     const handleChange = (e) => {
         const { name, value } = e.target;
         if (name === 'confirmPassword'){
@@ -28,12 +29,32 @@ const Signup = () => {
         return formData.password === confirmPassword;
     };
 
+    const checkUsernameAvailability = async () => {
+        if (!formData.username) {
+            alert('아이디를 입력해주세요.');
+            return; 
+        }
+        try {
+            const response = await axios.get(`https://api.capserver.link/username?username=${formData.username}`);
+            setIsUsernameAvailable(response.data);
+            if (!response.data) {
+                alert('이미 사용중인 아이디입니다.');
+            } else {
+                alert('사용 가능한 아이디입니다.');
+            }
+        } catch (error) {
+            console.error('아이디 중복 검사 오류', error);
+            alert('오류가 발생했습니다. 다시 시도해주세요.');
+        }
+    };
+
     const navigate = useNavigate();
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         if (confirmPassword && !passwordsMatch()) {
             alert('비밀번호가 일치하지 않습니다.');
-            return; // 일치하지 않을 경우 함수를 여기서 종료합니다.
+            return;
         }
         try {
             const response = await axios.post('https://api.capserver.link/join', formData, {
@@ -72,16 +93,16 @@ const Signup = () => {
                     </LabelWrapper>
                     <LabelWrapper $marginBottom="24px">
                         <StyledLabel htmlFor='username'>
-                            <StyledInput 
-                                type="text" 
-                                id='username' 
-                                name='username' 
-                                value={formData.username} 
-                                onChange={handleChange} 
+                            <StyledInput
+                                type="text"
+                                id='username'
+                                name='username'
+                                value={formData.username}
+                                onChange={handleChange}
                                 placeholder='아이디를 입력해주세요'
                                 required
                             />
-                            <StyledBtn type="button" $marginLeft="5%" alt="check">중복확인</StyledBtn>
+                            <StyledBtn type="button" $marginLeft="5%" alt="check" onClick={checkUsernameAvailability}>중복확인</StyledBtn>
                         </StyledLabel>
                     </LabelWrapper>
                     <LabelWrapper $marginBottom="24px">
