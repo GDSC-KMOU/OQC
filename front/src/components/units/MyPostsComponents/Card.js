@@ -2,7 +2,6 @@ import React from 'react';
 import styled from 'styled-components';
 
 const PostCard = ({ post, formatPostTime, navigate }) => {
-    console.log(post);
     return (
         <Card key={post.id} onClick={() => navigate(`/view-by-post/${post.id}`)}>
             <PostTitle $status={post.paid ? (post.accepted ? 'accepted' : 'paid') : 'unpaid'}>

@@ -18,7 +18,6 @@ const PopupContainer = ({ postId, setPostId, handlePopup }) => {
             const response = await axios.get(`https://api.capserver.link/posts/${postId}`, {
                 headers: { Authorization: `Bearer ${token}` }
             });
-            console.log(response.data)
             setPopupContents(response.data);
         } catch (error) {
             setErrorLog(error.message);

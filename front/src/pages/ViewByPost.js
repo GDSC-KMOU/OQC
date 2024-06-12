@@ -46,7 +46,6 @@ function ViewByPost() {
             const response = await axios.get(`https://api.capserver.link/posts/${postId}`, {
                 headers: { Authorization: `Bearer ${token}` }
             });
-            console.log(response.data);
             setPost(response.data);
             setLoading(false);
         } catch (error) {

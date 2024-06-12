@@ -31,7 +31,6 @@ export default function Nav(){
         if (token) {
             setIsLoggedIn(true);
             const payload = JSON.parse(base64DecodeUnicode(token.split('.')[1]));
-            console.log(payload);
             setIsAdmin(payload.role === 'ROLE_ADMIN');
             setUsername(payload.name);
         }

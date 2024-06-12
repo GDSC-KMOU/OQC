@@ -21,19 +21,15 @@ const Login = () => {
         
         try {
             const response = await axios.post('https://api.capserver.link/login', formData);
-
-            console.log('응답 헤더:', response.headers);
             const token = response.headers['authorization'] || response.headers['Authorization'];
 
             if (token) {
                 localStorage.setItem('token', token);
-                console.log('로그인 성공, 토큰:', token);
                 navigate('/');
                 window.location.reload();
             }
             
         } catch (error) {
-            console.error('로그인 실패', error.response ? error.response.data : error);
             alert("아이디 또는 비밀번호가 올바르지 않습니다.")
         }
     }
