@@ -216,3 +216,19 @@ export const MobileStyledLink = styled(Link)`
     border-radius: 12px;
     font-size: 14px;
 `;
+
+export const MobileStyledP = styled.p`
+    color: #333;
+    font-size: 18px;
+    font-weight: bold;
+    align-items: center;
+    height: 48px;
+    width: 78%;
+    display: flex;
+    background-color: #4DA3D5;
+    padding: 0 12px;
+    color: white;
+    margin-bottom: 12px;
+    border-radius: 12px;
+    font-size: 14px;
+`;

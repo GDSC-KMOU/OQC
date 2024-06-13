@@ -40,24 +40,18 @@ export default function Nav(){
         if (location.pathname === path) {
             navigate(0); // 현재 페이지 새로고침
         }
-        
+        setIsOpen(false);
     };
 
     const handleToggle = () => {
         setIsOpen(!isOpen);
     };
-    const handleOverlayClick = (e) => {
-        if (e.currentTarget) {
-            handleToggle();
-        }
-    };
-
+    
     return <NavUI 
         handleLinkClick={handleLinkClick} 
         isLoggedIn={isLoggedIn}
         username={username}
         selectedItem={selectedItem}
-        handleOverlayClick={handleOverlayClick}
         handleToggle={handleToggle}
         isOpen={isOpen}
     />

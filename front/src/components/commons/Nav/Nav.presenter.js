@@ -73,7 +73,7 @@ export default function NavUI(props){
                 <div />
             </S.MobileHamburger>
             {props.isOpen && (
-                <S.MobileNavContainer onClick={props.handleOverlayClick}>
+                <S.MobileNavContainer>
                     <S.MobileNavMenu>
                         <S.MobileNavTop>
                             <div>
@@ -98,7 +98,7 @@ export default function NavUI(props){
                             </>
                         ) : (
                             <>
-                                <S.MobileStyledLink alt={"light"}>{props.username}</S.MobileStyledLink>
+                                <S.MobileStyledP alt={"light"}>{props.username} 님</S.MobileStyledP>
                                 <S.MobileStyledLink to="/logout" onClick={() => props.handleLinkClick('/logout')} alt={"light"}>
                                     로그아웃
                                     <img src={Arrow} alt="arrow" />

@@ -4,6 +4,8 @@ import { useNavigate, Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 const Signup = () => {
+    const [message, setMessage] = useState("");
+    const [messageColor, setMessageColor] = useState("");
     const [formData, setFormData] = useState({
         username: '',
         name: '',
@@ -43,10 +45,12 @@ const Signup = () => {
             const response = await axios.get(`https://api.capserver.link/username?username=${formData.username}`);
             setIsUsernameAvailable(response.data);
             setIdCheck(true);
-            if (!response.data) {
-                alert('이미 사용중인 아이디입니다.');
+            if (!response.data) {;
+                setMessage('이미 사용중인 아이디입니다.');
+                setMessageColor("#FF0000");
             } else {
-                alert('사용 가능한 아이디입니다.');
+                setMessage('사용 가능한 아이디입니다.');
+                setMessageColor("#4DA3D5");
             }
         } catch (error) {
             console.error('아이디 중복 검사 오류', error);
@@ -103,7 +107,7 @@ const Signup = () => {
                             />
                         </StyledLabel>
                     </LabelWrapper>
-                    <LabelWrapper $marginBottom="24px">
+                    <LabelWrapper $marginBottom={message? "8px" : "24px"} $MobilemarginBottom= {message? "2px" : "12px"}>
                         <StyledLabel htmlFor='username'>
                             <StyledInput
                                 type="text"
@@ -117,6 +121,7 @@ const Signup = () => {
                             <StyledBtn type="button" $marginLeft="5%" alt="check" onClick={checkUsernameAvailability}>중복확인</StyledBtn>
                         </StyledLabel>
                     </LabelWrapper>
+                    {message? <StyledSubP $width="86%" color={messageColor}>{message}</StyledSubP> : ""}
                     <LabelWrapper $marginBottom="24px">
                         <StyledLabel htmlFor='password'>
                             <StyledInput 
@@ -144,10 +149,10 @@ const Signup = () => {
                                 autoComplete="off"
                             />
                             {confirmPassword && !passwordsMatch() && (
-                                <StyledP $paddingTop="8px" $color="#FF0000">비밀번호가 일치하지 않습니다.</StyledP>
+                                <StyledSubP $paddingTop="8px" color="#FF0000">비밀번호가 일치하지 않습니다.</StyledSubP>
                             )}
                             {confirmPassword && passwordsMatch() && (
-                                <StyledP $paddingTop="8px" $color="#4DA3D5">비밀번호가 일치합니다.</StyledP>
+                                <StyledSubP $paddingTop="8px" color="#4DA3D5">비밀번호가 일치합니다.</StyledSubP>
                             )}
                         </StyledLabel>
                     </LabelWrapper>
@@ -229,7 +234,7 @@ const LabelWrapper = styled.div`
     margin-bottom: ${(props) => props.$marginBottom};
     @media (max-width: 768px) {
         gap: 12px;
-        margin-bottom: 12px;
+        margin-bottom: ${(props) => props.$MobilemarginBottom || "12px"};
         margin-top: ${(props) => props.$marginTop};
     }
 `;
@@ -281,14 +286,29 @@ const StyledBtn = styled.button`
     }
 `;
 const StyledP = styled.p`
+    width: ${(props) => props.$width || '100%'};
     font-size: 16px;
     font-weight: bold;
-    color: ${(props) => props.$color || '#666666'};;
+    color: ${(props) => props.color || '#666666'};;
     margin-bottom: 24px;
     padding-top: ${(props) => props.$paddingTop};
     @media (max-width: 768px) {
         margin-top: 24px;
         margin-bottom: 12px;
+    }
+    
+`;
+
+const StyledSubP = styled.p`
+    width: ${(props) => props.$width || '100%'};
+    font-size: 16px;
+    font-weight: bold;
+    color: ${(props) => props.color || '#666666'};;
+    margin-bottom: 12px;
+    padding-top: ${(props) => props.$paddingTop};
+    @media (max-width: 768px) {
+        font-size: 10px;
+        margin-bottom: 2px;
     }
     
 `;
