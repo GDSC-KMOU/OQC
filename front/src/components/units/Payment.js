@@ -4,8 +4,6 @@ import { loadPaymentWidget } from "@tosspayments/payment-widget-sdk";
 import { nanoid } from "nanoid";
 import styled from "styled-components";
 
-const widgetClientKey = "test_gck_docs_Ovk5rk1EwkEbP0W43n07xlzm";
-
 export function CheckoutPage() {
     const location = useLocation();
     const post = location.state?.post;
